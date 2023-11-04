@@ -15,6 +15,7 @@ import Image from "next/image";
 import SeaZoomBackground from "@/components/SeaZoomBackground";
 import Chat from "@/components/Chat";
 import InputStone from "@/components/InputStone";
+import { StonesButton } from "@/components/StonesButton";
 
 const StoneBG = () => {
   return (
@@ -23,7 +24,6 @@ const StoneBG = () => {
         width: "100%",
         height: "100vh",
         position: "absolute",
-        overflowY: "scroll",
         left: 0,
         top: 0,
         zIndex: -1,
@@ -46,7 +46,7 @@ const StoneBG = () => {
   );
 };
 
-const Battle = ({ task = "biology", msges = [] }) => {
+const ChatBattle = ({ task = "biology", msges = [] }) => {
   return (
     <VStack pos="relative" h="100vh" overflow="clip" justify="center">
       <StonesContainer
@@ -57,17 +57,35 @@ const Battle = ({ task = "biology", msges = [] }) => {
       >
         <VStack width="85%" height="105vh">
           <VStack p={5} style={{ marginTop: "0" }}>
-            <BoldedHeader
-              fontSize="2.5em"
-              shadowOffset={4}
-              py="20px"
-              marginTop={"2rem"}
-            >
-              Battle of {task}
-            </BoldedHeader>
+            <HStack>
+              <StonesButton
+                stone="stone7"
+                width={"25rem"}
+                boxProps={{
+                  position: "absolute",
+                  left: 0,
+                }}
+              >
+                Leave
+              </StonesButton>
+              <BoldedHeader
+                fontSize="2.5em"
+                shadowOffset={4}
+                py="20px"
+                marginTop={"2rem"}
+              >
+                Battle of {task}
+              </BoldedHeader>
+            </HStack>
           </VStack>
           <VStack width="100%" height="75%" justifyContent={"space-between"}>
-            <VStack width="100%" maxHeight="80%" overflow="scroll" gap="1rem">
+            <VStack
+              width="100%"
+              maxHeight="80%"
+              overflow="hidden"
+              overflowY="scroll"
+              gap="1rem"
+            >
               <Chat
                 msg={`Hello please tell me a little bit about this text format Hello please tell me a little bit about this text format Hello please tell me a little bit about this text format Hello please tell me a little bit about this text format`}
               />
@@ -93,4 +111,4 @@ const Battle = ({ task = "biology", msges = [] }) => {
   );
 };
 
-export default Battle;
+export default ChatBattle;
