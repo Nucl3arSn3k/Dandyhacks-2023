@@ -2,12 +2,16 @@ import Head from "next/head";
 import { Box, Button, Flex, Heading, VStack } from "@chakra-ui/react";
 import { BoldedHeader } from "@/components/BoldedHeader";
 import Image from "next/image";
+import { motion } from "framer-motion";
+import { BobUpAndDown } from "@/components/BobUpAndDown";
 
 export default function Home() {
   return (
     <VStack>
       <VStack>
-        <BoldedHeader text="Name it Here!" fontSize="96px" shadowOffset={8} />
+        <BobUpAndDown>
+          <BoldedHeader text="Name it Here!" fontSize="96px" shadowOffset={8} />
+        </BobUpAndDown>
         <Button>Start</Button>
       </VStack>
       <Image
