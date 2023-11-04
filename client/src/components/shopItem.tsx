@@ -59,7 +59,7 @@ const ShopItem = ({
             height="0"
             sizes="auto"
             style={{
-              width: "100px",
+              width: "80px",
               height: "50px",
             }}
           ></Image>
