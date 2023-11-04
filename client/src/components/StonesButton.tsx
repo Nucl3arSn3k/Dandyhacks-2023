@@ -1,5 +1,6 @@
 import {
   Box,
+  BoxProps,
   Button,
   ButtonProps,
   HeadingProps,
@@ -11,14 +12,21 @@ import { BoldedHeader, BoldedHeaderProps } from "./BoldedHeader";
 import { useAnimate } from "framer-motion";
 
 interface Props {
-  height?: number;
-  width?: number;
-  stone?: "stone1" | "stone3" | "stone4";
+  height?: number | string;
+  width?: number | string;
+  stone?:
+    | "stone1"
+    | "stone3"
+    | "stone2"
+    | "stone4"
+    | "stone5"
+    | "stone6"
+    | "stone7";
   children?: ReactNode;
   buttonProps?: ButtonProps;
-  headerProps?: HeadingProps & { shadowOffset?: number };
-  size?: "lg" | "sm";
+  headerProps?: BoldedHeaderProps;
   isAnimationOff?: boolean;
+  boxProps?: BoxProps;
 }
 
 export const StonesButton = ({
@@ -29,10 +37,19 @@ export const StonesButton = ({
   height = 100,
   width = 400,
   isAnimationOff = false,
+  boxProps,
 }: Props) => {
   const [hover, setHover] = useBoolean();
-  const widthPixels = `${width}px`;
-  const heightPixels = `${height}px`;
+  let widthPixels = width;
+  let heightPixels = height;
+
+  if (typeof width === "number") {
+    widthPixels = `${width}px`;
+  }
+  if (typeof height === "number") {
+    heightPixels = `${height}px`;
+  }
+
   const [scope, animate] = useAnimate();
 
   useEffect(() => {
@@ -50,6 +67,7 @@ export const StonesButton = ({
       ref={scope}
       onMouseOver={setHover.on}
       onMouseLeave={setHover.off}
+      {...boxProps}
     >
       <Button
         pos="relative"

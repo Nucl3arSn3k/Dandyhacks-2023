@@ -10,6 +10,8 @@ interface Props {
   children?: ReactNode;
   buttonProps?: ButtonProps;
   headerProps?: BoldedHeaderProps;
+  rotation?: number; // Add a rotation prop
+
 }
 
 export const ArrowStone = ({
@@ -17,6 +19,7 @@ export const ArrowStone = ({
   children,
   height = 100,
   width = 400,
+  rotation = 0, // Default rotation value
 }: Props) => {
   const [hover, setHover] = useBoolean();
   const widthPixels = `${width}px`;
@@ -26,27 +29,37 @@ export const ArrowStone = ({
 
   useEffect(() => {
     if (hover) {
-      scope.current.style.transition = 'transform 0.5s';
-      scope.current.style.transform = 'scaleY(1.1)';
+      scope.current.style.transition = "transform 0.5s";
+      scope.current.style.transform = "scaleY(1.1)";
     } else {
-      scope.current.style.transition = 'transform 0.5s';
-      scope.current.style.transform = 'scaleY(1)';
+      scope.current.style.transition = "transform 0.5s";
+      scope.current.style.transform = "scaleY(1)";
     }
   }, [hover]);
 
   return (
-    <Box as="span" ref={scope}>
+    <Box
+      as="span"
+      ref={scope}
+      onMouseOver={setHover.on}
+      onMouseLeave={setHover.off}
+      zIndex={1}
+    >
       <Button
         pos="relative"
         w={widthPixels}
         h={heightPixels}
         variant="ghost"
         _hover={{ bg: "transparent" }}
+        zIndex={0}
       >
-        <BoldedHeader {...headerProps}>{children}</BoldedHeader>
-        <Image 
-          onMouseOver={setHover.on}
-          onMouseLeave={setHover.off}
+        <BoldedHeader
+          {...headerProps}
+         
+        >
+          {children}
+        </BoldedHeader>
+        <Image
           src="/assets/stones/arrowStone.png"
           alt="Background"
           width="0"
@@ -57,7 +70,9 @@ export const ArrowStone = ({
             height: heightPixels,
             position: "absolute",
             filter: hover ? "brightness(90%)" : "",
+            transform: `rotate(${rotation}deg)`, // Set rotation based on the prop
           }}
+          
         />
       </Button>
     </Box>
