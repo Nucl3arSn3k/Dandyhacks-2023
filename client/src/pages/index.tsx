@@ -9,8 +9,11 @@ import { WavyText } from "@/components/WavyText";
 import { Stones1Button } from "@/components/Stones1Button";
 import Link from "next/link";
 import { SeaBackgroundFullScreen } from "@/components/SeaBackgroundFullScreen";
+import { useRouter } from "next/router";
 
 export default function Home() {
+  const router = useRouter();
+
   return (
     <VStack pos="relative" h="100vh" overflow="clip">
       <VStack pt="50px" zIndex={10}>
@@ -21,8 +24,15 @@ export default function Home() {
         </BobUpAndDown>
         <HStack>
           <Stones1Button width={400}>Start</Stones1Button>
-          <Stones1Button width={400}>
-            <Link href="/raft">Resume</Link>
+          <Stones1Button
+            width={400}
+            buttonProps={{
+              onClick: () => {
+                router.push("/raft");
+              },
+            }}
+          >
+            Resume
           </Stones1Button>
         </HStack>
       </VStack>

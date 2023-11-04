@@ -13,6 +13,7 @@ interface Props {
 }
 
 export const Stones1Button = ({
+  buttonProps,
   headerProps,
   children,
   height = 100,
@@ -41,6 +42,7 @@ export const Stones1Button = ({
         h={heightPixels}
         variant="ghost"
         _hover={{ bg: "transparent" }}
+        {...buttonProps}
       >
         <BoldedHeader {...headerProps}>{children}</BoldedHeader>
         <Image
