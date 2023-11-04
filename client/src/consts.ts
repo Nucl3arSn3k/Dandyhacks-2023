@@ -1,6 +1,6 @@
 import { Quest } from "./types/questsTypes";
 
-export  enum StoneEnum {
+export enum StoneEnum {
   stone1 = "stone1",
   stone2 = "stone2",
   stone3 = "stone3",
