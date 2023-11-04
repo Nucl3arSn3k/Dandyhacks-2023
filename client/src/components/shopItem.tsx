@@ -1,42 +1,40 @@
 import React from "react";
 import Image from "next/image";
-import { VStack } from "@chakra-ui/react";
+import { VStack, Box } from "@chakra-ui/react";
 import { StonesButton } from "@/components/StonesButton";
 import { StoneEnum } from "@/consts";
-
+import { StonesContainer } from "./StonesContainer";
 
 export interface ShopItemProps {
-  stone?: StoneEnum
+  stone?: StoneEnum;
   text?: string;
-  url ?: string;
+  url?: string;
 }
 
-const ShopItem = ({ stone = StoneEnum.stone5, text = "", url="/assets/characters/dolphin.png" }:ShopItemProps) => {
-   
+const ShopItem = ({
+  stone = StoneEnum.stone5,
+  text = "",
+  url = "/assets/characters/dolphin.png",
+}: ShopItemProps) => {
   return (
     <VStack>
-      <Image
-        src={`/assets/stones/${stone}.png`}
-        alt="Background"
-        width="0"
-        height="0"
-        sizes="100vw"
-        style={{
-          width: "300px",
-          height: "250px",
-        }}
-      />
-      <Image
-        src={url}
-        alt="Background"
-        width="0"
-        height="0"
-        sizes="100vw"
-        style={{
-          width: "150px",
-          height: "150px",
-        }}
+      <StonesContainer stone={stone} width={250} height={250}>
+        <Image
+          src={url}
+          alt="Background"
+          width="0"
+          height="0"
+          sizes="auto"
+          style={{
+            width: "150px",
+            height: "150px",
+            position: "absolute",
+            // // top: "10",
+            bottom: "50px",
+          }}
         />
+      </StonesContainer>
+
       <StonesButton
         stone="stone6"
         width={250}
