@@ -1,30 +1,34 @@
 import React from 'react';
 import { Box, Image } from "@chakra-ui/react";
 
-// import image from public assets
-import stone from '/assets/stones/stone1.png';
-import percentageBar from 'assets/stones/green-progress-bar.png';
 
 interface Props {
   percentage: number;
 }
 
 const ProgressBar = ({ percentage }: Props) => {
-  // Calculate the width of the percentage bar based on the percentage value
-  const percentageWidth = `${percentage}%`;
 
   return (
-    <Box position="relative">
-      <Image src={stone} alt="stone" />
+    <Box 
+    position="relative" 
+    width="100%"
+    height="100%"
 
-      {/* Overlay the percentage bar using absolute positioning */}
+    >
+      <Image 
+      src="/assets/stones/stone1"
+       alt="stone" 
+         width="500px"
+            height="500px"
+        />
+
       <Box
         position="absolute"
         top={0}
         left={0}
-        width={percentageWidth}
+        width={percentage}
       >
-        <Image src={percentageBar} alt="percentage bar" />
+        <Image src="/assets/stones/green-progress-bar" alt="percentage bar" />
       </Box>
     </Box>
   );
