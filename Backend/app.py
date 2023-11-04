@@ -19,16 +19,19 @@ google = oauth.register(
     name='google',
     client_id='924496584494-leum14jn35adqclljhpgnhnu9htd6pjc.apps.googleusercontent.com',
     client_secret='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',
-    authorize_url='https://accounts.google.com/o/oauth2/auth',
+    
     authorize_params=None,
-    access_token_url='https://accounts.google.com/o/oauth2/token',
+    
     access_token_params=None,
     refresh_token_url=None,
-    redirect_uri='*',
+    redirect_uri='http://127.0.0.1:5000/callback',
+    server_metadata_url= 'https://accounts.google.com/.well-known/openid-configuration',
+    client_kwargs={'scope': 'email profile'},
     
 )
 #client_kwargs={'scope': 'email profile'},
-
+#access_token_url='https://accounts.google.com/o/oauth2/token',
+#authorize_url='https://accounts.google.com/o/oauth2/auth',
 @app.route('/pdfload')
 def pdf_loader():
     reader = PdfReader(r"D:\User\Documents\GitHub\CDCS\Dandyhacks-2023\Backend\bequiet.pdf") #needs a full length filepath,not a local one,don't know why
@@ -77,15 +80,16 @@ def login():
     redirect_uri = url_for('auth', _external=True)
     source = string.ascii_letters + string.digits
     result_str = ''.join((random.choice(source) for i in range(8)))
-    return google.authorize_redirect(redirect_uri,nonce = result_str,scope='email profile')
+    session["google_authlib_nonce"] = result_str
+    print(f"Nonce set in session: {session['google_authlib_nonce']}")
+    return google.authorize_redirect(redirect_uri,nonce = session["google_authlib_nonce"])
 
 
 @app.route('/callback')
 def auth():
     token = google.authorize_access_token()
-    source = string.ascii_letters + string.digits
-    result_str = ''.join((random.choice(source) for i in range(8)))
-    user_info = google.parse_id_token(token,nonce=result_str)
+    nonce = session.get("google_authlib_nonce", "")
+    user_info = google.parse_id_token(token,nonce=nonce)
     session['google_token'] = token
     email = user_info['email']
     if commit_token_email(token, email):
