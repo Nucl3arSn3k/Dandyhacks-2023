@@ -19,13 +19,13 @@ const SkillList = ({
 }) => {
   return (
     <VStack spacing={0}>
-      <BoldedHeader fontSize="1.4em" shadowOffset={3} as="h2">
+      <BoldedHeader fontSize="1.4em" shadowOffset={2} as="h2">
         {title}
       </BoldedHeader>
       {skills?.map((strength, idx) => (
         <BoldedHeader
           fontSize="1em"
-          shadowOffset={3}
+          shadowOffset={2}
           py="20px"
           as="p"
           key={idx}
