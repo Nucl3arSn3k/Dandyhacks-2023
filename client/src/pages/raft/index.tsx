@@ -4,6 +4,7 @@ import { Stones2Container } from "@/components/Stones2Container";
 import { Grid, GridItem, VStack } from "@chakra-ui/react";
 import React from "react";
 import Image from "next/image";
+import SeaZoomBackground from "@/components/SeaZoomBackground";
 
 const Raft = () => {
   return (
@@ -28,7 +29,7 @@ const Raft = () => {
           </Stones2Container>
         </GridItem>
       </Grid>
-      <SeaBackgroundFullScreen />
+      <SeaZoomBackground objPos="-20vw -70vh" />
     </VStack>
   );
 };
