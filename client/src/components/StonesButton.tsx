@@ -5,9 +5,9 @@ import { BoldedHeader, BoldedHeaderProps } from "./BoldedHeader";
 import { useAnimate } from "framer-motion";
 
 interface Props {
-  height?: number;
-  width?: number;
-  stone?: "stone1" | "stone3" | "stone4";
+  height?: number | string;
+  width?: number | string;
+  stone?: "stone1" | "stone2" | "stone3" | "stone4";
   children?: ReactNode;
   buttonProps?: ButtonProps;
   headerProps?: BoldedHeaderProps;
@@ -24,8 +24,16 @@ export const StonesButton = ({
   isAnimationOff = false,
 }: Props) => {
   const [hover, setHover] = useBoolean();
-  const widthPixels = `${width}px`;
-  const heightPixels = `${height}px`;
+  let widthPixels = width;
+  let heightPixels = height;
+
+  if (typeof width === "number") {
+    widthPixels = `${width}px`;
+  }
+  if (typeof height === "number") {
+    heightPixels = `${height}px`;
+  }
+
   const [scope, animate] = useAnimate();
 
   useEffect(() => {
