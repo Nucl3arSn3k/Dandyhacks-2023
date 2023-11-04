@@ -7,7 +7,14 @@ interface Props {
   width?: number | string;
   children?: ReactNode;
   height?: number | string;
-  stone?: "stone1" | "stone2" | "stone3" | "stone4" | "stone5";
+  stone?:
+    | "stone1"
+    | "stone2"
+    | "stone3"
+    | "stone4"
+    | "stone5"
+    | "stone6"
+    | "stone7";
 }
 
 export const StonesContainer = ({

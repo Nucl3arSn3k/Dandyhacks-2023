@@ -6,6 +6,7 @@ import { BoxProps } from "@chakra-ui/react";
 interface Props {
   animate?: any; // IDK what to type this! 😱
   children: ReactNode;
+  
 }
 
 export const BobUpAndDown = ({

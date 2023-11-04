@@ -21,24 +21,27 @@ export default function Shop() {
   const shopItems : ShopItemProps[] = [
     {
       stone: StoneEnum.stone5,
-      text:"Buy Dolphin",
+      text:"Buy Dolphin ",
       url: "/assets/characters/dolphin.png",
+      price: 100,
     },
     {
       stone: StoneEnum.stone5,
       text: "Buy Sail",
       url: "/assets/raft/sail.png",
+      price : 200,
     },
     {
       stone: StoneEnum.stone5,
       text: "Buy Engine",
       url: "/assets/raft/engine.png",
+      price: 300,
     },
   ];
 
   return (
     <VStack as="section" pos="relative" h="100vh" overflow="clip" zIndex={10}>
-      <VStack pt="50px" spacing="20">
+      <VStack pt="50px" spacing="30">
         <BobUpAndDown>
           <BoldedHeader as="span" fontSize="4em" shadowOffset={8}>
             <WavyText text="Shop" replay={true} />
@@ -46,7 +49,7 @@ export default function Shop() {
         </BobUpAndDown>
         <HStack>
           {shopItems.map((item) => {
-            return <ShopItem stone={item.stone} text={item.text} url={item.url} key={item.url} />;
+            return <ShopItem stone={item.stone} text={item.text} url={item.url} key={item.url} price={item.price} />;
           })}
         </HStack>
       </VStack>
