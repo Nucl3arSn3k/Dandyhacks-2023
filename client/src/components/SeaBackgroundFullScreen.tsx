@@ -1,6 +1,5 @@
 import Image from "next/image";
 import React from "react";
-import { ChakraMotionDiv } from "./ChakraMotionDiv";
 
 export const SeaBackgroundFullScreen = () => {
   return (

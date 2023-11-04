@@ -1,4 +1,10 @@
-import { Box, Button, ButtonProps, useBoolean } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  ButtonProps,
+  HeadingProps,
+  useBoolean,
+} from "@chakra-ui/react";
 import Image from "next/image";
 import React, { ReactNode, useEffect } from "react";
 import { BoldedHeader, BoldedHeaderProps } from "./BoldedHeader";
@@ -10,7 +16,8 @@ interface Props {
   stone?: "stone1" | "stone3" | "stone4";
   children?: ReactNode;
   buttonProps?: ButtonProps;
-  headerProps?: BoldedHeaderProps;
+  headerProps?: HeadingProps & { shadowOffset?: number };
+  size?: "lg" | "sm";
   isAnimationOff?: boolean;
 }
 
