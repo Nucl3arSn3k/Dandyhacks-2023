@@ -14,7 +14,7 @@ export default function Home() {
           <BoldedHeader text="Name it Here!" fontSize="96px" shadowOffset={8} />
         </BobUpAndDown>
         <Button>Start</Button>
-        <ProgressBar percentage={50} />
+        <ProgressBar percentage={50} /> 
       </VStack>
       <Image
         src="/assets/background/ocean_bg.png"
