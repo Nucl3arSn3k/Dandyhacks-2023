@@ -24,7 +24,7 @@ interface Props {
     | "stone7";
   children?: ReactNode;
   buttonProps?: ButtonProps;
-  headerProps?: BoldedHeaderProps;
+  headerProps?: HeadingProps & { shadowOffset: number };
   isAnimationOff?: boolean;
   boxProps?: BoxProps;
 }

@@ -34,15 +34,22 @@ const RaftHomePage = () => {
           <GridItem>
             <VStack pos="relative" h="100%">
               <Box pos="absolute">
-                <StonesContainer height={80} width={200}>
+                <StonesContainer height={80} width={300}>
                   <HStack>
                     <BoldedHeader fontSize="1.4em" shadowOffset={3}>
                       199
                     </BoldedHeader>
                     <Box pos="absolute" top="-20px" left="-90px">
-                      <Coin />
+                      {/* <Coin /> */}
                     </Box>
-                    <StonesButton stone="stone4">Shop</StonesButton>
+                    <StonesButton
+                      stone="stone4"
+                      width={130}
+                      height={60}
+                      headerProps={{ fontSize: "0.4em" }}
+                    >
+                      Shop
+                    </StonesButton>
                   </HStack>
                 </StonesContainer>
               </Box>
