@@ -3,7 +3,7 @@ import { Box, Button, HStack, VStack } from "@chakra-ui/react";
 import { BoldedHeader } from "@/components/BoldedHeader";
 import Image from "next/image";
 import { BobUpAndDown } from "@/components/BobUpAndDown";
-import Raft from "@/features/raft/components/Raft";
+import { Raft } from "@/features/raft/components/Raft";
 import { ChakraMotionDiv } from "@/components/ChakraMotionDiv";
 import { WavyText } from "@/components/WavyText";
 import { StonesButton } from "@/components/StonesButton";

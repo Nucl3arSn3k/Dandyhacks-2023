@@ -1,4 +1,5 @@
 import { BoldedHeader } from "@/components/BoldedHeader";
+import { ChakraMotionDiv } from "@/components/ChakraMotionDiv";
 import { ProgressBar } from "@/components/ProgressBar";
 import { SeaBackgroundFullScreen } from "@/components/SeaBackgroundFullScreen";
 import { StonesButton } from "@/components/StonesButton";
@@ -17,10 +18,10 @@ import {
 import Image from "next/image";
 import React, { useState } from "react";
 import { FileUploader } from "react-drag-drop-files";
-
+import { Raft } from "../../features/raft/components/Raft";
 const fileTypes = ["PDF"];
 
-const Raft = () => {
+const RaftHomePage = () => {
   const [file, setFile] = useState<File | null>(null);
   const {
     isOpen: isFileModalOpen,
@@ -134,6 +135,27 @@ const Raft = () => {
               </FileUploader>
             </VStack>
           </GridItem>
+          <GridItem>
+            <VStack h="100%" pos="relative">
+              <ChakraMotionDiv
+                pos="absolute"
+                top="80%"
+                animate={{
+                  opacity: [0, 0.5, 0.75, 1, 1],
+                  translateY: [700, 0],
+                  translateX: [700, 0],
+                }}
+                // @ts-ignore no problem in operation, although type error appears.
+                transition={{
+                  duration: 1,
+                  ease: "easeOut",
+                  times: [0, 0.2, 0.5, 0.8, 1],
+                }}
+              >
+                <Raft hasDolphin hasSail />
+              </ChakraMotionDiv>
+            </VStack>
+          </GridItem>
         </Grid>
         <SeaBackgroundFullScreen />
       </VStack>
@@ -141,4 +163,4 @@ const Raft = () => {
   );
 };
 
-export default Raft;
+export default RaftHomePage;

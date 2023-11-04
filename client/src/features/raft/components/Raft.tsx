@@ -9,7 +9,7 @@ interface Props {
   hasEngine?: boolean;
 }
 
-const Raft = ({
+export const Raft = ({
   hasEngine = false,
   hasSail = false,
   hasDolphin = false,
@@ -96,5 +96,3 @@ const Raft = ({
     </Box>
   );
 };
-
-export default Raft;
