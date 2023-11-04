@@ -7,35 +7,43 @@ import { useAnimate } from "framer-motion";
 interface Props {
   height?: number;
   width?: number;
+  stone?: "stone1" | "stone3" | "stone4";
   children?: ReactNode;
   buttonProps?: ButtonProps;
   headerProps?: BoldedHeaderProps;
+  isAnimationOff?: boolean;
 }
 
-export const Stones1Button = ({
+export const StonesButton = ({
   buttonProps,
   headerProps,
   children,
+  stone = "stone1",
   height = 100,
   width = 400,
+  isAnimationOff = false,
 }: Props) => {
   const [hover, setHover] = useBoolean();
   const widthPixels = `${width}px`;
   const heightPixels = `${height}px`;
-
   const [scope, animate] = useAnimate();
 
   useEffect(() => {
     const animation = async () => {
       await animate(scope.current, { y: [0, 5, -5, 0] }, { duration: 0.5 });
     };
-    if (hover) {
+    if (!isAnimationOff && hover) {
       animation();
     }
   }, [hover, scope]);
 
   return (
-    <Box as="span" ref={scope}>
+    <Box
+      as="span"
+      ref={scope}
+      onMouseOver={setHover.on}
+      onMouseLeave={setHover.off}
+    >
       <Button
         pos="relative"
         w={widthPixels}
@@ -45,10 +53,8 @@ export const Stones1Button = ({
         {...buttonProps}
       >
         <BoldedHeader {...headerProps}>{children}</BoldedHeader>
-        <Image 
-          onMouseOver={setHover.on}
-          onMouseLeave={setHover.off}
-          src="/assets/stones/stone1.png"
+        <Image
+          src={`/assets/stones/${stone}.png`}
           alt="Background"
           width="0"
           height="0"

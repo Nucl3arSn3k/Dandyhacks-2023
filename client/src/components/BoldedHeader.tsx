@@ -1,4 +1,4 @@
-import { Heading, HeadingProps } from "@chakra-ui/react";
+import { As, Heading, HeadingProps } from "@chakra-ui/react";
 import React, { ReactNode } from "react";
 
 export type BoldedHeaderProps = {
@@ -8,6 +8,7 @@ export type BoldedHeaderProps = {
 
 export const BoldedHeader = ({
   children,
+  as,
   shadowOffset = 5,
   ...rest
 }: BoldedHeaderProps) => {

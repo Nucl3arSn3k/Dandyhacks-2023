@@ -6,7 +6,7 @@ import { BobUpAndDown } from "@/components/BobUpAndDown";
 import Raft from "@/features/raft/components/Raft";
 import { ChakraMotionDiv } from "@/components/ChakraMotionDiv";
 import { WavyText } from "@/components/WavyText";
-import { Stones1Button } from "@/components/Stones1Button";
+import { StonesButton } from "@/components/StonesButton";
 import Link from "next/link";
 import { SeaBackgroundFullScreen } from "@/components/SeaBackgroundFullScreen";
 import { useRouter } from "next/router";
@@ -23,8 +23,8 @@ export default function Home() {
           </BoldedHeader>
         </BobUpAndDown>
         <HStack>
-          <Stones1Button width={400}>Start</Stones1Button>
-          <Stones1Button
+          <StonesButton width={400}>Start</StonesButton>
+          <StonesButton
             width={400}
             buttonProps={{
               onClick: () => {
@@ -33,7 +33,7 @@ export default function Home() {
             }}
           >
             Resume
-          </Stones1Button>
+          </StonesButton>
         </HStack>
       </VStack>
       <ChakraMotionDiv

@@ -6,11 +6,13 @@ interface Props {
   width?: number;
   children?: ReactNode;
   height?: number;
+  stone?: "stone2" | "stone3";
 }
 
-export const Stones2Container = ({
+export const StonesContainer = ({
   width = 500,
   height = 350,
+  stone = "stone2",
   children,
 }: Props) => {
   const widthPixels = `${width}px`;
@@ -22,7 +24,7 @@ export const Stones2Container = ({
         {children}
       </VStack>
       <Image
-        src="/assets/stones/stone2.png"
+        src={`/assets/stones/${stone}.png`}
         alt="Background"
         width="0"
         height="0"
