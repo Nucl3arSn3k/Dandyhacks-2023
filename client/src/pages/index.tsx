@@ -1,12 +1,15 @@
 import Head from "next/head";
-import { Box, Flex, Heading, VStack } from "@chakra-ui/react";
+import { Box, Button, Flex, Heading, VStack } from "@chakra-ui/react";
 import { BoldedHeader } from "@/components/BoldedHeader";
 import Image from "next/image";
 
 export default function Home() {
   return (
     <VStack>
-      <BoldedHeader text="Title Here" fontSize="96px" shadowOffset={10} />
+      <VStack>
+        <BoldedHeader text="Name it Here!" fontSize="96px" shadowOffset={8} />
+        <Button>Start</Button>
+      </VStack>
       <Image
         src="/assets/background/ocean_bg.png"
         alt="Background"
