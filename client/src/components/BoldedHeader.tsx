@@ -14,10 +14,14 @@ export const BoldedHeader = ({
 }: BoldedHeaderProps) => {
   return (
     <Heading
+      as="span"
       fontWeight={900}
       color="white"
       textShadow={`1px ${shadowOffset}px 0px #5F3E00`}
       zIndex={2}
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
       textTransform="uppercase"
       {...rest}
     >

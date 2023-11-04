@@ -6,12 +6,12 @@ interface Props {
   percentage: number;
 }
 
-const ProgressBar = ({ percentage }: Props) => {
+export const ProgressBar = ({ percentage }: Props) => {
   const percentagePixels = (percentage / 100) * 410;
-  const leftMargin = (100 - percentage) / 4;
+  const leftMargin = (100 - percentage) / 4 - 5;
 
   return (
-    <Box as="span" position="relative" width="1000px" height="1000px">
+    <Box position="relative">
       <Image
         src="/assets/stones/stone1.png"
         alt="background stone for progress bar"
@@ -19,10 +19,10 @@ const ProgressBar = ({ percentage }: Props) => {
         height="0"
         sizes="auto"
         style={{
-          width: 400,
-          height: 100,
-          position: "absolute",
+          width: 200,
+          height: 50,
           top: 0,
+          zIndex: 100,
           left: 0,
         }}
       />
@@ -33,8 +33,8 @@ const ProgressBar = ({ percentage }: Props) => {
         height="0"
         sizes="auto"
         style={{
-          width: percentagePixels,
-          height: 98,
+          width: percentagePixels / 2,
+          height: 50,
           position: "absolute",
           top: 0,
           left: leftMargin,
@@ -44,5 +44,3 @@ const ProgressBar = ({ percentage }: Props) => {
     </Box>
   );
 };
-
-export default ProgressBar;
