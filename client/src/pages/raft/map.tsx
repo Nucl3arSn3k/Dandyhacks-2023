@@ -1,11 +1,14 @@
 import { ArrowStone } from "@/components/ArrowStone";
 import { BobUpAndDown } from "@/components/BobUpAndDown";
 import { BoldedHeader } from "@/components/BoldedHeader";
+import { StonesButton } from "@/components/StonesButton";
 import { WavyText } from "@/components/WavyText";
 import { Box, VStack } from "@chakra-ui/react";
 import Image from "next/image";
+import { useRouter } from "next/router";
 
 const Map = () => {
+  const router = useRouter();
   return (
     <Box as="section" pos="relative" h="100vh" w="100vw">
       <Image
@@ -20,9 +23,21 @@ const Map = () => {
           zIndex: -1,
         }}
       />
-      <ArrowStone boxProps={{ position: "absolute", margin: "0", top: "2rem" }}>
-        Return
-      </ArrowStone>
+      <StonesButton
+        stone="stone7"
+        buttonProps={{
+          onClick: () => {
+            router.push("/raft");
+          },
+        }}
+        boxProps={{
+          pos: "absolute",
+          top: "5%",
+          left: "5%",
+        }}
+      >
+        Back
+      </StonesButton>
       <BobUpAndDown
         position="absolute"
         left={1110}

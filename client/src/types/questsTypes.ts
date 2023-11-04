@@ -6,4 +6,6 @@ export interface SkillType {
 export interface Quest extends SkillType {
   strengths?: SkillType[];
   weaknesses?: SkillType[];
+  id: number;
+  title: string;
 }

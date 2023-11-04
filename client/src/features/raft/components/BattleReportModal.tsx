@@ -3,6 +3,7 @@ import { StoneModal } from "@/components/StoneModal";
 import { Quest, SkillType } from "@/types/questsTypes";
 import { Grid, GridItem, VStack } from "@chakra-ui/react";
 import React from "react";
+import { useRouter } from "next/router";
 
 interface Props {
   isOpen?: boolean;
@@ -38,13 +39,16 @@ const SkillList = ({
 };
 
 export const BattleReportModal = ({ quest, isOpen, onClose }: Props) => {
+  const router = useRouter();
   return (
     <StoneModal
       isOpen={isOpen}
       onClose={onClose}
       header={`${quest?.title} Quest`}
       confirmText="Start"
-      confirmAction={() => {}}
+      confirmAction={() => {
+        router.push(`/raft/battle?questId=${quest?.id}`);
+      }}
       height={500}
     >
       <Grid templateColumns="repeat(2, 1fr)" columnGap={10}>
