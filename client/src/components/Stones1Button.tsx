@@ -45,7 +45,7 @@ export const Stones1Button = ({
         {...buttonProps}
       >
         <BoldedHeader {...headerProps}>{children}</BoldedHeader>
-        <Image
+        <Image 
           onMouseOver={setHover.on}
           onMouseLeave={setHover.off}
           src="/assets/stones/stone1.png"

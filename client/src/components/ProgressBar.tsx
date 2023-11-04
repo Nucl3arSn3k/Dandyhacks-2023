@@ -1,30 +1,40 @@
+import { Box } from "@chakra-ui/react";
+import Image from "next/image";
 import React from "react";
-import { Box, Image } from "@chakra-ui/react";
 
 interface Props {
   percentage: number;
 }
 
 const ProgressBar = ({ percentage }: Props) => {
+  const percentagePixels = (percentage / 100) * 410;
   return (
-    <Box position="relative" width="500px" height="500px">
-      <Image
+    <Box as="span">
+          <Image
         src="/assets/stones/stone1.png"
-        alt="Stone"
-        width="100%"
-        height="100%"
-        zIndex={-1}
-        position="absolute"
+        alt="background stone for progress bar" 
+        width="0"
+        height="0"
+        sizes="100vw"
+        style={{
+          width: 400,
+          height: 100,
+          position: "absolute",
+        }}
       />
-
-      {/* <Box
-        position="absolute"
-        top={0}
-        left={0}
-        width={percentage}
-      >
-        <Image src="/assets/stones/green-progress-bar.png" alt="percentage bar" />
-      </Box> */}
+         <Image
+        src="/assets/stones/green-progress-bar.png"
+        alt="progress bar"
+        width="0"
+        height="0"
+        sizes="100vw"
+        style={{
+          width: percentagePixels,
+          height: 100,
+          position: "absolute",
+        }}
+      />
+  
     </Box>
   );
 };
