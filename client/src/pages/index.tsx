@@ -1,11 +1,12 @@
 import Head from "next/head";
-import { Button, VStack } from "@chakra-ui/react";
+import { Box, Button, HStack, VStack } from "@chakra-ui/react";
 import { BoldedHeader } from "@/components/BoldedHeader";
 import Image from "next/image";
 import { BobUpAndDown } from "@/components/BobUpAndDown";
 import Raft from "@/features/raft/components/Raft";
 import { ChakraMotionDiv } from "@/components/ChakraMotionDiv";
 import { WavyText } from "@/components/WavyText";
+import { Stones1Button } from "@/components/Stones1Button";
 
 export default function Home() {
   return (
@@ -16,7 +17,10 @@ export default function Home() {
             <WavyText text="Quiz Voyage" replay={true} />
           </BoldedHeader>
         </BobUpAndDown>
-        <Button>Start</Button>
+        <HStack>
+          <Stones1Button width={400}>Start</Stones1Button>
+          <Stones1Button width={400}>Resume</Stones1Button>
+        </HStack>
       </VStack>
       <ChakraMotionDiv
         pos="absolute"

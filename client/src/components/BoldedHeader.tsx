@@ -1,16 +1,16 @@
-import { Box, Heading, HeadingProps } from "@chakra-ui/react";
+import { Heading, HeadingProps } from "@chakra-ui/react";
 import React, { ReactNode } from "react";
 
-interface Props {
+export type BoldedHeaderProps = {
   children: ReactNode;
   shadowOffset?: number;
-}
+} & HeadingProps;
 
 export const BoldedHeader = ({
   children,
   shadowOffset = 5,
   ...rest
-}: Props & HeadingProps) => {
+}: BoldedHeaderProps) => {
   return (
     <Heading
       fontWeight={900}
