@@ -13,9 +13,29 @@ import { BoldedHeader } from "@/components/BoldedHeader";
 import { WavyText } from "@/components/WavyText";
 import { StonesButton } from "@/components/StonesButton";
 import { useRouter } from "next/router";
+import ShopItem, { ShopItemProps } from "@/components/shopItem";
+import { StoneEnum } from "@/consts";
 
 export default function Shop() {
   const router = useRouter();
+  const shopItems : ShopItemProps[] = [
+    {
+      stone: StoneEnum.stone5,
+      text:"Buy Dolphin",
+      url: "/assets/characters/dolphin.png",
+    },
+    {
+      stone: StoneEnum.stone5,
+      text: "Buy Sail",
+      url: "/assets/raft/sail.png",
+    },
+    {
+      stone: StoneEnum.stone5,
+      text: "Buy Engine",
+      url: "/assets/raft/engine.png",
+    },
+  ];
+
   return (
     <VStack as="section" pos="relative" h="100vh" overflow="clip" zIndex={10}>
       <VStack pt="50px" spacing="20">
@@ -25,62 +45,9 @@ export default function Shop() {
           </BoldedHeader>
         </BobUpAndDown>
         <HStack>
-          <VStack>
-            <Image
-              src={`/assets/stones/stone5.png`}
-              alt="Background"
-              width="0"
-              height="0"
-              sizes="100vw"
-              style={{
-                width: "300px",
-                height: "250px",
-              }}
-            />
-            <StonesButton stone="stone6" width={250} >
-              {/* <BoldedHeader as="span" fontSize=".6em"> */}
-              Buy Dolphin
-              {/* </BoldedHeader> */}
-            </StonesButton>
-          </VStack>
-
-          {/* <VStack>
-            <Image
-              src={`/assets/stones/stone5.png`}
-              alt="Background"
-              width="0"
-              height="0"
-              sizes="100vw"
-              style={{
-                width: "300px",
-                height: "250px",
-              }}
-            />
-            <StonesButton stone="stone6" width={250}>
-              <BoldedHeader as="span" fontSize=".6em">
-                Buy Sail
-              </BoldedHeader>
-            </StonesButton>
-          </VStack>
-
-          <VStack>
-            <Image
-              src={`/assets/stones/stone5.png`}
-              alt="Background"
-              width="0"
-              height="0"
-              sizes="100vw"
-              style={{
-                width: "300px",
-                height: "250px",
-              }}
-            />
-            <StonesButton stone="stone6" width={250}>
-              <BoldedHeader as="span" fontSize=".6em">
-                Buy Engine
-              </BoldedHeader>
-            </StonesButton>
-          </VStack> */}
+          {shopItems.map((item) => {
+            return <ShopItem stone={item.stone} text={item.text} url={item.url} key={item.url} />;
+          })}
         </HStack>
       </VStack>
       <StonesButton
