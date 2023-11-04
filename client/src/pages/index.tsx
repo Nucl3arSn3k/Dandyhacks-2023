@@ -7,6 +7,8 @@ import Raft from "@/features/raft/components/Raft";
 import { ChakraMotionDiv } from "@/components/ChakraMotionDiv";
 import { WavyText } from "@/components/WavyText";
 import { Stones1Button } from "@/components/Stones1Button";
+import Link from "next/link";
+import { SeaBackgroundFullScreen } from "@/components/SeaBackgroundFullScreen";
 
 export default function Home() {
   return (
@@ -19,7 +21,9 @@ export default function Home() {
         </BobUpAndDown>
         <HStack>
           <Stones1Button width={400}>Start</Stones1Button>
-          <Stones1Button width={400}>Resume</Stones1Button>
+          <Stones1Button width={400}>
+            <Link href="/raft">Resume</Link>
+          </Stones1Button>
         </HStack>
       </VStack>
       <ChakraMotionDiv
@@ -39,19 +43,7 @@ export default function Home() {
       >
         <Raft hasDolphin hasSail />
       </ChakraMotionDiv>
-      <Image
-        src="/assets/background/ocean_bg.png"
-        alt="Background"
-        width="0"
-        height="0"
-        sizes="100vw"
-        style={{
-          width: "100%",
-          height: "100vh",
-          zIndex: -1,
-          position: "absolute",
-        }}
-      />
+      <SeaBackgroundFullScreen />
     </VStack>
   );
 }
