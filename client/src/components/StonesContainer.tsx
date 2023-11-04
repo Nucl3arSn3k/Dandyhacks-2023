@@ -3,10 +3,10 @@ import Image from "next/image";
 import React, { ReactNode } from "react";
 
 interface Props {
-  width?: number;
+  width?: number | string;
   children?: ReactNode;
-  height?: number;
-  stone?: "stone2" | "stone3";
+  height?: number | string;
+  stone?: "stone1" | "stone2" | "stone3";
 }
 
 export const StonesContainer = ({
@@ -15,11 +15,14 @@ export const StonesContainer = ({
   stone = "stone2",
   children,
 }: Props & BoxProps) => {
-  const widthPixels = `${width}px`;
-  const heightPixels = `${height}px`;
-
+  if (typeof width === "number") {
+    width = `${width}px`;
+  }
+  if (typeof height === "number") {
+    height = `${height}px`;
+  }
   return (
-    <Box as="section" pos="relative" w={widthPixels} h={heightPixels}>
+    <Box as="section" pos="relative" w={width} h={height}>
       <VStack pos="absolute" h="100%" w="100%">
         {children}
       </VStack>
@@ -30,8 +33,8 @@ export const StonesContainer = ({
         height="0"
         sizes="100vw"
         style={{
-          width: widthPixels,
-          height: heightPixels,
+          width,
+          height,
         }}
       />
     </Box>
