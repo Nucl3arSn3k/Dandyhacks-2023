@@ -22,6 +22,8 @@ interface Props {
   cancelText?: string;
   cancelAction?: VoidFunction;
   children?: ReactNode;
+  width?: number;
+  height?: number;
 }
 
 export const StoneModal = ({
@@ -33,18 +35,20 @@ export const StoneModal = ({
   cancelText = "Cancel",
   isOpen = false,
   onClose,
+  width = 500,
+  height = 350,
 }: Props) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose} isCentered>
       <ModalOverlay />
       <ModalContent bg="transparent">
-        <StonesContainer>
+        <StonesContainer width={width} height={height}>
           <ModalHeader>
             <BoldedHeader fontSize="1.4em" shadowOffset={3} py="20px">
               {header}
             </BoldedHeader>
           </ModalHeader>
-          <ModalCloseButton />
+          <ModalCloseButton color="white" />
           <ModalBody>{children}</ModalBody>
           <ModalFooter>
             <StonesButton

@@ -1,29 +1,21 @@
 import { BoldedHeader } from "@/components/BoldedHeader";
-import SeaZoomBackground from "@/components/SeaZoomBackground";
-import { StonesContainer } from "@/components/StonesContainer";
-import { ConfirmFileModal } from "@/features/raft/components/ConfirmFileModal";
-import { Grid, GridItem, VStack, useDisclosure } from "@chakra-ui/react";
-import Image from "next/image";
-import React, { useState } from "react";
-import { FileUploader } from "react-drag-drop-files";
+import { ChakraMotionDiv } from "@/components/ChakraMotionDiv";
+import { SeaBackgroundFullScreen } from "@/components/SeaBackgroundFullScreen";
+import { Box, Grid, GridItem, VStack } from "@chakra-ui/react";
+import React from "react";
+import { Raft } from "../../features/raft/components/Raft";
+import { UploadAssignment } from "@/features/raft/components/UploadAssignment";
+import { QuestLog } from "@/features/raft/components/QuestLog";
+import { WavyText } from "@/components/WavyText";
+import { StonesButton } from "@/components/StonesButton";
+import { RaftWithViewMap } from "@/features/raft/components/RaftWithViewMap";
 
-const fileTypes = ["PDF"];
-
-const Raft = () => {
-  const [file, setFile] = useState<File | null>(null);
-
-  const { isOpen, onClose, onOpen } = useDisclosure();
-  const handleChange = (file: File) => {
-    setFile(file);
-    onOpen();
-  };
-
+const RaftHomePage = () => {
   return (
     <>
-      <ConfirmFileModal onClose={onClose} isOpen={isOpen} file={file} />
       <VStack pos="relative" h="100vh" overflow="clip" justify="center">
         <BoldedHeader fontSize="2.5em" shadowOffset={4} py="20px">
-          Home Base
+          <WavyText text="Home Base" replay={true} />
         </BoldedHeader>
         <Grid
           maxW="5xl"
@@ -34,45 +26,20 @@ const Raft = () => {
         >
           <GridItem>
             <VStack>
-              <StonesContainer height={400}>
-                <VStack p={5}>
-                  <BoldedHeader fontSize="2.5em" shadowOffset={4}>
-                    Progress
-                  </BoldedHeader>
-                </VStack>
-              </StonesContainer>
-              <FileUploader
-                multiple={false}
-                handleChange={handleChange}
-                name="file"
-                types={fileTypes}
-              >
-                <StonesContainer stone="stone3" height={250}>
-                  <VStack p={10} alignItems="center" h="100%" justify="center">
-                    <BoldedHeader fontSize="2em" shadowOffset={3}>
-                      Upload Assignment
-                    </BoldedHeader>
-                    <Image
-                      src={`/assets/icons/upload.png`}
-                      alt="Background"
-                      width="0"
-                      height="0"
-                      sizes="100vw"
-                      style={{
-                        width: "50px",
-                        height: "50px",
-                      }}
-                    />
-                  </VStack>
-                </StonesContainer>
-              </FileUploader>
+              <QuestLog />
+              <UploadAssignment />
+            </VStack>
+          </GridItem>
+          <GridItem>
+            <VStack h="100%" pos="relative">
+              <RaftWithViewMap />
             </VStack>
           </GridItem>
         </Grid>
-        <SeaZoomBackground />
+        <SeaBackgroundFullScreen />
       </VStack>
     </>
   );
 };
 
-export default Raft;
+export default RaftHomePage;
