@@ -1,5 +1,4 @@
-Create some questions based off of this material,i.e what type of information is often reliable?
-Do not repeat what the text states when answering this prompt.
+Create some questions based off of this material.
 
     Evaluating Information
     • Popularity =/= quality.
