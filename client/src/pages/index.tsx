@@ -9,7 +9,9 @@ import { WavyText } from "@/components/WavyText";
 import { Stones1Button } from "@/components/Stones1Button";
 import Link from "next/link";
 import { SeaBackgroundFullScreen } from "@/components/SeaBackgroundFullScreen";
-import ProgressBar from "@/components/ProgressBar";
+
+
+
 
 export default function Home() {
   return (
@@ -26,6 +28,7 @@ export default function Home() {
             <Link href="/raft">Resume</Link>
           </Stones1Button>
         </HStack>
+     
       </VStack>
       <ChakraMotionDiv
         pos="absolute"
@@ -41,6 +44,7 @@ export default function Home() {
           ease: "easeOut",
           times: [0, 0.2, 0.5, 0.8, 1],
         }}
+
       >
         <Raft hasDolphin hasSail />
       </ChakraMotionDiv>
