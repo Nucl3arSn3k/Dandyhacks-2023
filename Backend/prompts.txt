@@ -1,0 +1,14 @@
+Create some questions based off of this material,i.e what type of information is often reliable?
+Do not repeat what the text states when answering this prompt.
+
+    Evaluating Information
+    • Popularity =/= quality.
+    • Usually Higher Quality:
+    • Information taken independently from many
+    diverse individuals is often reliable.
+    • Usually Lower Quality:
+    • Information taken from like-minded sources.
+    • Information taken from sources that already
+    consumed an earlier source.
+    • Neutrals → swayed, or silenced
+    • Partisans → pushing existing views further
