@@ -1,12 +1,11 @@
 import Head from "next/head";
 import { Flex, Heading } from "@chakra-ui/react";
+import { BoldedHeader } from "@/components/BoldedHeader";
 
 export default function Home() {
   return (
     <Flex>
-      <Heading fontSize="5xl" mb={5} textAlign="center">
-        Dandy Hacks
-      </Heading>
+      <BoldedHeader text="hello" />
     </Flex>
   );
 }
