@@ -1,10 +1,26 @@
-from flask import Flask,make_response,request,render_template,send_file
+from flask import Flask,make_response,request,redirect, url_for, session
 from pypdf import PdfReader
 from io import BytesIO
 import base64
 import mimetypes
-
+from authlib.integrations.flask_client import OAuth
 app = Flask(__name__)
+
+app.secret_key = 'your_secret_key'  # Change this to a random secret key
+
+oauth = OAuth(app)
+google = oauth.register(
+    name='google',
+    client_id='924496584494-leum14jn35adqclljhpgnhnu9htd6pjc.apps.googleusercontent.com',
+    client_secret='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',
+    authorize_url='https://accounts.google.com/o/oauth2/auth',
+    authorize_params=None,
+    access_token_url='https://accounts.google.com/o/oauth2/token',
+    access_token_params=None,
+    refresh_token_url=None,
+    redirect_uri='*',
+    client_kwargs={'scope': 'email profile'},
+)
 
 
 @app.route('/pdfload')
@@ -41,7 +57,7 @@ def convert():
             page = reader.pages[x]
             text = page.extract_text()
             combined_text += text
-        
+        print(combined_text)
         response = make_response(combined_text)
         response.headers["Content-Disposition"] = "attachment; filename=extracted_text.txt"
         response.headers["Content-Type"] = "text/plain"
@@ -49,6 +65,25 @@ def convert():
     else:
         return 'Unsupported upload',415
 
+
+@app.route('/login')
+def login():
+    redirect_uri = url_for('auth', _external=True)
+    return google.authorize_redirect(redirect_uri)
+
+
+@app.route('/callback')
+def auth():
+    token = google.authorize_access_token()
+    user_info = google.parse_id_token(token)
+    session['google_token'] = token
+    return 'Logged in as: ' + user_info['email']
+
+
+@app.route('/logout')
+def logout():
+    session.pop('google_token', None)
+    return redirect(url_for('index'))
 
 
 
