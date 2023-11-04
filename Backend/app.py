@@ -4,6 +4,12 @@ from io import BytesIO
 import base64
 import mimetypes
 from authlib.integrations.flask_client import OAuth
+from google.cloud import aiplatform
+import vertexai
+from vertexai.language_models import TextGenerationModel
+from databasehandler import commit_token_email
+
+
 app = Flask(__name__)
 
 app.secret_key = 'your_secret_key'  # Change this to a random secret key
@@ -77,13 +83,19 @@ def auth():
     token = google.authorize_access_token()
     user_info = google.parse_id_token(token)
     session['google_token'] = token
-    return 'Logged in as: ' + user_info['email']
+    email = user_info['email']
+    if commit_token_email(token, email):
+        return 'Logged in as: ' + email
+    else:
+        return 'Error logging in. Please try again later.'
 
 
 @app.route('/logout')
 def logout():
     session.pop('google_token', None)
     return redirect(url_for('index'))
+
+
 
 
 
