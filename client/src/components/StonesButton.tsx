@@ -24,7 +24,7 @@ interface Props {
     | "stone7";
   children?: ReactNode;
   buttonProps?: ButtonProps;
-  headerProps?: HeadingProps & { shadowOffset: number };
+  headerProps?: HeadingProps & { shadowOffset?: number };
   isAnimationOff?: boolean;
   boxProps?: BoxProps;
 }
@@ -38,17 +38,10 @@ export const StonesButton = ({
   width = 400,
   isAnimationOff = false,
   boxProps,
-}: Props) => {
+}: Props & ButtonProps) => {
   const [hover, setHover] = useBoolean();
-  let widthPixels = width;
-  let heightPixels = height;
-
-  if (typeof width === "number") {
-    widthPixels = `${width}px`;
-  }
-  if (typeof height === "number") {
-    heightPixels = `${height}px`;
-  }
+  let widthPixels = typeof width === "number" ? `${width}px` : width;
+  let heightPixels = typeof height === "number" ? `${height}px` : height;
 
   const [scope, animate] = useAnimate();
 

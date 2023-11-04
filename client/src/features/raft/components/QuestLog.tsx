@@ -19,6 +19,7 @@ export const QuestLog = () => {
   } = useDisclosure();
 
   const onSelectViewReport = (quest: Quest) => {
+    console.log("quest");
     setOpenedReport(quest);
     onOpenReportModal();
   };
