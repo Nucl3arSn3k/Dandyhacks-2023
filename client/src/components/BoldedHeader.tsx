@@ -12,7 +12,7 @@ export const BoldedHeader = ({
   ...rest
 }: Props & HeadingProps) => {
   return (
-    <Box pos="relative">
+    <>
       <Heading
         fontWeight={900}
         color="white"
@@ -35,6 +35,6 @@ export const BoldedHeader = ({
       >
         {text}
       </Heading>
-    </Box>
+    </>
   );
 };
