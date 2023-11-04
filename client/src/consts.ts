@@ -23,6 +23,20 @@ export const QUESTS: Record<string, Quest> = {
     id: 0,
     title: "Physics",
     percentageKnown: 30,
+    conversation: [
+      {
+        msg: "Hello, I am your helpful tutor for today",
+        from: "bot",
+      },
+      {
+        msg: "Here are you 10 questions for physics. These are the 10 questions.",
+        from: "bot",
+      },
+      {
+        msg: "I think the answer do this mechanics question is that the change in energy in 5J",
+        from: "user",
+      },
+    ],
     strengths: [
       {
         title: "Kinematics",
@@ -70,6 +84,7 @@ export const QUESTS: Record<string, Quest> = {
         percentageKnown: 50,
       },
     ],
+    conversation: [],
     weaknesses: [
       {
         title: "Kinematics",
@@ -89,6 +104,7 @@ export const QUESTS: Record<string, Quest> = {
     id: 2,
     title: "Chemistry",
     percentageKnown: 70,
+    conversation: [],
     strengths: [
       {
         title: "Calculus",
