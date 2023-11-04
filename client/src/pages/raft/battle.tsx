@@ -1,56 +1,14 @@
 import { BoldedHeader } from "@/components/BoldedHeader";
-import { SeaBackgroundFullScreen } from "@/components/SeaBackgroundFullScreen";
 import { StonesContainer } from "@/components/StonesContainer";
-import {
-  Box,
-  Flex,
-  Grid,
-  GridItem,
-  HStack,
-  Spacer,
-  VStack,
-} from "@chakra-ui/react";
+import { HStack, VStack } from "@chakra-ui/react";
 import React from "react";
-import Image from "next/image";
-import SeaZoomBackground from "@/components/SeaZoomBackground";
 import Chat from "@/components/Chat";
 import InputStone from "@/components/InputStone";
 import { StonesButton } from "@/components/StonesButton";
-import { useRouter } from "next/router";
-import { QUESTS } from "@/consts";
-
-const StoneBG = () => {
-  return (
-    <div
-      style={{
-        width: "100%",
-        height: "100vh",
-        position: "absolute",
-        left: 0,
-        top: 0,
-        zIndex: -1,
-      }}
-    >
-      <Image
-        src="/assets/background/ocean_bg_large.png"
-        alt="Background"
-        width="0"
-        height="0"
-        sizes="100vw"
-        style={{
-          zIndex: -1,
-          width: "100%",
-          height: "100vh",
-          objectFit: "cover",
-        }}
-      />
-    </div>
-  );
-};
+import { BobUpAndDown } from "@/components/BobUpAndDown";
+import Link from "next/link";
 
 const ChatBattle = ({ task = "biology", msges = [] }) => {
-  const router = useRouter();
-  const { questId } = router.query;
   return (
     <VStack pos="relative" h="100vh" overflow="clip" justify="center">
       <StonesContainer
@@ -62,40 +20,55 @@ const ChatBattle = ({ task = "biology", msges = [] }) => {
         <VStack width="85%" height="105vh">
           <VStack p={5} style={{ marginTop: "0" }}>
             <HStack>
-              <StonesButton
-                stone="stone7"
-                width={"25rem"}
-                boxProps={{
-                  position: "absolute",
-                  left: 0,
-                }}
-                buttonProps={{
-                  onClick: () => {
-                    router.push("/raft");
-                  },
-                }}
-              >
-                Leave
-              </StonesButton>
-              <BoldedHeader
-                fontSize="2.5em"
-                shadowOffset={4}
-                py="20px"
-                marginTop={"2rem"}
-              >
-                Battle of{" "}
-                {QUESTS[`quest_${questId}`]?.title
-                  ? QUESTS[`quest_${questId}`].title
-                  : "Biology"}
-              </BoldedHeader>
+              <Link href="/raft">
+                <StonesButton
+                  stone="stone7"
+                  width={"25rem"}
+                  headerProps={{ shadowOffset: 3 }}
+                  boxProps={{
+                    position: "absolute",
+                    left: 0,
+                  }}
+                >
+                  Leave
+                </StonesButton>
+              </Link>
+              <BobUpAndDown>
+                <BoldedHeader
+                  fontSize="2.5em"
+                  shadowOffset={4}
+                  py="20px"
+                  marginTop={"2rem"}
+                >
+                  Battle of {task}
+                </BoldedHeader>
+              </BobUpAndDown>
             </HStack>
           </VStack>
-          <VStack width="100%" height="75%" justifyContent={"space-between"}>
+          <VStack
+            width="100%"
+            height="75%"
+            justifyContent={"space-between"}
+            maxW="5xl"
+          >
             <VStack
               width="100%"
               maxHeight="80%"
               overflow="hidden"
               overflowY="scroll"
+              py={5}
+              css={{
+                "&::-webkit-scrollbar": {
+                  width: "4px",
+                },
+                "&::-webkit-scrollbar-track": {
+                  width: "6px",
+                },
+                "&::-webkit-scrollbar-thumb": {
+                  background: "#564B4B",
+                  borderRadius: "24px",
+                },
+              }}
               gap="1rem"
             >
               <Chat
