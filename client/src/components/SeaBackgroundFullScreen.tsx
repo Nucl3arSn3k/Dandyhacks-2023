@@ -14,6 +14,7 @@ export const SeaBackgroundFullScreen = () => {
         height: "100vh",
         zIndex: -1,
         position: "absolute",
+        objectFit: "cover",
       }}
     />
   );

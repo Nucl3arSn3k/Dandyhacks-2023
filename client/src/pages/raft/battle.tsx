@@ -1,10 +1,8 @@
 import { BoldedHeader } from "@/components/BoldedHeader";
-import { SeaBackgroundFullScreen } from "@/components/SeaBackgroundFullScreen";
-import { Stones2Container } from "@/components/Stones2Container";
-import { Box, Flex, Grid, GridItem, Spacer, VStack } from "@chakra-ui/react";
+import { Box, Flex, VStack } from "@chakra-ui/react";
 import React from "react";
-import Image from "next/image";
 import SeaZoomBackground from "@/components/SeaZoomBackground";
+import { StonesContainer } from "@/components/StonesContainer";
 
 const BattleResults = ({
   weaknesses = ["mechanics", "waves"],
@@ -39,18 +37,14 @@ const BattleResults = ({
 const Battle = () => {
   return (
     <VStack pos="relative" h="100vh" overflow="clip" justify="center">
-      <Stones2Container
-        height={"80vh"}
-        width={"70vw"}
-        style={{ marginTop: "5rem" }}
-      >
-        <VStack p={5} style={{ marginTop: "3rem" }}>
+      <StonesContainer marginTop="5rem">
+        <VStack p={5} marginTop="3rem">
           <BoldedHeader fontSize="2.5em" shadowOffset={4}>
             Results
           </BoldedHeader>
         </VStack>
         <BattleResults />
-      </Stones2Container>
+      </StonesContainer>
       <SeaZoomBackground />
     </VStack>
   );
