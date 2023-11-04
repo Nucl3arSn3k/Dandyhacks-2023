@@ -23,7 +23,7 @@ const StoneBG = () => {
         width: "100%",
         height: "100vh",
         position: "absolute",
-        overflow: "hidden",
+        overflowY: "scroll",
         left: 0,
         top: 0,
         zIndex: -1,
@@ -56,7 +56,7 @@ const Battle = ({ task = "biology", msges = [] }) => {
         stone="stone2"
       >
         <VStack width="85%" height="105vh">
-          <VStack p={5} style={{ marginTop: "3rem" }}>
+          <VStack p={5} style={{ marginTop: "0" }}>
             <BoldedHeader
               fontSize="2.5em"
               shadowOffset={4}
@@ -83,7 +83,7 @@ const Battle = ({ task = "biology", msges = [] }) => {
               <Chat
                 msg={`Hello please tell me a little bit about this text format Hello please tell me a little bit about this text format Hello please tell me a little bit about this text format Hello please tell me a little bit about this text format`}
               />
-              <Chat align="end" />
+              <Chat from="bot" />
             </VStack>
             <InputStone />
           </VStack>
