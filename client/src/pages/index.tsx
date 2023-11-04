@@ -1,6 +1,7 @@
 import Head from "next/head";
 import { Box, Button, Flex, Heading, VStack } from "@chakra-ui/react";
 import { BoldedHeader } from "@/components/BoldedHeader";
+import ProgressBar from "@/components/progressBar";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { BobUpAndDown } from "@/components/BobUpAndDown";
@@ -14,6 +15,7 @@ export default function Home() {
           <BoldedHeader text="Name it Here!" fontSize="8em" shadowOffset={8} />
         </BobUpAndDown>
         <Button>Start</Button>
+        <ProgressBar percentage={50} />
       </VStack>
       <Box pos="absolute" top="80%">
         <Raft />
