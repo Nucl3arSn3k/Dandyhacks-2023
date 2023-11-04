@@ -1,4 +1,10 @@
-import { Box, Button, ButtonProps, useBoolean } from "@chakra-ui/react";
+import {
+  Box,
+  BoxProps,
+  Button,
+  ButtonProps,
+  useBoolean,
+} from "@chakra-ui/react";
 import Image from "next/image";
 import React, { ReactNode, useEffect } from "react";
 import { BoldedHeader, BoldedHeaderProps } from "./BoldedHeader";
@@ -10,11 +16,12 @@ interface Props {
   children?: ReactNode;
   buttonProps?: ButtonProps;
   headerProps?: BoldedHeaderProps;
+  boxProps?: BoxProps;
   rotation?: number; // Add a rotation prop
-
 }
 
 export const ArrowStone = ({
+  boxProps = {},
   headerProps,
   children,
   height = 100,
@@ -44,6 +51,7 @@ export const ArrowStone = ({
       onMouseOver={setHover.on}
       onMouseLeave={setHover.off}
       zIndex={1}
+      {...boxProps}
     >
       <Button
         pos="relative"
@@ -53,14 +61,9 @@ export const ArrowStone = ({
         _hover={{ bg: "transparent" }}
         zIndex={0}
       >
-        <BoldedHeader
-          {...headerProps}
-         
-        >
-          {children}
-        </BoldedHeader>
+        <BoldedHeader {...headerProps}>{children}</BoldedHeader>
         <Image
-          src="/assets/stones/arrowStone.png"
+          src="/assets/stones/stone7.png"
           alt="Background"
           width="0"
           height="0"
@@ -72,7 +75,6 @@ export const ArrowStone = ({
             filter: hover ? "brightness(90%)" : "",
             transform: `rotate(${rotation}deg)`, // Set rotation based on the prop
           }}
-          
         />
       </Button>
     </Box>

@@ -10,6 +10,14 @@ export enum StoneEnum {
   stone7 = "stone7",
 }
 
+export const IslandCoords = [
+  { x: 400, y: 380 },
+  { x: 660, y: 350 },
+  { x: 700, y: 500 },
+  { x: 1050, y: 450 },
+  { x: 1110, y: 370 },
+];
+
 export const QUESTS: Quest[] = [
   {
     title: "Physics",
