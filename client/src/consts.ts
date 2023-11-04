@@ -1,5 +1,4 @@
 import { Quest } from "./types/questsTypes";
-
 export const QUESTS: Quest[] = [
   {
     title: "Physics",
