@@ -24,16 +24,9 @@ export default function Home() {
         </BobUpAndDown>
         <HStack>
           <StonesButton width={400}>Start</StonesButton>
-          <StonesButton
-            width={400}
-            buttonProps={{
-              onClick: () => {
-                router.push("/raft");
-              },
-            }}
-          >
-            Resume
-          </StonesButton>
+          <Link href="/raft">
+            <StonesButton width={400}>Resume</StonesButton>
+          </Link>
         </HStack>
       </VStack>
 
@@ -52,7 +45,7 @@ export default function Home() {
           times: [0, 0.2, 0.5, 0.8, 1],
         }}
       >
-        <Raft hasDolphin hasSail />
+        <Raft hasDolphin hasSail hasEngine />
       </ChakraMotionDiv>
 
       <SeaBackgroundFullScreen />
