@@ -1,3 +1,4 @@
+import { StoneEnum } from "@/consts";
 import { Box, BoxProps, VStack } from "@chakra-ui/react";
 import Image from "next/image";
 import React, { ReactNode } from "react";
@@ -6,13 +7,15 @@ interface Props {
   width?: number | string;
   children?: ReactNode;
   height?: number | string;
-  stone?: "stone1" | "stone2" | "stone3";
+  stone?: "stone1" | "stone2" | "stone3" | "stone4" | "stone5";
 }
 
 export const StonesContainer = ({
   width = 500,
   height = 350,
   stone = "stone2",
+  justifyContent = "center",
+  alignItems = "center",
   children,
 }: Props & BoxProps) => {
   if (typeof width === "number") {
@@ -23,7 +26,13 @@ export const StonesContainer = ({
   }
   return (
     <Box as="section" pos="relative" w={width} h={height}>
-      <VStack pos="absolute" h="100%" w="100%">
+      <VStack
+        pos="absolute"
+        h="100%"
+        w="100%"
+        justifyContent={justifyContent}
+        alignItems={alignItems}
+      >
         {children}
       </VStack>
       <Image
