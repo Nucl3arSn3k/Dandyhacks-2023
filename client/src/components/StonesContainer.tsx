@@ -1,4 +1,4 @@
-import { Box, VStack } from "@chakra-ui/react";
+import { Box, BoxProps, VStack } from "@chakra-ui/react";
 import Image from "next/image";
 import React, { ReactNode } from "react";
 
@@ -14,7 +14,7 @@ export const StonesContainer = ({
   height = 350,
   stone = "stone2",
   children,
-}: Props) => {
+}: Props & BoxProps) => {
   const widthPixels = `${width}px`;
   const heightPixels = `${height}px`;
 

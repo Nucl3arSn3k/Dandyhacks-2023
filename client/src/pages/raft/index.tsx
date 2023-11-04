@@ -1,5 +1,5 @@
 import { BoldedHeader } from "@/components/BoldedHeader";
-import { SeaBackgroundFullScreen } from "@/components/SeaBackgroundFullScreen";
+import SeaZoomBackground from "@/components/SeaZoomBackground";
 import { StonesContainer } from "@/components/StonesContainer";
 import { ConfirmFileModal } from "@/features/raft/components/ConfirmFileModal";
 import { Grid, GridItem, VStack, useDisclosure } from "@chakra-ui/react";
@@ -11,6 +11,7 @@ const fileTypes = ["PDF"];
 
 const Raft = () => {
   const [file, setFile] = useState<File | null>(null);
+
   const { isOpen, onClose, onOpen } = useDisclosure();
   const handleChange = (file: File) => {
     setFile(file);
@@ -68,7 +69,7 @@ const Raft = () => {
             </VStack>
           </GridItem>
         </Grid>
-        <SeaBackgroundFullScreen />
+        <SeaZoomBackground />
       </VStack>
     </>
   );
