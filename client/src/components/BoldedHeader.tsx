@@ -12,19 +12,20 @@ export const BoldedHeader = ({
   ...rest
 }: Props & HeadingProps) => {
   return (
-    <Box as="span" pos="relative">
+    <Box pos="relative">
       <Heading
         fontWeight={900}
         color="white"
+        position="absolute"
         textShadow="-1px -1px 0 #5F3E00, 1px -1px 0 #5F3E00, -1px 1px 0 #5F3E00, 1px 1px 0 #5F3E00"
-        zIndex={1}
+        zIndex={2}
         textTransform="uppercase"
         {...rest}
       >
         {text}
       </Heading>
       <Heading
-        zIndex={-1}
+        zIndex={1}
         fontWeight={900}
         color="#564B4B"
         position="absolute"
