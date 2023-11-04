@@ -10,7 +10,6 @@ import { StonesButton } from "@/components/StonesButton";
 import Link from "next/link";
 import { SeaBackgroundFullScreen } from "@/components/SeaBackgroundFullScreen";
 import { useRouter } from "next/router";
-import { ArrowStone } from "@/components/arrowStone";
 
 export default function Home() {
   const router = useRouter();
