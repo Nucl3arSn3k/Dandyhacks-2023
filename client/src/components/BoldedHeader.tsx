@@ -3,9 +3,14 @@ import React, { ReactNode } from "react";
 
 interface Props {
   text: string;
+  shadowOffset?: number;
 }
 
-export const BoldedHeader = ({ text, ...rest }: Props & HeadingProps) => {
+export const BoldedHeader = ({
+  text,
+  shadowOffset = 5,
+  ...rest
+}: Props & HeadingProps) => {
   return (
     <Box as="span" pos="relative">
       <Heading
@@ -23,7 +28,7 @@ export const BoldedHeader = ({ text, ...rest }: Props & HeadingProps) => {
         fontWeight={900}
         color="#564B4B"
         position="absolute"
-        top="5px"
+        top={`${shadowOffset}px`}
         textTransform="uppercase"
         {...rest}
       >
