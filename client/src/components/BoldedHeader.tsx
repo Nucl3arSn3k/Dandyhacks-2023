@@ -2,12 +2,12 @@ import { Box, Heading, HeadingProps } from "@chakra-ui/react";
 import React, { ReactNode } from "react";
 
 interface Props {
-  text: string;
+  children: ReactNode;
   shadowOffset?: number;
 }
 
 export const BoldedHeader = ({
-  text,
+  children,
   shadowOffset = 5,
   ...rest
 }: Props & HeadingProps) => {
@@ -20,7 +20,7 @@ export const BoldedHeader = ({
       textTransform="uppercase"
       {...rest}
     >
-      {text}
+      {children}
     </Heading>
   );
 };
