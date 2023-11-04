@@ -1,5 +1,15 @@
 import { Quest } from "./types/questsTypes";
 
+export  enum StoneEnum {
+  stone1 = "stone1",
+  stone2 = "stone2",
+  stone3 = "stone3",
+  stone4 = "stone4",
+  stone5 = "stone5",
+  stone6 = "stone6",
+  stone7 = "stone7",
+}
+
 export const QUESTS: Quest[] = [
   {
     title: "Physics",

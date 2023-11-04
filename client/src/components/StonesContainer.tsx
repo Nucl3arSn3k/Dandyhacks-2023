@@ -1,3 +1,4 @@
+import { StoneEnum } from "@/consts";
 import { Box, BoxProps, VStack } from "@chakra-ui/react";
 import Image from "next/image";
 import React, { ReactNode } from "react";
