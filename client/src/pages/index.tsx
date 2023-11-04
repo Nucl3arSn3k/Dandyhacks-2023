@@ -3,7 +3,7 @@ import { Box, Button, HStack, VStack } from "@chakra-ui/react";
 import { BoldedHeader } from "@/components/BoldedHeader";
 import Image from "next/image";
 import { BobUpAndDown } from "@/components/BobUpAndDown";
-import { Raft } from "@/features/raft/components/Raft";
+import {Raft} from "@/features/raft/components/Raft";
 import { ChakraMotionDiv } from "@/components/ChakraMotionDiv";
 import { WavyText } from "@/components/WavyText";
 import { StonesButton } from "@/components/StonesButton";
@@ -23,7 +23,7 @@ export default function Home() {
           </BoldedHeader>
         </BobUpAndDown>
         <HStack>
-          <StonesButton width={400}>Start</StonesButton>
+          <StonesButton stone="stone2" width={400}>Start</StonesButton>
           <StonesButton
             width={400}
             buttonProps={{
@@ -36,6 +36,7 @@ export default function Home() {
           </StonesButton>
         </HStack>
       </VStack>
+
       <ChakraMotionDiv
         pos="absolute"
         top="80%"
@@ -53,6 +54,7 @@ export default function Home() {
       >
         <Raft hasDolphin hasSail />
       </ChakraMotionDiv>
+
       <SeaBackgroundFullScreen />
     </VStack>
   );

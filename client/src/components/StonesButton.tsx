@@ -1,5 +1,6 @@
 import {
   Box,
+  BoxProps,
   Button,
   ButtonProps,
   HeadingProps,
@@ -16,9 +17,9 @@ interface Props {
   stone?: "stone1" | "stone3" | "stone2" | "stone4" | "stone5" | "stone6" | "stone7";
   children?: ReactNode;
   buttonProps?: ButtonProps;
-  headerProps?: HeadingProps & { shadowOffset?: number };
-  size?: "lg" | "sm";
+  headerProps?: BoldedHeaderProps;
   isAnimationOff?: boolean;
+  boxProps?: BoxProps;
 }
 
 export const StonesButton = ({
