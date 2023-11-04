@@ -91,11 +91,22 @@ def auth():
     nonce = session.get("google_authlib_nonce", "")
     user_info = google.parse_id_token(token,nonce=nonce)
     session['google_token'] = token
+    access_token = token['access_token']
+    expires_in = token['expires_in']
+    scope = token['scope']
+    token_type = token['token_type']
+    id_token = token['id_token']
+    expires_at = token['expires_at']
     email = user_info['email']
-    if commit_token_email(token, email):
+    #print(type(token))
+    print(email)
+    
+    if commit_token_email(access_token,expires_in,scope,id_token,expires_at,email):
         return 'Logged in as: ' + email
     else:
         return 'Error logging in. Please try again later.'
+        
+    return 'TEMP'
 
 
 @app.route('/logout')
