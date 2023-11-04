@@ -8,8 +8,8 @@ from google.cloud import aiplatform
 import vertexai
 from vertexai.language_models import TextGenerationModel
 from databasehandler import commit_token_email
-
-
+import random
+import string
 app = Flask(__name__)
 
 app.secret_key = 'your_secret_key'  # Change this to a random secret key
@@ -25,9 +25,9 @@ google = oauth.register(
     access_token_params=None,
     refresh_token_url=None,
     redirect_uri='*',
-    client_kwargs={'scope': 'email profile'},
+    
 )
-
+#client_kwargs={'scope': 'email profile'},
 
 @app.route('/pdfload')
 def pdf_loader():
@@ -75,13 +75,17 @@ def convert():
 @app.route('/login')
 def login():
     redirect_uri = url_for('auth', _external=True)
-    return google.authorize_redirect(redirect_uri)
+    source = string.ascii_letters + string.digits
+    result_str = ''.join((random.choice(source) for i in range(8)))
+    return google.authorize_redirect(redirect_uri,nonce = result_str,scope='email profile')
 
 
 @app.route('/callback')
 def auth():
     token = google.authorize_access_token()
-    user_info = google.parse_id_token(token)
+    source = string.ascii_letters + string.digits
+    result_str = ''.join((random.choice(source) for i in range(8)))
+    user_info = google.parse_id_token(token,nonce=result_str)
     session['google_token'] = token
     email = user_info['email']
     if commit_token_email(token, email):
