@@ -9,6 +9,7 @@ import { WavyText } from "@/components/WavyText";
 import { Stones1Button } from "@/components/Stones1Button";
 import Link from "next/link";
 import { SeaBackgroundFullScreen } from "@/components/SeaBackgroundFullScreen";
+import ProgressBar from "@/components/ProgressBar";
 
 export default function Home() {
   return (

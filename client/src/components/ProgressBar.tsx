@@ -7,30 +7,34 @@ interface Props {
 }
 
 const ProgressBar = ({ percentage }: Props) => {
+  const percentagePixels = (percentage / 100) * 410;
   return (
-    <Box width="500px" height="700px" position="relative">
-      <Image
+    <Box as="span">
+          <Image
         src="/assets/stones/stone1.png"
-        alt="Background"
-        width='0'
-        height='0'
+        alt="background stone for progress bar" 
+        width="0"
+        height="0"
+        sizes="100vw"
         style={{
-          zIndex: 0, // Set a lower zIndex for the background image
-          height: "700px",
-          width: "500px",
+          width: 400,
+          height: 100,
+          position: "absolute",
         }}
       />
-      <Image
+         <Image
         src="/assets/stones/green-progress-bar.png"
-        alt="New Image"
-        width='0'
-        height='0'
+        alt="progress bar"
+        width="0"
+        height="0"
+        sizes="100vw"
         style={{
-          zIndex: 1, // Set a higher zIndex for the progress bar image
-          height: "500px",
-          width: `${percentage}%`,
+          width: percentagePixels,
+          height: 100,
+          position: "absolute",
         }}
       />
+  
     </Box>
   );
 };

@@ -43,7 +43,7 @@ export const Stones1Button = ({
         _hover={{ bg: "transparent" }}
       >
         <BoldedHeader {...headerProps}>{children}</BoldedHeader>
-        <Image
+        <Image 
           onMouseOver={setHover.on}
           onMouseLeave={setHover.off}
           src="/assets/stones/stone1.png"
