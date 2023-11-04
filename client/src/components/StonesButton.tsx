@@ -12,8 +12,8 @@ import { BoldedHeader, BoldedHeaderProps } from "./BoldedHeader";
 import { useAnimate } from "framer-motion";
 
 interface Props {
-  height?: number;
-  width?: number;
+  height?: number | string;
+  width?: number | string;
   stone?:
     | "stone1"
     | "stone3"
