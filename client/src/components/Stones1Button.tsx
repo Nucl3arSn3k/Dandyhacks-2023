@@ -58,6 +58,8 @@ export const Stones1Button = ({
             height: heightPixels,
             position: "absolute",
             filter: hover ? "brightness(90%)" : "",
+            //fit content
+            objectFit: "cover",
           }}
         />
       </Button>

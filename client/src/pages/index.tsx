@@ -10,6 +10,7 @@ import { Stones1Button } from "@/components/Stones1Button";
 import Link from "next/link";
 import { SeaBackgroundFullScreen } from "@/components/SeaBackgroundFullScreen";
 import { useRouter } from "next/router";
+import { ArrowStone } from "@/components/arrowStone";
 
 export default function Home() {
   const router = useRouter();
@@ -35,7 +36,9 @@ export default function Home() {
             Resume
           </Stones1Button>
         </HStack>
-     
+        <HStack>
+          <ArrowStone width={400} rotation={180}>Next</ArrowStone>
+        </HStack>
       </VStack>
       <ChakraMotionDiv
         pos="absolute"
@@ -51,7 +54,6 @@ export default function Home() {
           ease: "easeOut",
           times: [0, 0.2, 0.5, 0.8, 1],
         }}
-
       >
         <Raft hasDolphin hasSail />
       </ChakraMotionDiv>
