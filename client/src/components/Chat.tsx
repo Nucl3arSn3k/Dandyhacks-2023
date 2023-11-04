@@ -1,6 +1,5 @@
 import { Box, HStack, VStack } from "@chakra-ui/react";
 import { BoldedHeader } from "./BoldedHeader";
-import { StonesButton } from "./StonesButton";
 import { StonesContainer } from "./StonesContainer";
 import Image from "next/image";
 
