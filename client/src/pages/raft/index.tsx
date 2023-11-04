@@ -42,14 +42,16 @@ const RaftHomePage = () => {
               <Box pos="absolute">
                 <HStack spacing={0}>
                   <PlayerCoins />
-                  <StonesButton
-                    stone="stone4"
-                    width={150}
-                    height={70}
-                    headerProps={{ fontSize: "1.4em", shadowOffset: 3 }}
-                  >
-                    <Link href="/raft/shop">Shop</Link>
-                  </StonesButton>
+                  <Link href="/raft/shop">
+                    <StonesButton
+                      stone="stone4"
+                      width={150}
+                      height={70}
+                      headerProps={{ fontSize: "1.4em", shadowOffset: 3 }}
+                    >
+                      Shop
+                    </StonesButton>
+                  </Link>
                 </HStack>
               </Box>
               <RaftWithViewMap />

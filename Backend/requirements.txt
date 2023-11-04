@@ -1,8 +1,8 @@
 Authlib==1.2.1
 Flask==2.2.2
-google_cloud_aiplatform==1.36.0
-MySQL-python==1.2.5
-protobuf==4.25.0
+google-cloud-aiplatform==1.36.0
+mysqlclient==2.2.0
+protobuf==4.21.7
 pypdf==3.17.0
 python-dotenv==1.0.0
 vertexai==0.0.1
