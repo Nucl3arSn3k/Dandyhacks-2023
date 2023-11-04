@@ -3,14 +3,6 @@ import { BoldedHeader } from "./BoldedHeader";
 import { StonesContainer } from "./StonesContainer";
 import Image from "next/image";
 
-const style = {
-  borderRadius: "1rem",
-  border: "3px solid #564B4B",
-  background: "#FFF",
-  padding: "1.5rem",
-  width: "100%",
-};
-
 const Chat = ({ msg = "default", from = "user" }) => {
   return (
     <HStack
@@ -20,35 +12,36 @@ const Chat = ({ msg = "default", from = "user" }) => {
       flexDirection={from == "user" ? "row" : "row-reverse"}
     >
       <StonesContainer stone="stone5" width="11rem" height="10rem">
-        {from == "user" ? (
-          <Image
-            src={`/assets/characters/monkey.png`}
-            alt="Background"
-            width="0"
-            height="0"
-            sizes="100vw"
-            style={{ width: "5rem", height: "5rem" }}
-          />
-        ) : (
-          <Image
-            src={`/assets/characters/dolphin.png`}
-            alt="Background"
-            width="0"
-            height="0"
-            sizes="100vw"
-            style={{ width: "5rem", height: "5rem" }}
-          />
-        )}
+        <Image
+          src={
+            from === "user"
+              ? `/assets/characters/monkey.png`
+              : `/assets/characters/dolphin.png`
+          }
+          alt="Background"
+          width="0"
+          height="0"
+          sizes="100vw"
+          style={{ width: "5rem", height: "5rem" }}
+        />
       </StonesContainer>
       <VStack
         alignItems={from == "user" ? "flex-start" : "flex-end"}
         flex={1}
         gap="0.5rem"
       >
-        <BoldedHeader fontSize="1rem" shadowOffset={4}>
-          {from == "user" ? "momo" : "jeff"}
+        <BoldedHeader fontSize="1rem" shadowOffset={2}>
+          {from == "user" ? "Momo The Tutor" : "You"}
         </BoldedHeader>
-        <Box style={style} whiteSpace={"pre-wrap"}>
+        <Box
+          borderRadius="1rem"
+          border="3px solid #564B4B"
+          background="#FFF"
+          padding="1.5rem"
+          width="100%"
+          boxShadow="0px 3px 0px 0px rgba(95,62,0,0.95)"
+          whiteSpace={"pre-wrap"}
+        >
           {msg}
         </Box>
       </VStack>

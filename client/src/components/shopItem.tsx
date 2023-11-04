@@ -6,7 +6,7 @@ import { StoneEnum } from "@/consts";
 import { StonesContainer } from "./StonesContainer";
 
 export interface ShopItemProps {
-  stone?: StoneEnum;
+  stone?: "stone1" | "stone2" | "stone3" | "stone4" | "stone5";
   text?: string;
   url?: string;
 }
