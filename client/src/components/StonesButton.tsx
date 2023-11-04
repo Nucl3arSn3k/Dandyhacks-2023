@@ -1,4 +1,4 @@
-import { Box, Button, ButtonProps, useBoolean } from "@chakra-ui/react";
+import { Box, Button, ButtonProps, Container, useBoolean, BoxProps } from "@chakra-ui/react";
 import Image from "next/image";
 import React, { ReactNode, useEffect } from "react";
 import { BoldedHeader, BoldedHeaderProps } from "./BoldedHeader";
@@ -7,10 +7,11 @@ import { useAnimate } from "framer-motion";
 interface Props {
   height?: number;
   width?: number;
-  stone?: "stone1" | "stone3" | "stone4";
+  stone?: "stone1" | "stone3" | "stone2" | "stone4" | "stone5" | "stone6" | "stone7";
   children?: ReactNode;
   buttonProps?: ButtonProps;
   headerProps?: BoldedHeaderProps;
+  boxProps ?: BoxProps;
   isAnimationOff?: boolean;
 }
 
@@ -22,6 +23,7 @@ export const StonesButton = ({
   height = 100,
   width = 400,
   isAnimationOff = false,
+  boxProps
 }: Props) => {
   const [hover, setHover] = useBoolean();
   const widthPixels = `${width}px`;
@@ -43,6 +45,7 @@ export const StonesButton = ({
       ref={scope}
       onMouseOver={setHover.on}
       onMouseLeave={setHover.off}
+      {...boxProps}
     >
       <Button
         pos="relative"
@@ -64,8 +67,6 @@ export const StonesButton = ({
             height: heightPixels,
             position: "absolute",
             filter: hover ? "brightness(90%)" : "",
-            //fit content
-            objectFit: "cover",
           }}
         />
       </Button>
