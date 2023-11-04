@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { Box, Flex, Heading, VStack } from "@chakra-ui/react";
+import { Box, Button, Flex, Heading, VStack } from "@chakra-ui/react";
 import { BoldedHeader } from "@/components/BoldedHeader";
 import ProgressBar from "@/components/progressBar";
 import Image from "next/image";
@@ -7,10 +7,11 @@ import Image from "next/image";
 export default function Home() {
   return (
     <VStack>
-
-      <BoldedHeader text="Title Here" fontSize="96px" shadowOffset={10} />
-      <ProgressBar percentage={50} />
-
+      <VStack>
+        <BoldedHeader text="Name it Here!" fontSize="96px" shadowOffset={8} />
+        <Button>Start</Button>
+        <ProgressBar percentage={50} />
+      </VStack>
       <Image
         src="/assets/background/ocean_bg.png"
         alt="Background"
