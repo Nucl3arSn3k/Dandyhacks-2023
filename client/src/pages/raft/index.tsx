@@ -1,14 +1,15 @@
 import { BoldedHeader } from "@/components/BoldedHeader";
-import { ChakraMotionDiv } from "@/components/ChakraMotionDiv";
 import { SeaBackgroundFullScreen } from "@/components/SeaBackgroundFullScreen";
-import { Box, Grid, GridItem, VStack } from "@chakra-ui/react";
+import { Box, Grid, GridItem, HStack, VStack } from "@chakra-ui/react";
 import React from "react";
 import { Raft } from "../../features/raft/components/Raft";
 import { UploadAssignment } from "@/features/raft/components/UploadAssignment";
 import { QuestLog } from "@/features/raft/components/QuestLog";
 import { WavyText } from "@/components/WavyText";
-import { StonesButton } from "@/components/StonesButton";
 import { RaftWithViewMap } from "@/features/raft/components/RaftWithViewMap";
+import { StonesContainer } from "@/components/StonesContainer";
+import { Coin } from "@/components/Coin";
+import { StonesButton } from "@/components/StonesButton";
 
 const RaftHomePage = () => {
   return (
@@ -31,7 +32,20 @@ const RaftHomePage = () => {
             </VStack>
           </GridItem>
           <GridItem>
-            <VStack h="100%" pos="relative">
+            <VStack pos="relative" h="100%">
+              <Box pos="absolute">
+                <StonesContainer height={80} width={200}>
+                  <HStack>
+                    <BoldedHeader fontSize="1.4em" shadowOffset={3}>
+                      199
+                    </BoldedHeader>
+                    <Box pos="absolute" top="-20px" left="-90px">
+                      <Coin />
+                    </Box>
+                    <StonesButton stone="stone4">Shop</StonesButton>
+                  </HStack>
+                </StonesContainer>
+              </Box>
               <RaftWithViewMap />
             </VStack>
           </GridItem>
