@@ -3,6 +3,7 @@ import { ChakraMotionDiv } from "@/components/ChakraMotionDiv";
 import { StonesButton } from "@/components/StonesButton";
 import React from "react";
 import { Raft } from "./Raft";
+import Link from "next/link";
 
 export const RaftWithViewMap = () => {
   return (
@@ -36,16 +37,18 @@ export const RaftWithViewMap = () => {
           ease: "easeOut",
         }}
       >
-        <StonesButton
-          stone="stone4"
-          width={200}
-          height={70}
-          isAnimationOff={true}
-        >
-          <BoldedHeader fontSize="0.5em" shadowOffset={3} py="20px" as="span">
-            View Map
-          </BoldedHeader>
-        </StonesButton>
+        <Link href="/raft/map">
+          <StonesButton
+            stone="stone4"
+            width={200}
+            height={70}
+            isAnimationOff={true}
+          >
+            <BoldedHeader fontSize="0.5em" shadowOffset={3} py="20px" as="span">
+              View Map
+            </BoldedHeader>
+          </StonesButton>
+        </Link>
       </ChakraMotionDiv>
       <Raft hasDolphin hasSail />
     </ChakraMotionDiv>

@@ -14,6 +14,7 @@ export interface ShopItemProps {
     | "stone5"
     | "stone6"
     | "stone7";
+  stone?: "stone1" | "stone2" | "stone3" | "stone4" | "stone5";
   text?: string;
   url?: string;
   price?: number;
@@ -66,6 +67,7 @@ const ShopItem = ({
           <Box>{price}</Box>
         </HStack>
       </StonesButton>
+
     </VStack>
   );
 };
