@@ -18,8 +18,9 @@ export const IslandCoords = [
   { x: 1110, y: 370 },
 ];
 
-export const QUESTS: Quest[] = [
-  {
+export const QUESTS: Record<string, Quest> = {
+  quest_0: {
+    id: 0,
     title: "Physics",
     percentageKnown: 30,
     strengths: [
@@ -51,7 +52,8 @@ export const QUESTS: Quest[] = [
       },
     ],
   },
-  {
+  quest_1: {
+    id: 1,
     title: "Mathematics",
     percentageKnown: 30,
     strengths: [
@@ -83,7 +85,8 @@ export const QUESTS: Quest[] = [
       },
     ],
   },
-  {
+  quest_2: {
+    id: 2,
     title: "Chemistry",
     percentageKnown: 70,
     strengths: [
@@ -115,4 +118,4 @@ export const QUESTS: Quest[] = [
       },
     ],
   },
-];
+};

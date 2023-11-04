@@ -24,6 +24,7 @@ export const ArrowStone = ({
   boxProps = {},
   headerProps,
   children,
+  buttonProps,
   height = 100,
   width = 400,
   rotation = 0, // Default rotation value
@@ -60,6 +61,7 @@ export const ArrowStone = ({
         variant="ghost"
         _hover={{ bg: "transparent" }}
         zIndex={0}
+        {...buttonProps}
       >
         <BoldedHeader {...headerProps}>{children}</BoldedHeader>
         <Image

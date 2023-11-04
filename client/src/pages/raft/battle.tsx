@@ -1,53 +1,126 @@
 import { BoldedHeader } from "@/components/BoldedHeader";
-import { Box, Flex, VStack } from "@chakra-ui/react";
-import React from "react";
-import SeaZoomBackground from "@/components/SeaZoomBackground";
+import { SeaBackgroundFullScreen } from "@/components/SeaBackgroundFullScreen";
 import { StonesContainer } from "@/components/StonesContainer";
+import {
+  Box,
+  Flex,
+  Grid,
+  GridItem,
+  HStack,
+  Spacer,
+  VStack,
+} from "@chakra-ui/react";
+import React from "react";
+import Image from "next/image";
+import SeaZoomBackground from "@/components/SeaZoomBackground";
+import Chat from "@/components/Chat";
+import InputStone from "@/components/InputStone";
+import { StonesButton } from "@/components/StonesButton";
+import { useRouter } from "next/router";
+import { QUESTS } from "@/consts";
 
-const BattleResults = ({
-  weaknesses = ["mechanics", "waves"],
-  strengths = ["energy"],
-}) => {
+const StoneBG = () => {
   return (
-    <Flex w={"70%"} justifyContent={"space-between"} marginTop="2rem">
-      <Box>
-        <BoldedHeader fontSize="2rem" shadowOffset={4}>
-          Strengths
-        </BoldedHeader>
-        {strengths.map((weakness, i) => (
-          <BoldedHeader key={i} fontSize="1.5rem" marginTop={"1rem"}>
-            {strengths}
-          </BoldedHeader>
-        ))}
-      </Box>
-      <Box>
-        <BoldedHeader fontSize="2rem" shadowOffset={4}>
-          Weaknesses
-        </BoldedHeader>
-        {weaknesses.map((weakness, i) => (
-          <BoldedHeader key={i} fontSize="1.5rem" marginTop={"1rem"}>
-            {weakness}
-          </BoldedHeader>
-        ))}
-      </Box>
-    </Flex>
+    <div
+      style={{
+        width: "100%",
+        height: "100vh",
+        position: "absolute",
+        left: 0,
+        top: 0,
+        zIndex: -1,
+      }}
+    >
+      <Image
+        src="/assets/background/ocean_bg_large.png"
+        alt="Background"
+        width="0"
+        height="0"
+        sizes="100vw"
+        style={{
+          zIndex: -1,
+          width: "100%",
+          height: "100vh",
+          objectFit: "cover",
+        }}
+      />
+    </div>
   );
 };
 
-const Battle = () => {
+const ChatBattle = ({ task = "biology", msges = [] }) => {
+  const router = useRouter();
+  const { questId } = router.query;
   return (
     <VStack pos="relative" h="100vh" overflow="clip" justify="center">
-      <StonesContainer marginTop="5rem">
-        <VStack p={5} marginTop="3rem">
-          <BoldedHeader fontSize="2.5em" shadowOffset={4}>
-            Results
-          </BoldedHeader>
+      <StonesContainer
+        height={"120vh"}
+        width={"110vw"}
+        style={{ marginTop: "5rem" }}
+        stone="stone2"
+      >
+        <VStack width="85%" height="105vh">
+          <VStack p={5} style={{ marginTop: "0" }}>
+            <HStack>
+              <StonesButton
+                stone="stone7"
+                width={"25rem"}
+                boxProps={{
+                  position: "absolute",
+                  left: 0,
+                }}
+                buttonProps={{
+                  onClick: () => {
+                    router.push("/raft");
+                  },
+                }}
+              >
+                Leave
+              </StonesButton>
+              <BoldedHeader
+                fontSize="2.5em"
+                shadowOffset={4}
+                py="20px"
+                marginTop={"2rem"}
+              >
+                Battle of{" "}
+                {QUESTS[`quest_${questId}`]?.title
+                  ? QUESTS[`quest_${questId}`].title
+                  : "Biology"}
+              </BoldedHeader>
+            </HStack>
+          </VStack>
+          <VStack width="100%" height="75%" justifyContent={"space-between"}>
+            <VStack
+              width="100%"
+              maxHeight="80%"
+              overflow="hidden"
+              overflowY="scroll"
+              gap="1rem"
+            >
+              <Chat
+                msg={`Hello please tell me a little bit about this text format Hello please tell me a little bit about this text format Hello please tell me a little bit about this text format Hello please tell me a little bit about this text format`}
+              />
+              <Chat
+                msg={`Hello please tell me a little bit about this text format Hello please tell me a little bit about this text format Hello please tell me a little bit about this text format Hello please tell me a little bit about this text format`}
+              />
+              <Chat
+                msg={`Hello please tell me a little bit about this text format Hello please tell me a little bit about this text format Hello please tell me a little bit about this text format Hello please tell me a little bit about this text format`}
+              />
+              <Chat
+                msg={`Hello please tell me a little bit about this text format Hello please tell me a little bit about this text format Hello please tell me a little bit about this text format Hello please tell me a little bit about this text format`}
+              />
+              <Chat
+                msg={`Hello please tell me a little bit about this text format Hello please tell me a little bit about this text format Hello please tell me a little bit about this text format Hello please tell me a little bit about this text format`}
+              />
+              <Chat from="bot" />
+            </VStack>
+            <InputStone />
+          </VStack>
         </VStack>
-        <BattleResults />
       </StonesContainer>
-      <SeaZoomBackground />
     </VStack>
   );
 };
 
-export default Battle;
+export default ChatBattle;

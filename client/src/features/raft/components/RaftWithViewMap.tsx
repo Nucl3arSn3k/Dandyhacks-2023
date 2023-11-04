@@ -3,8 +3,10 @@ import { ChakraMotionDiv } from "@/components/ChakraMotionDiv";
 import { StonesButton } from "@/components/StonesButton";
 import React from "react";
 import { Raft } from "./Raft";
+import { useRouter } from "next/router";
 
 export const RaftWithViewMap = () => {
+  const router = useRouter();
   return (
     <ChakraMotionDiv
       pos="absolute"
@@ -41,6 +43,11 @@ export const RaftWithViewMap = () => {
           width={200}
           height={70}
           isAnimationOff={true}
+          buttonProps={{
+            onClick: () => {
+              router.push("/raft/map");
+            },
+          }}
         >
           <BoldedHeader fontSize="0.5em" shadowOffset={3} py="20px" as="span">
             View Map
