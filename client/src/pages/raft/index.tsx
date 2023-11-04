@@ -1,35 +1,22 @@
-import { BoldedHeader } from "@/components/BoldedHeader";
-import { SeaBackgroundFullScreen } from "@/components/SeaBackgroundFullScreen";
-import { Stones2Container } from "@/components/Stones2Container";
-import { Grid, GridItem, VStack } from "@chakra-ui/react";
-import React from "react";
+import Image from "next/image";
 
-const Raft = () => {
+export default function Home() {
   return (
-    <VStack pos="relative" h="100vh" overflow="clip" justify="center">
-      <BoldedHeader fontSize="2.5em" shadowOffset={4} py="20px">
-        Home Base
-      </BoldedHeader>
-      <Grid
-        maxW="5xl"
-        h="100vh"
-        p="20px"
-        mx="auto"
-        templateColumns="repeat(4, 1fr)"
-      >
-        <GridItem>
-          <Stones2Container height={400}>
-            <VStack p={5}>
-              <BoldedHeader fontSize="2.5em" shadowOffset={4}>
-                Progress
-              </BoldedHeader>
-            </VStack>
-          </Stones2Container>
-        </GridItem>
-      </Grid>
-      <SeaBackgroundFullScreen />
-    </VStack>
+    <div style={{ width: "100%", height: "100vh", overflow: "hidden" }}>
+      <Image
+        src="/assets/background/ocean_bg_large.png"
+        alt="Background"
+        width="0"
+        height="0"
+        sizes="100vw"
+        style={{
+          zIndex: -1,
+          width: "3024px",
+          height: "1964px",
+          objectFit: "cover",
+          objectPosition: "-20vw -70vh",
+        }}
+      />
+    </div>
   );
-};
-
-export default Raft;
+}
