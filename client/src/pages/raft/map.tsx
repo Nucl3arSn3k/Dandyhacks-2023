@@ -15,9 +15,12 @@ function MeshComponent({ isHovered = false }: { isHovered?: boolean }) {
   const [isRotatingLeft, setIsRotatingLeft] = useState(true);
 
   useEffect(() => {
-    setTimeout(() => {
+    let timer = setTimeout(() => {
       setIsRotatingLeft((prev) => !prev);
     }, 1000);
+    return () => {
+      clearTimeout(timer);
+    };
   }, []);
 
   useEffect(() => {
@@ -27,13 +30,13 @@ function MeshComponent({ isHovered = false }: { isHovered?: boolean }) {
 
   useFrame(() => {
     if (isRotatingLeft) {
-      mesh.current.rotation.z += 0.01;
-      mesh.current.rotation.x += 0.01;
-      mesh.current.rotation.y -= isHovered ? 0.1 : 0.0001;
+      mesh.current.rotation.z += isHovered ? 0.05 : 0.01;
+      mesh.current.rotation.x += isHovered ? 0.05 : 0.01;
+      mesh.current.rotation.y -= isHovered ? 0.0005 : 0.0001;
     } else {
-      mesh.current.rotation.z -= 0.01;
-      mesh.current.rotation.x -= 0.01;
-      mesh.current.rotation.y += isHovered ? 0.1 : 0.0001;
+      mesh.current.rotation.z -= isHovered ? 0.05 : 0.01;
+      mesh.current.rotation.x -= isHovered ? 0.05 : 0.01;
+      mesh.current.rotation.y += isHovered ? 0.0005 : 0.0001;
     }
   });
 
@@ -44,7 +47,7 @@ function MeshComponent({ isHovered = false }: { isHovered?: boolean }) {
   );
 }
 
-export function Shiba() {
+export function Arrow() {
   const [hover, setHover] = useBoolean();
 
   return (
@@ -55,7 +58,7 @@ export function Shiba() {
     >
       <Canvas className="h-2xl w-2xl">
         <OrbitControls />
-        <ambientLight intensity={10} />
+        {/* <ambientLight intensity={10} /> */}
         <pointLight position={[10, 10, 10]} />
         <MeshComponent isHovered={hover} />
       </Canvas>
@@ -65,25 +68,25 @@ export function Shiba() {
 
 const Map = () => {
   return (
-    <Box as="section" pos="relative">
-      <Box pos="absolute">
-        <Shiba />
+    <Box as="section" pos="relative" h="100vh" w="100vw">
+      <Box w="900px" height="800px" pos="relative" mx="auto" overflow="clip">
+        <Box pos="absolute" top="60%" left="15%">
+          <Arrow />
+        </Box>
+        <Image
+          src="/assets/background/bg_in_spyglass.png"
+          alt="Background"
+          width="0"
+          height="0"
+          sizes="100vw"
+          unoptimized={true}
+          style={{
+            width: "100%",
+            height: "100%",
+            zIndex: -1,
+          }}
+        />
       </Box>
-      <Image
-        src="/assets/background/bg_in_spyglass.png"
-        alt="Background"
-        width="0"
-        height="0"
-        sizes="100vw"
-        unoptimized={true}
-        style={{
-          width: "100%",
-          height: "100vh",
-          zIndex: -1,
-          position: "absolute",
-          objectFit: "cover",
-        }}
-      />
     </Box>
   );
 };
