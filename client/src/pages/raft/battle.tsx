@@ -9,26 +9,22 @@ import { BobUpAndDown } from "@/components/BobUpAndDown";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { QUESTS } from "@/consts";
+import { useSession } from "next-auth/react";
+import { PrismaClient, Prisma } from "@prisma/client";
+import handleUpdate from "../api/updateQuest";
+import axios from "axios";
 
-const ChatBattle = ({ task = "biology", msges = [] }) => {
+const prisma = new PrismaClient();
+
+const ChatBattle = async ({ task = "biology", messages, questId }) => {
+  const { data: session } = useSession();
   const router = useRouter();
-  const { questId } = router.query;
   let [val, setValue] = React.useState("");
-  let [data, setData] = React.useState(
-    `quest_${questId}` in QUESTS
-      ? QUESTS[`quest_${questId}`]
-      : { title: "Biology", conversation: [{ msg: "hi", from: "user" }] }
-  );
-
-  React.useEffect(() => {
-    setData(
-      `quest_${questId}` in QUESTS
-        ? QUESTS[`quest_${questId}`]
-        : { title: "Biology", conversation: [{ msg: "hi", from: "user" }] }
-    );
-  }, []);
+  let [data, setData] = React.useState(messages);
 
   const chatEndRef = React.useRef(null);
+
+  let newMsges = [];
 
   const scrollToBottom = () => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -49,7 +45,14 @@ const ChatBattle = ({ task = "biology", msges = [] }) => {
         <VStack width="85%" height="105vh">
           <VStack p={5} style={{ marginTop: "0" }}>
             <HStack>
-              <Link href="/raft">
+              <Link
+                href="/raft"
+                onClick={() =>
+                  axios
+                    .post("/api/updateQuest", { msgData: data, questId })
+                    .then((res) => console.log(res))
+                }
+              >
                 <StonesButton
                   stone="stone7"
                   width={"25rem"}
@@ -114,6 +117,11 @@ const ChatBattle = ({ task = "biology", msges = [] }) => {
                 }
                 return setData((data) => {
                   setValue("");
+                  newMsges.push({
+                    msg: val,
+                    timestamp: new Date(),
+                    from: "user",
+                  });
                   return {
                     ...data,
                     conversation: [
