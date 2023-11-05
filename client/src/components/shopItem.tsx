@@ -65,12 +65,12 @@ const ShopItem = ({
           />
         </StonesContainer>
       </ChakraMotionDiv>
-
       <StonesButton
         stone="stone6"
         width={350}
         headerProps={{
           fontSize: "1.3em",
+          shadowOffset: 3,
           onClick: () => {
             buyItem(price, text);
             playSound(text);

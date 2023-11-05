@@ -16,8 +16,7 @@ export default function BackgroundMusic() {
       src: ["../assets/sounds/BackgroundMusic.mp3"],
       loop: false,
       volume: 0.5,
-      onend: function () {
-      },
+      onend: function () {},
     });
   }, []);
 
@@ -33,7 +32,7 @@ export default function BackgroundMusic() {
       isPlaying.current = !isPlaying.current;
     }
   };
-  
+
   return (
     <Box
       position="absolute"
@@ -52,7 +51,7 @@ export default function BackgroundMusic() {
             onPlaySound();
           },
         }}
-        headerProps={{ fontSize: "1em" }}
+        headerProps={{ fontSize: "1em", shadowOffset: 2 }}
       >
         {isMuted ? "Play Music" : "Pause Music"}
       </StonesButton>

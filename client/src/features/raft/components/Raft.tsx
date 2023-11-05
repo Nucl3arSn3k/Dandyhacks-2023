@@ -4,31 +4,32 @@ import Image from "next/image";
 import React from "react";
 import { useUser } from "@/store/useUsers";
 
-export const Raft = () => {
+export const Raft = ({ hasDolphin = false }: { hasDolphin?: boolean }) => {
   const { currency, ownsDolphin, ownsSail, ownsEngine } = useUser();
   return (
-    <Box pos="relative" >
-      {ownsDolphin && (
-        <BobUpAndDown
-          position="absolute"
-          right="26%"
-          top="-35%"
-          animate={{ translateY: [0, 1, -1, 2, 0] }}
-          zIndex={5}
-        >
-          <Image
-            src="/assets/characters/dolphin.png"
-            alt="Background"
-            width="0"
-            height="0"
-            sizes="100vw"
-            style={{
-              width: "115px",
-              height: "100px",
-            }}
-          />
-        </BobUpAndDown>
-      )}
+    <Box pos="relative">
+      {ownsDolphin ||
+        (hasDolphin && (
+          <BobUpAndDown
+            position="absolute"
+            right="26%"
+            top="-35%"
+            animate={{ translateY: [0, 1, -1, 2, 0] }}
+            zIndex={5}
+          >
+            <Image
+              src="/assets/characters/dolphin.png"
+              alt="Background"
+              width="0"
+              height="0"
+              sizes="100vw"
+              style={{
+                width: "115px",
+                height: "100px",
+              }}
+            />
+          </BobUpAndDown>
+        ))}
       {ownsSail && (
         <BobUpAndDown
           position="absolute"
