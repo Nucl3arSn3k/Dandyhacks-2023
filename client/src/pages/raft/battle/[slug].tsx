@@ -109,6 +109,8 @@ const BattleChat = ({
     }
   };
 
+  console.log(history);
+
   useEffect(() => {
     scrollToBottom();
   }, [history]);
@@ -219,6 +221,7 @@ const BattleChat = ({
                   question: { msg: val, from: "user" },
                   isFinalPrompt: false,
                 });
+
                 setValue("");
                 setHistory((prev: any) => {
                   const removeAILoading = prev.filter(
@@ -227,7 +230,7 @@ const BattleChat = ({
                   return [
                     ...removeAILoading,
                     {
-                      message: aiResponse.data.message,
+                      message: aiResponse.data.data.message,
                       isUserSender: false,
                       isAiLoading: false,
                     },
