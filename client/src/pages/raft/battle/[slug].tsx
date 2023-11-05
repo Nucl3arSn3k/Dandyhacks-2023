@@ -17,11 +17,12 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { QUESTS } from "@/consts";
 import { getSession, useSession } from "next-auth/react";
-import { PrismaClient, Prisma } from "@prisma/client";
+import { PrismaClient, Prisma, Quest } from "@prisma/client";
 import axios from "axios";
 import { GetServerSideProps, NextPageContext } from "next";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
+import { BattleReportModal } from "@/features/raft/components/BattleReportModal";
 
 interface CreateQuestData {
   questId: string;
@@ -111,12 +112,35 @@ const BattleChat = ({
     scrollToBottom();
   }, [history]);
 
-  if (initialLoad) {
-    return <div>Loading</div>;
-  }
+  // if (initialLoad) {
+  //   return <div>Loading</div>;
+  // }
+
+  const [openedReport, setOpenedReport] = useState<Quest | null>(null);
+
+  const {
+    isOpen: isReportModalOpen,
+    onClose: onCloseReportModal,
+    onOpen: onOpenReportModal,
+  } = useDisclosure();
+
+  const onSelectViewReport = (quest: Quest) => {
+    console.log("quest");
+    setOpenedReport(quest);
+    onOpenReportModal();
+  };
 
   return (
     <VStack pos="relative" h="100vh" overflow="clip" justify="center">
+      <BattleReportModal
+        quest={openedReport}
+        onClose={onCloseReportModal}
+        isOpen={isReportModalOpen}
+        confirmAction={() => {
+          router.push(`/raft`);
+        }}
+        textConfirm="Leave"
+      />
       <Heading>{aiLoading ? "ai loading" : "no loading"}</Heading>
       <StonesContainer
         height={"120vh"}
@@ -127,19 +151,32 @@ const BattleChat = ({
         <VStack width="85%" height="105vh">
           <VStack p={5} style={{ marginTop: "0" }}>
             <HStack>
-              <Link href="/raft">
-                <StonesButton
-                  stone="stone7"
-                  width={"25rem"}
-                  headerProps={{ shadowOffset: 3 }}
-                  boxProps={{
-                    position: "absolute",
-                    left: 0,
-                  }}
-                >
-                  End Quest
-                </StonesButton>
-              </Link>
+              <StonesButton
+                stone="stone7"
+                width={"25rem"}
+                headerProps={{ shadowOffset: 3 }}
+                boxProps={{
+                  position: "absolute",
+                  left: 0,
+                }}
+                onClick={async () => {
+                  const aiResponse = await axios.post(
+                    "/api/createQuestMessage",
+                    {
+                      questId: questId,
+                      question: { msg: "", from: "user" },
+                      isFinalPrompt: true,
+                      create: false,
+                    }
+                  );
+
+                  console.log(aiResponse.data.message);
+
+                  onSelectViewReport(quest);
+                }}
+              >
+                End Quest
+              </StonesButton>
               <BobUpAndDown>
                 <BoldedHeader
                   fontSize="2.5em"

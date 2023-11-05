@@ -87,6 +87,7 @@ export default async function handleUpdate(
               },
             })
           : { data: { message: textFromAI.data } };
+      console.log(aiResponse);
       res.status(201).json(aiResponse);
     } catch (error) {
       console.log(error);
