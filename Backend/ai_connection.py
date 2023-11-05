@@ -2,7 +2,6 @@ import vertexai
 from vertexai.language_models import TextGenerationModel
 import os
 import json
-from oauth2client.client import GoogleCredentials
 
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "confident-slice-404114-7d0b0ed1f4b4.json"
 
@@ -11,7 +10,7 @@ credentials_path = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
 if credentials_path is None:
     credentials_path = "confident-slice-404114-7d0b0ed1f4b4.json"
     
-credentials = GoogleCredentials.get_application_default()
+
 
 
 def main():
@@ -21,7 +20,7 @@ def main():
 
     with open(r"./prompts.txt", 'r') as file:
         input3 = file.read()
-    trigger(input3,0.2,"confident-slice-404114","us-central1")
+    return trigger(input3,0.2,"confident-slice-404114","us-central1")
 
 def interview(
     temperature: float,
@@ -78,14 +77,17 @@ def trigger(user_input,temperature: float,
     response2 = model.predict (localstr,**parameters)
 
     print(f"Model2:{response2.text}")
+    total_text = localstr + response2.text
 
     questions_list = localstr.strip().split('\n')
+    
     questions_dict = {}
 
     for x,question in enumerate(questions_list,start=1):
         questions_dict[f"Question"]=question.strip()
 
     questions_json = json.dumps(questions_dict, indent=4)
+    return total_text
     #print(questions_json)
 
 #def categorization(input_text)

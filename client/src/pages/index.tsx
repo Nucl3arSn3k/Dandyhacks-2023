@@ -7,10 +7,12 @@ import { Raft } from "@/features/raft/components/Raft";
 import { ChakraMotionDiv } from "@/components/ChakraMotionDiv";
 import { WavyText } from "@/components/WavyText";
 import { StonesButton } from "@/components/StonesButton";
-import Link from "next/link";
 import { SeaBackgroundFullScreen } from "@/components/SeaBackgroundFullScreen";
+import { useRouter } from "next/router";
 
 export default function Home() {
+  const router = useRouter();
+
   return (
     <VStack pos="relative" h="100vh" overflow="clip">
       <VStack pt="50px" zIndex={10}>
@@ -20,12 +22,29 @@ export default function Home() {
           </BoldedHeader>
         </BobUpAndDown>
         <HStack>
-          <StonesButton width={400}>Start</StonesButton>
-          <Link href="/raft">
-            <StonesButton width={400}>Resume</StonesButton>
-          </Link>
+          <StonesButton
+            width={400}
+            buttonProps={{
+              onClick: () => {
+                router.push("/api/auth/signin");
+              },
+            }}
+          >
+            Start
+          </StonesButton>
+          <StonesButton
+            width={400}
+            buttonProps={{
+              onClick: () => {
+                router.push("/raft");
+              },
+            }}
+          >
+            Resume
+          </StonesButton>
         </HStack>
       </VStack>
+
       <ChakraMotionDiv
         pos="absolute"
         top="80%"
@@ -41,7 +60,7 @@ export default function Home() {
           times: [0, 0.2, 0.5, 0.8, 1],
         }}
       >
-        <Raft hasDolphin hasSail hasEngine />
+        <Raft hasDolphin />
       </ChakraMotionDiv>
 
       <SeaBackgroundFullScreen />
