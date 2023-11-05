@@ -52,11 +52,13 @@ const ChatBattle = ({ task = "biology", msges = [] }) => {
               <Link href="/raft">
                 <StonesButton
                   stone="stone7"
-                  width={"25rem"}
-                  headerProps={{ shadowOffset: 3 }}
+                  width={"20rem"}
+                  // top={"-20rem"}
+                  headerProps={{ fontSize: "1.5em" }}
                   boxProps={{
                     position: "absolute",
-                    left: 0,
+                    left: 20,
+                    top: 110,
                   }}
                 >
                   Leave

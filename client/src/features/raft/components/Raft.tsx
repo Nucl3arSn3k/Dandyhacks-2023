@@ -2,22 +2,13 @@ import { BobUpAndDown } from "@/components/BobUpAndDown";
 import { Box, BoxProps } from "@chakra-ui/react";
 import Image from "next/image";
 import React from "react";
+import { useUser } from "@/store/useUsers";
 
-interface Props {
-  hasDolphin?: boolean;
-  hasSail?: boolean;
-  hasEngine?: boolean;
-}
-
-export const Raft = ({
-  hasEngine = false,
-  hasSail = false,
-  hasDolphin = false,
-  ...rest
-}: Props & BoxProps) => {
+export const Raft = () => {
+  const { currency, ownsDolphin, ownsSail, ownsEngine } = useUser();
   return (
-    <Box pos="relative" {...rest}>
-      {hasDolphin && (
+    <Box pos="relative" >
+      {ownsDolphin && (
         <BobUpAndDown
           position="absolute"
           right="26%"
@@ -38,7 +29,7 @@ export const Raft = ({
           />
         </BobUpAndDown>
       )}
-      {hasSail && (
+      {ownsSail && (
         <BobUpAndDown
           position="absolute"
           right="26%"
@@ -59,7 +50,7 @@ export const Raft = ({
           />
         </BobUpAndDown>
       )}
-      {hasEngine && (
+      {ownsEngine && (
         <BobUpAndDown
           position="absolute"
           right="-30%"
