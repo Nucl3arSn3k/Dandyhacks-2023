@@ -9,7 +9,10 @@ from google.cloud import aiplatform
 import ai_connection
 import random
 import string
+from flask_cors import CORS
 app = Flask(__name__)
+CORS(app)
+pdfx = ""
 
 app.secret_key = 'your_secret_key'  # Change this to a random secret key
 
@@ -19,7 +22,7 @@ def hello_world():
 
 @app.route("/ai")
 def ai():
-    return ai_connection.main()
+    return ai_connection.ouroboros(0.2,"confident-slice-404114","us-central1",pdfx)
 
 @app.route('/pdfload')
 def pdf_loader():
@@ -30,6 +33,9 @@ def pdf_loader():
         page = reader.pages[x]
         text = page.extract_text()
         combined_text += text
+    global pdfx
+
+    pdfx = combined_text
     
     response = make_response(combined_text)
     response.headers["Content-Disposition"] = "attachment; filename=extracted_text.txt"
