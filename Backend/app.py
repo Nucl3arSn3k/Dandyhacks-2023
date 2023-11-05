@@ -23,12 +23,14 @@ def hello_world():
 
 @app.route("/ai", methods=["post"])
 def ai():
-    data = request.get_json
-    chat_history = json.loads(data.get('chat_history'))
-    pdf_input = data.get('pdf_input', '')
-    final_prompt = data.get("final_prompt", False).to_bool()
+    data = json.loads(request.data)
+    chat_history = data['chat_history']
+    pdf_input = data['pdf_input']
+    final_prompt = data["final_prompt"]
     
-    return ai_connection.model_run(0.2,"confident-slice-404114","us-central1",chat_history, pdf_input, final_prompt)
+    print(final_prompt)
+    
+    return ai_connection.model_run(0.2,"confident-slice-404114","us-central1",chat_history, final_prompt, pdf_input)
 
 @app.route('/pdfload')
 def pdf_loader():
