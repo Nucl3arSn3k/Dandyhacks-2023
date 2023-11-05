@@ -5,31 +5,30 @@ import React from "react";
 import { useUser } from "@/store/useUsers";
 
 export const Raft = ({ hasDolphin = false }: { hasDolphin?: boolean }) => {
-  const { currency, ownsDolphin, ownsSail, ownsEngine } = useUser();
+  const { currency, ownsDolphin, ownsSail, ownsParrot } = useUser();
   return (
     <Box pos="relative">
-      {ownsDolphin ||
-        (hasDolphin && (
-          <BobUpAndDown
-            position="absolute"
-            right="26%"
-            top="-35%"
-            animate={{ translateY: [0, 1, -1, 2, 0] }}
-            zIndex={5}
-          >
-            <Image
-              src="/assets/characters/dolphin.png"
-              alt="Background"
-              width="0"
-              height="0"
-              sizes="100vw"
-              style={{
-                width: "115px",
-                height: "100px",
-              }}
-            />
-          </BobUpAndDown>
-        ))}
+      {ownsDolphin && (
+        <BobUpAndDown
+          position="absolute"
+          right="40%"
+          top="-35%"
+          animate={{ translateY: [0, 1, -1, 2, 0] }}
+          zIndex={10}
+        >
+          <Image
+            src="/assets/characters/dolphin.png"
+            alt="Background"
+            width="0"
+            height="0"
+            sizes="100vw"
+            style={{
+              width: "115px",
+              height: "100px",
+            }}
+          />
+        </BobUpAndDown>
+      )}
       {ownsSail && (
         <BobUpAndDown
           position="absolute"
@@ -51,23 +50,23 @@ export const Raft = ({ hasDolphin = false }: { hasDolphin?: boolean }) => {
           />
         </BobUpAndDown>
       )}
-      {ownsEngine && (
+      {ownsParrot && (
         <BobUpAndDown
           position="absolute"
-          right="-30%"
-          bottom="-10%"
+          right="10%"
+          top="-30%"
           animate={{ translateY: [0, 1, -1, 2, 0] }}
-          zIndex={4}
+          zIndex={5}
         >
           <Image
-            src="/assets/raft/engine.png"
+            src="/assets/characters/parrot.png"
             alt="Background"
             width="0"
             height="0"
             sizes="100vw"
             style={{
-              width: "250px",
-              height: "80px",
+              width: "80px",
+              height: "60px",
             }}
           />
         </BobUpAndDown>

@@ -49,20 +49,20 @@ const ShopItem = ({
           ease: "easeInOut",
         }}
       >
-        <StonesContainer stone={stone} width={250} height={250}>
-          <Image
-            src={url}
-            alt="Background"
-            width="0"
-            height="0"
-            sizes="auto"
-            style={{
-              width: "150px",
-              height: "150px",
-              position: "absolute",
-              bottom: "50px",
-            }}
-          />
+        <StonesContainer stone={stone} width={220} height={220}>
+          <VStack alignItems="center">
+            <Image
+              src={url}
+              alt="Background"
+              width="0"
+              height="0"
+              sizes="auto"
+              style={{
+                width: "90px",
+                height: "90px",
+              }}
+            />
+          </VStack>
         </StonesContainer>
       </ChakraMotionDiv>
       <StonesButton
