@@ -28,6 +28,16 @@ const ChatBattle = ({ task = "biology", msges = [] }) => {
     );
   }, []);
 
+  const chatEndRef = React.useRef(null);
+
+  const scrollToBottom = () => {
+    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  React.useEffect(() => {
+    scrollToBottom();
+  }, [data]);
+
   return (
     <VStack pos="relative" h="100vh" overflow="clip" justify="center">
       <StonesContainer
@@ -93,6 +103,7 @@ const ChatBattle = ({ task = "biology", msges = [] }) => {
               {data.conversation.map((msg, idx) => (
                 <Chat key={idx} msg={msg.msg} from={msg.from} />
               ))}
+              <div ref={chatEndRef} />
             </VStack>
             <InputStone
               onChange={(e) => setValue(e.target.value)}

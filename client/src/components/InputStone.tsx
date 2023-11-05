@@ -7,7 +7,7 @@ import {
   Input,
 } from "@chakra-ui/react";
 import { StonesButton } from "./StonesButton";
-import { ChangeEvent } from "react";
+import { ChangeEvent, KeyboardEvent } from "react";
 
 const style = {
   borderRadius: "1rem",
@@ -22,6 +22,11 @@ const InputStone = ({
   onChange = (e: ChangeEvent<HTMLInputElement>) => {},
   onEnter = () => {},
 }) => {
+  const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      onEnter();
+    }
+  };
   return (
     <InputGroup size="md" width={"100%"}>
       <Input
@@ -34,6 +39,7 @@ const InputStone = ({
         onChange={onChange}
         backgroundColor="white"
         value={val}
+        onKeyDown={handleKeyDown}
       />
       <InputRightElement width="14rem" height="5rem" borderRadius="16px">
         <StonesButton
