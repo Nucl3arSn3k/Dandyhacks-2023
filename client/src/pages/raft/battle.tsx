@@ -11,7 +11,7 @@ import { useRouter } from "next/router";
 import { QUESTS } from "@/consts";
 import { useSession } from "next-auth/react";
 import { PrismaClient, Prisma } from "@prisma/client";
-import handleUpdate from "../api/updateQuest";
+import handleUpdate from "../api/createQuestMessage";
 import axios from "axios";
 
 const prisma = new PrismaClient();
@@ -115,6 +115,7 @@ const ChatBattle = async ({ task = "biology", messages, questId }) => {
                 if (val.trim() == "") {
                   return;
                 }
+                // call AI here
                 return setData((data) => {
                   setValue("");
                   newMsges.push({
