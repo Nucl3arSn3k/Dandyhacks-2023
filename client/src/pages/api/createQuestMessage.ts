@@ -7,6 +7,7 @@ interface CreateQuestData {
   questId: string;
   question: { from: "user"; msg: string };
   isFinalPrompt?: boolean;
+  create?: boolean;
 }
 
 export default async function handleUpdate(
@@ -72,15 +73,20 @@ export default async function handleUpdate(
         final_prompt: isFinalPrompt,
       });
 
+      console.log(data.create);
+
       // create quest message from api response
-      const aiResponse = await prisma.questMessage.create({
-        data: {
-          questId: givenQuestId,
-          userEmail: session.user!.email!,
-          message: textFromAI.data,
-          isUserSender: false,
-        },
-      });
+      const aiResponse =
+        data.create == true
+          ? await prisma.questMessage.create({
+              data: {
+                questId: givenQuestId,
+                userEmail: session.user!.email!,
+                message: textFromAI.data,
+                isUserSender: false,
+              },
+            })
+          : { data: { message: textFromAI.data } };
       res.status(201).json(aiResponse);
     } catch (error) {
       console.log(error);

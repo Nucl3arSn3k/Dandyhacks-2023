@@ -4,11 +4,13 @@ import { Quest, SkillType } from "@/types/questsTypes";
 import { Grid, GridItem, VStack } from "@chakra-ui/react";
 import React from "react";
 import { useRouter } from "next/router";
+import { Fn } from "@prisma/client/runtime/library";
 
 interface Props {
   isOpen?: boolean;
   onClose: VoidFunction;
   quest: Quest | null;
+  confirmAction: () => void;
 }
 
 const SkillList = ({
@@ -38,7 +40,14 @@ const SkillList = ({
   );
 };
 
-export const BattleReportModal = ({ quest, isOpen, onClose }: Props) => {
+export const BattleReportModal = ({
+  quest,
+  isOpen,
+  onClose,
+  confirmAction = () => {
+    router.push(`/raft/battle?questId=${quest?.id}`);
+  },
+}: Props) => {
   const router = useRouter();
   return (
     <StoneModal
@@ -46,9 +55,7 @@ export const BattleReportModal = ({ quest, isOpen, onClose }: Props) => {
       onClose={onClose}
       header={`${quest?.title} Quest`}
       confirmText="Start"
-      confirmAction={() => {
-        router.push(`/raft/battle?questId=${quest?.id}`);
-      }}
+      confirmAction={confirmAction}
       height={500}
     >
       <Grid templateColumns="repeat(2, 1fr)" columnGap={10}>

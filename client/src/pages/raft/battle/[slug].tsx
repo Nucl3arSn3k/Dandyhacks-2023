@@ -1,15 +1,31 @@
 import { BoldedHeader } from "@/components/BoldedHeader";
 import { StonesContainer } from "@/components/StonesContainer";
-import { HStack, Heading, Tooltip, VStack, useBoolean } from "@chakra-ui/react";
+import {
+  HStack,
+  Heading,
+  Tooltip,
+  VStack,
+  useBoolean,
+  useDisclosure,
+} from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import Chat from "@/components/Chat";
 import InputStone from "@/components/InputStone";
 import { StonesButton } from "@/components/StonesButton";
 import { BobUpAndDown } from "@/components/BobUpAndDown";
 import Link from "next/link";
-import { getSession } from "next-auth/react";
-import { PrismaClient } from "@prisma/client";
+import { useRouter } from "next/router";
+import { QUESTS } from "@/consts";
+import { getSession, useSession } from "next-auth/react";
+import { PrismaClient, Prisma } from "@prisma/client";
 import axios from "axios";
+import { GetServerSideProps, NextPageContext } from "next";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/pages/api/auth/[...nextauth]";
+
+interface CreateQuestData {
+  questId: string;
+}
 
 interface QuestData {
   initQuest: any; // Define the actual type for the quest object
@@ -81,6 +97,7 @@ const BattleChat = ({
   const [history, setHistory] = useState<any>(initQuestMessages);
   const chatEndRef = React.useRef<HTMLDivElement | null>(null);
   let [val, setValue] = React.useState("");
+  const router = useRouter();
 
   const [aiLoading, setAiLoading] = useBoolean(false);
 
@@ -94,8 +111,13 @@ const BattleChat = ({
     scrollToBottom();
   }, [history]);
 
+  if (initialLoad) {
+    return <div>Loading</div>;
+  }
+
   return (
     <VStack pos="relative" h="100vh" overflow="clip" justify="center">
+      <Heading>{aiLoading ? "ai loading" : "no loading"}</Heading>
       <StonesContainer
         height={"120vh"}
         width={"110vw"}
@@ -109,7 +131,7 @@ const BattleChat = ({
                 <StonesButton
                   stone="stone7"
                   width={"25rem"}
-                  headerProps={{ shadowOffset: 3, fontSize: "1.4em" }}
+                  headerProps={{ shadowOffset: 3 }}
                   boxProps={{
                     position: "absolute",
                     left: 0,
