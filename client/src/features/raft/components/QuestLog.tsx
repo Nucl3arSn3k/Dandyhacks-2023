@@ -48,40 +48,39 @@ export const QuestLog = () => {
             <BoldedHeader fontSize="2.5em" shadowOffset={4}>
               Top Quests
             </BoldedHeader>
-            {Object.keys(QUESTS)
-              .map((quest_id, idx) => QUESTS[quest_id])
-              .map((quest, idx) => (
-                <HStack key={idx} pos="relative" alignItems="center">
-                  <VStack alignItems="flex-start">
-                    <BoldedHeader as="h3" fontSize="1.4em" shadowOffset={3}>
-                      {quest.title}
-                    </BoldedHeader>
-                    <ProgressBar percentage={quest.percentageKnown} />
-                  </VStack>
-                  <StonesButton
-                    stone="stone4"
-                    width={200}
-                    height={90}
-                    isAnimationOff={true}
-                    buttonProps={{
-                      onClick: () => {
-                        onSelectViewReport(quest);
-                      },
-                    }}
+            {Object.values(QUESTS).map((quest, idx) => (
+              <HStack key={idx} pos="relative" alignItems="center">
+                <VStack alignItems="flex-start">
+                  <BoldedHeader as="h3" fontSize="1.4em" shadowOffset={3}>
+                    {quest.title}
+                  </BoldedHeader>
+                  <ProgressBar percentage={quest.percentageKnown} />
+                </VStack>
+                <StonesButton
+                  stone="stone4"
+                  width={200}
+                  height={90}
+                  isAnimationOff={true}
+                  buttonProps={{
+                    onClick: () => {
+                      onSelectViewReport(quest);
+                    },
+                  }}
+                >
+                  <BoldedHeader
+                    fontSize="0.5em"
+                    shadowOffset={3}
+                    py="20px"
+                    as="span"
                   >
-                    <BoldedHeader
-                      fontSize="0.5em"
-                      shadowOffset={3}
-                      py="20px"
-                      as="span"
-                    >
-                      View
-                    </BoldedHeader>
-                  </StonesButton>
-                </HStack>
-              ))}
+                    View
+                  </BoldedHeader>
+                </StonesButton>
+              </HStack>
+            ))}
           </VStack>
         </StonesContainer>
+
       </ChakraMotionDiv>
     </>
   );

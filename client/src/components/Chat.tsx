@@ -33,7 +33,7 @@ const Chat = ({ msg = "default", from = "user" }) => {
         position={"relative"}
       >
         <BoldedHeader fontSize="1rem" shadowOffset={2}>
-          {from == "user" ? "Momo The Tutor" : "You"}
+          {from == "user" ? "You" : "Delphi The Tutor"}
         </BoldedHeader>
         <Box
           borderRadius="1rem"

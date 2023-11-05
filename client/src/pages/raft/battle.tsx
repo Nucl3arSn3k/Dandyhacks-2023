@@ -108,8 +108,11 @@ const ChatBattle = ({ task = "biology", msges = [] }) => {
             <InputStone
               onChange={(e) => setValue(e.target.value)}
               val={val}
-              onEnter={() =>
-                setData((data) => {
+              onEnter={() => {
+                if (val.trim() == "") {
+                  return;
+                }
+                return setData((data) => {
                   setValue("");
                   return {
                     ...data,
@@ -118,8 +121,8 @@ const ChatBattle = ({ task = "biology", msges = [] }) => {
                       { msg: val, from: "user" },
                     ],
                   };
-                })
-              }
+                });
+              }}
             />
           </VStack>
         </VStack>

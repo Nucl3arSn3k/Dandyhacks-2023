@@ -13,9 +13,14 @@ import { StonesButton } from "@/components/StonesButton";
 import Link from "next/link";
 import { PlayerCoins } from "@/components/PlayerCoins";
 import { BobUpAndDown } from "@/components/BobUpAndDown";
+import { useUser } from "@/store/useUsers";
 import { useRouter } from "next/router";
 
 const RaftHomePage = () => {
+  const {
+    currency,
+  } = useUser();
+
   return (
     <>
       <VStack pos="relative" h="100vh" overflow="clip" justify="center">
@@ -41,7 +46,7 @@ const RaftHomePage = () => {
             <VStack pos="relative" h="100%">
               <Box pos="absolute">
                 <HStack spacing={0}>
-                  <PlayerCoins />
+                  <PlayerCoins currency={currency} />
                   <Link href="/raft/shop">
                     <StonesButton
                       stone="stone4"

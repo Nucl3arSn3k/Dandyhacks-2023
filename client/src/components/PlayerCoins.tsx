@@ -4,13 +4,17 @@ import { Box, HStack } from "@chakra-ui/react";
 import { BoldedHeader } from "./BoldedHeader";
 import { Coin } from "./Coin";
 
-export const PlayerCoins = () => {
+interface Props {
+  currency?: number;
+}
+
+export const PlayerCoins = ({ currency }: Props) => {
   return (
     <StonesContainer height={80} width={120}>
       <HStack w="100%" justify="space-between" p={5}>
         <HStack>
           <BoldedHeader fontSize="1.4em" shadowOffset={3}>
-            199
+            {currency}
           </BoldedHeader>
           <Box pos="absolute" top="-20px" left="-70px">
             <Coin />
