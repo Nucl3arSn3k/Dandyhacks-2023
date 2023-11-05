@@ -21,10 +21,10 @@ export const ConfirmFileModal = ({ file, isOpen = false, onClose }: Props) => {
             console.error(error);
           } else {
             console.log("Base64 data:", base64Data);
+            console.log(file?.name);
             axios
               .post("/api/createQuest", {
-                title: file?.name,
-                file: base64Data,
+                title: "test",
               })
               .then(function (response) {
                 console.log(response);

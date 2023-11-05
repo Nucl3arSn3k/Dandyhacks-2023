@@ -70,11 +70,10 @@ model User {
   hasEngine  Boolean @default(false) 
 }
 
-
-
 model Quest {
   id    String @id @default(cuid())
   title String
+  initialPDFText String @default("")     
   strengths String[]
   weaknesses String[]
   userEmail  String  @map("user_email")
