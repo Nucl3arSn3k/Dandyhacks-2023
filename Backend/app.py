@@ -20,9 +20,11 @@ app.secret_key = 'your_secret_key'  # Change this to a random secret key
 def hello_world():
     return 'Hello, World!'
 
-@app.route("/ai")
+@app.route("/ai", methods=["post"])
 def ai():
-    return ai_connection.ouroboros(0.2,"confident-slice-404114","us-central1",pdfx)
+    data = request.get_json
+    value = data.get('text', '')
+    return ai_connection.ouroboros2(0.2,"confident-slice-404114","us-central1",value)
 
 @app.route('/pdfload')
 def pdf_loader():

@@ -142,7 +142,22 @@ def ouroboros(
     jsonString = {'orig_dat':localstr}
     return jsonString,ouroboros(temperature, project_id, location, depth+1, max_depth,globalstore)
 
-    
+def ouroboros2(
+    temperature: float,
+    project_id: str,
+    location: str,
+    user_input: str = ""
+):
+    vertexai.init(project=project_id, location=location)
+    parameters = {
+        "temperature": temperature,
+        "max_output_tokens": 1000,
+        "top_p": 0.8,
+        "top_k": 40,
+    }
+    model = TextGenerationModel.from_pretrained("text-bison@001")
+    response = model.predict(user_input, **parameters)
+    return response.text 
 
 
 

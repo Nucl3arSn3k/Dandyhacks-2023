@@ -10,7 +10,7 @@ beautifulsoup4==4.11.1
 black==22.8.0
 CacheControl==0.12.11
 cachetools==5.2.0
-
+flask_cors
 cffi==1.16.0
 charset-normalizer==2.1.1
 
