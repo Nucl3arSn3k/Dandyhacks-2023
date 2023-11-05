@@ -3,7 +3,6 @@ import { PrismaClient } from "@prisma/client";
 import { getServerSession } from "next-auth";
 import { authOptions } from "./auth/[...nextauth]";
 import axios from "axios";
-import { text } from "stream/consumers";
 
 const prisma = new PrismaClient();
 
@@ -75,7 +74,7 @@ export default async function handleUpdate(
         pdf_input: pdfInput,
         final_prompt: isFinalPrompt,
       });
-      console.log(textFromAI.data);
+
       // create quest message from api response
       const aiResponse = await prisma.questMessage.create({
         data: {
