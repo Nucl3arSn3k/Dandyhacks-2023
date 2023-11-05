@@ -15,4 +15,4 @@ RUN pip install -r requirements.txt
 
 ENV PORT 5000
 
-CMD [ "python", "app.py" ]
+CMD [ "python", "ai_connection.py" ]

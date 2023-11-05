@@ -2,10 +2,24 @@ import vertexai
 from vertexai.language_models import TextGenerationModel
 import os
 import json
+from oauth2client.client import GoogleCredentials
+
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "confident-slice-404114-7d0b0ed1f4b4.json"
+
+credentials_path = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
+
+if credentials_path is None:
+    credentials_path = "confident-slice-404114-7d0b0ed1f4b4.json"
+    
+credentials = GoogleCredentials.get_application_default()
+
+
 def main():
+    
+    
     #interview(0.2,"confident-slice-404114","us-central1")
 
-    with open(r"Backend\prompts.txt", 'r') as file:
+    with open(r"./prompts.txt", 'r') as file:
         input3 = file.read()
     trigger(input3,0.2,"confident-slice-404114","us-central1")
 
@@ -45,7 +59,7 @@ def interview(
 def trigger(user_input,temperature: float,
     project_id: str,
     location: str,):
-    vertexai.init(project=project_id, location=location)
+    vertexai.init(project=project_id, location=location, )
     # TODO developer - override these parameters as needed:
     parameters = {
         "temperature": temperature,
