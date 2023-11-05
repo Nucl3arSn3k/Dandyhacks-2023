@@ -24,6 +24,7 @@ interface Props {
   children?: ReactNode;
   width?: number;
   height?: number;
+  hideFooter?: boolean;
 }
 
 export const StoneModal = ({
@@ -32,6 +33,7 @@ export const StoneModal = ({
   confirmAction,
   confirmText = "Confirm",
   cancelAction,
+  hideFooter = false,
   cancelText = "Cancel",
   isOpen = false,
   onClose,
@@ -50,45 +52,47 @@ export const StoneModal = ({
           </ModalHeader>
           <ModalCloseButton color="white" />
           <ModalBody>{children}</ModalBody>
-          <ModalFooter>
-            <StonesButton
-              stone="stone3"
-              width={120}
-              height={50}
-              buttonProps={{
-                onClick: () => {
-                  cancelAction?.();
-                  onClose();
-                },
-              }}
-              isAnimationOff={true}
-            >
-              <BoldedHeader
-                fontSize="0.5em"
-                shadowOffset={3}
-                py="20px"
-                as="span"
+          {!hideFooter && (
+            <ModalFooter>
+              <StonesButton
+                stone="stone3"
+                width={120}
+                height={50}
+                buttonProps={{
+                  onClick: () => {
+                    cancelAction?.();
+                    onClose();
+                  },
+                }}
+                isAnimationOff={true}
               >
-                {cancelText}
-              </BoldedHeader>
-            </StonesButton>
-            <StonesButton
-              stone="stone4"
-              width={200}
-              height={70}
-              isAnimationOff={true}
-              buttonProps={{ onClick: confirmAction }}
-            >
-              <BoldedHeader
-                fontSize="0.5em"
-                shadowOffset={3}
-                py="20px"
-                as="span"
+                <BoldedHeader
+                  fontSize="0.5em"
+                  shadowOffset={3}
+                  py="20px"
+                  as="span"
+                >
+                  {cancelText}
+                </BoldedHeader>
+              </StonesButton>
+              <StonesButton
+                stone="stone4"
+                width={200}
+                height={70}
+                isAnimationOff={true}
+                buttonProps={{ onClick: confirmAction }}
               >
-                {confirmText}
-              </BoldedHeader>
-            </StonesButton>
-          </ModalFooter>
+                <BoldedHeader
+                  fontSize="0.5em"
+                  shadowOffset={3}
+                  py="20px"
+                  as="span"
+                >
+                  {confirmText}
+                </BoldedHeader>
+              </StonesButton>
+            </ModalFooter>
+          )}
         </StonesContainer>
       </ModalContent>
     </Modal>

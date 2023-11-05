@@ -4,9 +4,19 @@ import { PrismaClient } from "@prisma/client";
 import { NextApiRequest, NextApiResponse } from "next";
 import { getServerSession } from "next-auth";
 import { authOptions } from "./auth/[...nextauth]";
+import axios from "axios";
+
+export const config = {
+  api: {
+    bodyParser: {
+      sizeLimit: "4mb", // Set desired value here
+    },
+  },
+};
 
 interface CreateQuestData {
   title: string;
+  base64: string;
 }
 
 const prisma = new PrismaClient();
@@ -19,12 +29,28 @@ export default async function handler(
     try {
       const data: CreateQuestData = req.body;
       const session = await getServerSession(req, res, authOptions);
+      console.log(session);
       if (!session) {
         res.status(401).json({ error: "You are not authenticated" });
         return;
       }
-      if (session.user?.email) {
+      if (!session.user?.email) {
         res.status(500).json({ error: "Could not find user email" });
+      }
+
+      const headers = {
+        "Content-Type": "application/pdf",
+        "Content-Length": Buffer.byteLength(data.base64),
+      };
+      try {
+        const plainText = await axios.post(
+          "http://localhost:8000/convert",
+          data.base64,
+          { headers }
+        );
+        console.log(plainText);
+      } catch (e) {
+        console.log(e);
       }
 
       const createdQuest = await prisma.quest.create({
