@@ -48,26 +48,23 @@ export default async function handler(
           data.base64,
           { headers }
         );
-        console.log(plainText);
+        const plainTextPdf = plainText.data;
+        const createdQuest = await prisma.quest.create({
+          data: {
+            title: data.title,
+            strengths: [],
+            initialPDFText: plainTextPdf,
+            weaknesses: [],
+            userEmail: session.user!.email!,
+          },
+          include: {
+            QuestMessage: true,
+          },
+        });
+        res.status(201).json(createdQuest);
       } catch (e) {
-        console.log(e);
+        res.status(500).json({ error: "An error when converting file to PDF" });
       }
-
-      const createdQuest = await prisma.quest.create({
-        data: {
-          title: data.title,
-          strengths: [],
-          // replace w string from base 64
-          initialPDFText: "This is the initial",
-          weaknesses: [],
-          userEmail: session.user!.email!,
-        },
-        include: {
-          QuestMessage: true,
-        },
-      });
-
-      res.status(201).json(createdQuest);
     } catch (error) {
       res
         .status(500)
