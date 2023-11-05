@@ -3,6 +3,7 @@ import { StoneModal } from "@/components/StoneModal";
 import React from "react";
 import axios from "axios";
 import { useBoolean } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 
 interface Props {
   isOpen?: boolean;
@@ -11,15 +12,21 @@ interface Props {
 }
 
 export const ConfirmFileModal = ({ file, isOpen = false, onClose }: Props) => {
-  const [loading, setLoading] = useBoolean();
+  const [loading, setLoading] = useBoolean(false);
+  const router = useRouter();
 
   async function postFile(base64: string) {
     setLoading.on();
-    const data = await axios.post("/api/createQuest", {
-      title: "test",
-      base64: base64,
-    });
-    setLoading.off();
+    try {
+      const newQuest = await axios.post("/api/createQuest", {
+        title: "test",
+        base64: base64,
+      });
+      console.log(newQuest);
+      router.push(`/raft/battle/${newQuest.data.id}`);
+    } catch (e) {
+      setLoading.off();
+    }
   }
 
   return (
@@ -32,14 +39,13 @@ export const ConfirmFileModal = ({ file, isOpen = false, onClose }: Props) => {
           if (error) {
             console.error(error);
           } else {
-            console.log("Base64 data:", base64Data);
             postFile(base64Data!);
           }
         });
       }}
     >
       <BoldedHeader fontSize="1.4em" shadowOffset={3} py="20px" as="p">
-        {loading ? file?.name : "Creating Quest"}
+        {loading ? "Creating Quest..." : file?.name}
       </BoldedHeader>
     </StoneModal>
   );

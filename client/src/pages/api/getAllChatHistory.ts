@@ -1,10 +1,7 @@
-// pages/api/quests/create.ts
-
 import { PrismaClient } from "@prisma/client";
 import { NextApiRequest, NextApiResponse } from "next";
 import { getServerSession } from "next-auth";
 import { authOptions } from "./auth/[...nextauth]";
-import axios from "axios";
 
 export const config = {
   api: {
@@ -15,8 +12,7 @@ export const config = {
 };
 
 interface CreateQuestData {
-  title: string;
-  base64: string;
+  questId: string;
 }
 
 const prisma = new PrismaClient();
@@ -36,41 +32,24 @@ export default async function handler(
       if (!session.user?.email) {
         res.status(500).json({ error: "Could not find user email" });
       }
-
-      const headers = {
-        "Content-Type": "application/pdf",
-        "Content-Length": Buffer.byteLength(data.base64),
-      };
       try {
-        const plainText = await axios.post(
-          "http://localhost:8000/convert",
-          data.base64,
-          { headers }
-        );
-        const plainTextPdf = plainText.data;
-        const createdQuest = await prisma.quest.create({
-          data: {
-            title: data.title,
-            strengths: [],
-            initialPDFText: plainTextPdf,
-            weaknesses: [],
+        // get question on load
+        const quest = await prisma.quest.findFirst({
+          where: {
+            id: data.questId,
+            userEmail: session.user!.email!,
+          },
+        });
+        const questMessages = await prisma.questMessage.findMany({
+          where: {
+            id: quest?.id,
             userEmail: session.user!.email!,
           },
         });
 
-        // FIRST API RESPONSE CALL INITIAL QUESTIONS
+        // returns quest and quest messages
 
-        // create quest message from api response
-        await prisma.questMessage.create({
-          data: {
-            questId: createdQuest.id,
-            userEmail: session.user!.email!,
-            message: "", // FROM API
-            isUserSender: false,
-          },
-        });
-
-        res.status(201).json(createdQuest);
+        res.status(200).json({ quest, questMessages });
       } catch (e) {
         res.status(500).json({ error: "An error when converting file to PDF" });
       }
