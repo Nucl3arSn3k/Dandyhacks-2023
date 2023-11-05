@@ -1,9 +1,9 @@
-import { Box, HStack, VStack } from "@chakra-ui/react";
+import { Box, HStack, Spinner, VStack } from "@chakra-ui/react";
 import { BoldedHeader } from "./BoldedHeader";
 import { StonesContainer } from "./StonesContainer";
 import Image from "next/image";
 
-const Chat = ({ msg = "default", from = "user" }) => {
+const Chat = ({ msg = "default", from = "user", isAiLoading = false }) => {
   return (
     <HStack
       alignSelf={from !== "user" ? "flex-start" : "flex-end"}
@@ -35,19 +35,31 @@ const Chat = ({ msg = "default", from = "user" }) => {
         <BoldedHeader fontSize="1rem" shadowOffset={2}>
           {from == "user" ? "You" : "Delphi The Tutor"}
         </BoldedHeader>
-        <Box
-          borderRadius="1rem"
-          border="3px solid #564B4B"
-          background="#FFF"
-          padding="1.5rem"
-          width="100%"
-          position="relative"
-          boxShadow="0px 3px 0px 0px rgba(95,62,0,0.95)"
-          whiteSpace={"pre-wrap"}
-          textOverflow={"wrap"}
-        >
-          {msg}
-        </Box>
+        {isAiLoading ? (
+          <Spinner
+            thickness="4px"
+            speed="0.65s"
+            emptyColor="gray.200"
+            color="rgba(95,62,0,0.95)"
+            size="xl"
+            mb="30px"
+          />
+        ) : (
+          <Box
+            borderRadius="1rem"
+            border="3px solid #564B4B"
+            background="#FFF"
+            padding="1.5rem"
+            width="100%"
+            position="relative"
+            boxShadow="0px 3px 0px 0px rgba(95,62,0,0.95)"
+            whiteSpace={"pre-wrap"}
+            textOverflow={"wrap"}
+            mb="20px"
+          >
+            {msg}
+          </Box>
+        )}
       </VStack>
     </HStack>
   );
