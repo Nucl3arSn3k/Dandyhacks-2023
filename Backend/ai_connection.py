@@ -10,17 +10,20 @@ credentials_path = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
 if credentials_path is None:
     credentials_path = "confident-slice-404114-7d0b0ed1f4b4.json"
     
-
+globalstore = ""
 
 
 def main():
     
     
-    #interview(0.2,"confident-slice-404114","us-central1")
+    #interview(0.2,"confident-slice-404114","us-central1"  )
 
+    ouroboros(0.2,"confident-slice-404114","us-central1")
+    """
     with open(r"./prompts.txt", 'r') as file:
         input3 = file.read()
     return trigger(input3,0.2,"confident-slice-404114","us-central1")
+    """
 
 def interview(
     temperature: float,
@@ -91,6 +94,67 @@ def trigger(user_input,temperature: float,
     #print(questions_json)
 
 #def categorization(input_text)
+
+def ouroboros(
+    
+    temperature: float,
+    project_id: str,
+    location: str,
+    depth: int = 0,
+    max_depth: int = 5,
+    previous_output: str = "",
+    user_input: str = ""
+):
+    vertexai.init(project=project_id, location=location)
+    # TODO developer - override these parameters as needed:
+    parameters = {
+        "temperature": temperature,
+        "max_output_tokens": 1000,
+        "top_p": 0.8,
+        "top_k": 40,
+    }
+    model = TextGenerationModel.from_pretrained("text-bison@001")
+    global globalstore
+
+    if depth >= max_depth:
+        return None
+    
+    if not user_input:
+        user_input = input("You: ")
+
+    if os.path.isfile(user_input):
+        with open(user_input, 'r') as file:
+            user_input = file.read() 
+
+    if depth == 0:
+        combined_input = user_input
+    else:
+        combined_input = previous_output + user_input 
+
+    response = model.predict(combined_input, **parameters)
+
+    localstr = response.text
+    globalstore += response.text
+
+    print(f"Model: {localstr}")
+    
+
+    questions_list = localstr.strip().split('\n')
+
+    questions_dict = {}
+
+    for x, question in enumerate(questions_list, start=1):
+        questions_dict[f"Question {x}"] = question.strip()
+
+    #print(globalstore)
+    questions_json = json.dumps(questions_dict, indent=4)
+    ouroboros(temperature, project_id, location, depth+1, max_depth,globalstore)
+
+    
+
+
+
+
 
 
 
