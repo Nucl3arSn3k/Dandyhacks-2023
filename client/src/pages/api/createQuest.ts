@@ -29,7 +29,6 @@ export default async function handler(
     try {
       const data: CreateQuestData = req.body;
       const session = await getServerSession(req, res, authOptions);
-      console.log(session);
       if (!session) {
         res.status(401).json({ error: "You are not authenticated" });
         return;
