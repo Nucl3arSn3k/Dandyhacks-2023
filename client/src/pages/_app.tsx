@@ -1,9 +1,10 @@
 // pages/_app.js
 import { ChakraProvider } from "@chakra-ui/react";
+import { SessionProvider } from "next-auth/react";
 import type { AppProps } from "next/app";
 import Head from "next/head";
 
-function App({ Component, pageProps }: AppProps) {
+function App({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   return (
     <ChakraProvider>
       <Head>
@@ -14,8 +15,9 @@ function App({ Component, pageProps }: AppProps) {
           href="/favicon_io/android-chrome-512x512.png"
         />
       </Head>
-
-      <Component {...pageProps} />
+      <SessionProvider session={session}>
+        <Component {...pageProps} />
+      </SessionProvider>
     </ChakraProvider>
   );
 }

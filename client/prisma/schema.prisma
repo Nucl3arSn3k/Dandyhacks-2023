@@ -62,20 +62,15 @@ model User {
   posts         Post[]
   accounts      Account[]
   sessions      Session[]
-  UserShop      UserShop[]
   Quest         Quest[]
   QuestMessage  QuestMessage[]
+  currency   Int     @default(0)     
+  hasDolphin Boolean @default(false) 
+  hasSail    Boolean @default(false) 
+  hasEngine  Boolean @default(false) 
 }
 
-model UserShop {
-  id         String  @id @default(cuid())
-  currency   Int
-  hasDolphin Boolean
-  hasSail    Boolean
-  hasEngine  Boolean
-  userEmail  String  @map("user_email")
-  user         User           @relation(fields: [userEmail], references: [email], onDelete: Cascade)
-}
+
 
 model Quest {
   id    String @id @default(cuid())

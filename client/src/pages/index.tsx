@@ -9,9 +9,10 @@ import { WavyText } from "@/components/WavyText";
 import { StonesButton } from "@/components/StonesButton";
 import { SeaBackgroundFullScreen } from "@/components/SeaBackgroundFullScreen";
 import { useRouter } from "next/router";
-
+import { useSession } from "next-auth/react";
 export default function Home() {
   const router = useRouter();
+  const { data: session } = useSession();
 
   return (
     <VStack pos="relative" h="100vh" overflow="clip">
@@ -32,16 +33,18 @@ export default function Home() {
           >
             Start
           </StonesButton>
-          <StonesButton
-            width={400}
-            buttonProps={{
-              onClick: () => {
-                router.push("/raft");
-              },
-            }}
-          >
-            Resume
-          </StonesButton>
+          {session && (
+            <StonesButton
+              width={400}
+              buttonProps={{
+                onClick: () => {
+                  router.push("/raft");
+                },
+              }}
+            >
+              Resume
+            </StonesButton>
+          )}
         </HStack>
       </VStack>
 
