@@ -1,6 +1,12 @@
 import { BoldedHeader } from "@/components/BoldedHeader";
 import { StonesContainer } from "@/components/StonesContainer";
-import { HStack, Heading, VStack, useBoolean } from "@chakra-ui/react";
+import {
+  HStack,
+  Heading,
+  VStack,
+  useBoolean,
+  useDisclosure,
+} from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import Chat from "@/components/Chat";
 import InputStone from "@/components/InputStone";
@@ -10,11 +16,12 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { QUESTS } from "@/consts";
 import { getSession, useSession } from "next-auth/react";
-import { PrismaClient, Prisma } from "@prisma/client";
+import { PrismaClient, Prisma, Quest } from "@prisma/client";
 import axios from "axios";
 import { GetServerSideProps, NextPageContext } from "next";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
+import { BattleReportModal } from "@/features/raft/components/BattleReportModal";
 
 interface CreateQuestData {
   questId: string;
@@ -91,6 +98,7 @@ const BattleChat = ({
   const [history, setHistory] = useState<any>(initQuestMessages);
   const chatEndRef = React.useRef<HTMLDivElement | null>(null);
   let [val, setValue] = React.useState("");
+  const router = useRouter();
 
   console.log(initQuestMessages);
 
@@ -105,13 +113,32 @@ const BattleChat = ({
   useEffect(() => {
     scrollToBottom();
   }, [history]);
+  const {
+    isOpen: isReportModalOpen,
+    onClose: onCloseReportModal,
+    onOpen: onOpenReportModal,
+  } = useDisclosure();
+
+  const [openedReport, setOpenedReport] = useState<Quest | null>(null);
 
   if (initialLoad) {
     return <div>Loading</div>;
   }
 
+  const onSelectViewReport = (quest: Quest) => {
+    console.log("quest");
+    setOpenedReport(quest);
+    onOpenReportModal();
+  };
+
   return (
     <VStack pos="relative" h="100vh" overflow="clip" justify="center">
+      <BattleReportModal
+        quest={openedReport}
+        onClose={onCloseReportModal}
+        isOpen={isReportModalOpen}
+        confirmAction={() => router.push(`/raft`)}
+      />
       <Heading>{aiLoading ? "ai loading" : "no loading"}</Heading>
       <StonesContainer
         height={"120vh"}
@@ -122,19 +149,57 @@ const BattleChat = ({
         <VStack width="85%" height="105vh">
           <VStack p={5} style={{ marginTop: "0" }}>
             <HStack>
-              <Link href="/raft">
-                <StonesButton
-                  stone="stone7"
-                  width={"25rem"}
-                  headerProps={{ shadowOffset: 3 }}
-                  boxProps={{
-                    position: "absolute",
-                    left: 0,
-                  }}
-                >
-                  End Quest
-                </StonesButton>
-              </Link>
+              <StonesButton
+                stone="stone7"
+                width={"25rem"}
+                headerProps={{ shadowOffset: 3 }}
+                boxProps={{
+                  position: "absolute",
+                  left: 0,
+                }}
+                onClick={async () => {
+                  const aiResponse = await axios.post(
+                    "/api/createQuestMessage",
+                    {
+                      questId: questId,
+                      question: { msg: "", from: "user" },
+                      isFinalPrompt: true,
+                      create: false,
+                    }
+                  );
+
+                  console.log(aiResponse);
+
+                  let weaknesses = [];
+                  let strengths = [];
+
+                  aiResponse.data.message
+                    .split("\n")
+                    .forEach((line: string) => {
+                      let lineData = line.split(":");
+                      let topic = lineData[1].trim();
+                      let topicType = lineData[2].trim();
+
+                      if (topicType == "Weak") {
+                        weaknesses.push(topic);
+                      } else if (topicType == "Strong") {
+                        strengths.push(topic);
+                      }
+                    });
+                  const questData = await axios.post("/api/getQuest", {
+                    questId,
+                  });
+
+                  await axios.post("/api/updateQuest", {
+                    weakness: [...questData.data.quest.weakness],
+                    strengths: [...questData.data.quest.strengths],
+                    questId,
+                  });
+                  onSelectViewReport(questData.data.quest);
+                }}
+              >
+                End Quest
+              </StonesButton>
               <BobUpAndDown>
                 <BoldedHeader
                   fontSize="2.5em"
