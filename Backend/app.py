@@ -6,11 +6,20 @@ import mimetypes
 from authlib.integrations.flask_client import OAuth
 from google.cloud import aiplatform
 
+import ai_connection
 import random
 import string
 app = Flask(__name__)
 
 app.secret_key = 'your_secret_key'  # Change this to a random secret key
+
+@app.route('/')
+def hello_world():
+    return 'Hello, World!'
+
+@app.route("/ai")
+def ai():
+    return ai_connection.main()
 
 @app.route('/pdfload')
 def pdf_loader():
@@ -55,4 +64,4 @@ def convert():
         return 'Unsupported upload',415
 
 if __name__ == "__main__":
-    app.run(debug=False)
+    app.run(host="0.0.0.0", port=8000, debug=False)
