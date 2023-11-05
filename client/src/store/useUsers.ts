@@ -5,17 +5,21 @@ export interface UserInfo {
   ownsDolphin: boolean;
   ownsSail: boolean;
   ownsParrot: boolean;
-    setCurrency: (currency: number) => void;
-    setOwnsDolphin: (ownsDolphin: boolean) => void;
-    setOwnsSail: (ownsSail: boolean) => void;
-    setOwnsParrot: (ownsParrot: boolean) => void;
+  setCurrency: (currency: number) => void;
+  addCurrency: (currency: number) => void;
+  setOwnsDolphin: (ownsDolphin: boolean) => void;
+  setOwnsSail: (ownsSail: boolean) => void;
+  setOwnsParrot: (ownsParrot: boolean) => void;
 }
 
 export const useUser = create<UserInfo>()((set) => ({
-  currency: 400,
+  currency: 50,
   ownsDolphin: false,
   ownsSail: false,
   ownsParrot: false,
+
+  addCurrency: (currency: number) =>
+    set((prev) => ({ currency: prev.currency + currency })),
 
   setCurrency: (currency: number) => set({ currency }),
   setOwnsDolphin: (ownsDolphin: boolean) => set({ ownsDolphin }),

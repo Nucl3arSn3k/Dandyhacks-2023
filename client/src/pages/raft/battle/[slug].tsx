@@ -22,6 +22,7 @@ import axios from "axios";
 import { GetServerSideProps, NextPageContext } from "next";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
+import { useUser } from "@/store/useUsers";
 
 interface CreateQuestData {
   questId: string;
@@ -98,6 +99,7 @@ const BattleChat = ({
   const chatEndRef = React.useRef<HTMLDivElement | null>(null);
   let [val, setValue] = React.useState("");
   const router = useRouter();
+  const { addCurrency } = useUser();
 
   const [aiLoading, setAiLoading] = useBoolean(false);
 
@@ -210,6 +212,7 @@ const BattleChat = ({
                     isAiLoading: true,
                   },
                 ]);
+                addCurrency(10);
 
                 const aiResponse = await axios.post("/api/createQuestMessage", {
                   questId: questId,
