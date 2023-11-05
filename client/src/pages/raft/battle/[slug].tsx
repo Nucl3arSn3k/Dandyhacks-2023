@@ -111,10 +111,6 @@ const BattleChat = ({
     scrollToBottom();
   }, [history]);
 
-  if (initialLoad) {
-    return <div>Loading</div>;
-  }
-
   return (
     <VStack pos="relative" h="100vh" overflow="clip" justify="center">
       <Heading>{aiLoading ? "ai loading" : "no loading"}</Heading>
@@ -131,7 +127,7 @@ const BattleChat = ({
                 <StonesButton
                   stone="stone7"
                   width={"25rem"}
-                  headerProps={{ shadowOffset: 3 }}
+                  headerProps={{ shadowOffset: 3, fontSize: "1.4em" }}
                   boxProps={{
                     position: "absolute",
                     left: 0,

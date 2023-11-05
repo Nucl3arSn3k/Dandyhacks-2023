@@ -107,9 +107,10 @@ export default function Shop() {
           </BoldedHeader>
         </BobUpAndDown>
         <HStack>
-          {shopItems.map((item) => {
+          {shopItems.map((item, idx) => {
             return (
               <ShopItem
+                index={idx}
                 stone={item.stone}
                 text={item.text}
                 url={item.url}
