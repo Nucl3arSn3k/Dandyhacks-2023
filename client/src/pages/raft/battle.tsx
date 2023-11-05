@@ -109,7 +109,7 @@ const ChatBattle = ({ task = "biology", msges = [] }) => {
               onChange={(e) => setValue(e.target.value)}
               val={val}
               onEnter={() => {
-                if (val.trim()) {
+                if (val.trim() == "") {
                   return;
                 }
                 return setData((data) => {
