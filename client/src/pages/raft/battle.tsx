@@ -7,8 +7,27 @@ import InputStone from "@/components/InputStone";
 import { StonesButton } from "@/components/StonesButton";
 import { BobUpAndDown } from "@/components/BobUpAndDown";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import { QUESTS } from "@/consts";
 
 const ChatBattle = ({ task = "biology", msges = [] }) => {
+  const router = useRouter();
+  const { questId } = router.query;
+  let [val, setValue] = React.useState("");
+  let [data, setData] = React.useState(
+    `quest_${questId}` in QUESTS
+      ? QUESTS[`quest_${questId}`]
+      : { title: "Biology", conversation: [{ msg: "hi", from: "user" }] }
+  );
+
+  React.useEffect(() => {
+    setData(
+      `quest_${questId}` in QUESTS
+        ? QUESTS[`quest_${questId}`]
+        : { title: "Biology", conversation: [{ msg: "hi", from: "user" }] }
+    );
+  }, []);
+
   return (
     <VStack pos="relative" h="100vh" overflow="clip" justify="center">
       <StonesContainer
@@ -40,7 +59,7 @@ const ChatBattle = ({ task = "biology", msges = [] }) => {
                   py="20px"
                   marginTop={"2rem"}
                 >
-                  Battle of {task}
+                  Battle of {data.title}
                 </BoldedHeader>
               </BobUpAndDown>
             </HStack>
@@ -71,24 +90,26 @@ const ChatBattle = ({ task = "biology", msges = [] }) => {
               }}
               gap="1rem"
             >
-              <Chat
-                msg={`Hello please tell me a little bit about this text format Hello please tell me a little bit about this text format Hello please tell me a little bit about this text format Hello please tell me a little bit about this text format`}
-              />
-              <Chat
-                msg={`Hello please tell me a little bit about this text format Hello please tell me a little bit about this text format Hello please tell me a little bit about this text format Hello please tell me a little bit about this text format`}
-              />
-              <Chat
-                msg={`Hello please tell me a little bit about this text format Hello please tell me a little bit about this text format Hello please tell me a little bit about this text format Hello please tell me a little bit about this text format`}
-              />
-              <Chat
-                msg={`Hello please tell me a little bit about this text format Hello please tell me a little bit about this text format Hello please tell me a little bit about this text format Hello please tell me a little bit about this text format`}
-              />
-              <Chat
-                msg={`Hello please tell me a little bit about this text format Hello please tell me a little bit about this text format Hello please tell me a little bit about this text format Hello please tell me a little bit about this text format`}
-              />
-              <Chat from="bot" />
+              {data.conversation.map((msg, idx) => (
+                <Chat key={idx} msg={msg.msg} from={msg.from} />
+              ))}
             </VStack>
-            <InputStone />
+            <InputStone
+              onChange={(e) => setValue(e.target.value)}
+              val={val}
+              onEnter={() =>
+                setData((data) => {
+                  setValue("");
+                  return {
+                    ...data,
+                    conversation: [
+                      ...data.conversation,
+                      { msg: val, from: "user" },
+                    ],
+                  };
+                })
+              }
+            />
           </VStack>
         </VStack>
       </StonesContainer>

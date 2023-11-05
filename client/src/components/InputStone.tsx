@@ -7,6 +7,7 @@ import {
   Input,
 } from "@chakra-ui/react";
 import { StonesButton } from "./StonesButton";
+import { ChangeEvent } from "react";
 
 const style = {
   borderRadius: "1rem",
@@ -16,7 +17,11 @@ const style = {
   maxWidth: "45%",
 };
 
-const InputStone = ({ val = "", onChange = () => {} }) => {
+const InputStone = ({
+  val = "",
+  onChange = (e: ChangeEvent<HTMLInputElement>) => {},
+  onEnter = () => {},
+}) => {
   return (
     <InputGroup size="md" width={"100%"}>
       <Input
@@ -31,7 +36,12 @@ const InputStone = ({ val = "", onChange = () => {} }) => {
         value={val}
       />
       <InputRightElement width="14rem" height="5rem" borderRadius="16px">
-        <StonesButton stone="stone3" width={"10rem"} height={"4rem"}>
+        <StonesButton
+          stone="stone3"
+          width={"10rem"}
+          height={"4rem"}
+          onClick={onEnter}
+        >
           Send
         </StonesButton>
       </InputRightElement>

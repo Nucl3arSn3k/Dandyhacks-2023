@@ -38,6 +38,7 @@ export const StonesButton = ({
   width = 400,
   isAnimationOff = false,
   boxProps,
+  onClick,
 }: Props & ButtonProps) => {
   const [hover, setHover] = useBoolean();
   let widthPixels = typeof width === "number" ? `${width}px` : width;
@@ -68,6 +69,7 @@ export const StonesButton = ({
         h={heightPixels}
         variant="ghost"
         _hover={{ bg: "transparent" }}
+        onClick={onClick}
         {...buttonProps}
       >
         <BoldedHeader {...headerProps}>{children}</BoldedHeader>
