@@ -6,11 +6,17 @@ const prisma = new PrismaClient();
 
 export default async function handleUpdate(
   req: NextApiRequest,
-  res: NextApiResponse,
-  msges: any,
-  questId: string
+  res: NextApiResponse
 ) {
-  const session = await getSession({ req });
+  const data: CreateQuestData = req.body;
+  const session = await getServerSession(req, res, authOptions);
+  if (!session) {
+    res.status(401).json({ error: "You are not authenticated" });
+    return;
+  }
+  if (!session.user?.email) {
+    res.status(500).json({ error: "Could not find user email" });
+  }
 
   if (!session) {
     res.status(401).json({ error: "You are not authenticated" });

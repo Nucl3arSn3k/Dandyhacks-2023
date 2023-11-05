@@ -1,7 +1,7 @@
 import { BoldedHeader } from "@/components/BoldedHeader";
 import { StonesContainer } from "@/components/StonesContainer";
 import { HStack, VStack } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect } from "react";
 import Chat from "@/components/Chat";
 import InputStone from "@/components/InputStone";
 import { StonesButton } from "@/components/StonesButton";
@@ -11,18 +11,19 @@ import { useRouter } from "next/router";
 import { QUESTS } from "@/consts";
 import { useSession } from "next-auth/react";
 import { PrismaClient, Prisma } from "@prisma/client";
-import handleUpdate from "../api/createQuestMessage";
 import axios from "axios";
 
 const prisma = new PrismaClient();
 
-const ChatBattle = async ({ task = "biology", messages, questId }) => {
-  const { data: session } = useSession();
+const ChatBattle = async ({ task = "biology", messages }) => {
+  // let [val, setValue] = React.useState("");
+  // let [data, setData] = React.useState(messages);
   const router = useRouter();
-  let [val, setValue] = React.useState("");
-  let [data, setData] = React.useState(messages);
+  const questId = router.query.slug;
 
-  const chatEndRef = React.useRef(null);
+  useEffect(() => {}, []);
+
+  const chatEndRef = React.useRef<HTMLDivElement | null>(null);
 
   let newMsges = [];
 
