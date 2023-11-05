@@ -3,17 +3,14 @@ import { Box, Button, HStack, VStack } from "@chakra-ui/react";
 import { BoldedHeader } from "@/components/BoldedHeader";
 import Image from "next/image";
 import { BobUpAndDown } from "@/components/BobUpAndDown";
-import {Raft} from "@/features/raft/components/Raft";
+import { Raft } from "@/features/raft/components/Raft";
 import { ChakraMotionDiv } from "@/components/ChakraMotionDiv";
 import { WavyText } from "@/components/WavyText";
 import { StonesButton } from "@/components/StonesButton";
 import Link from "next/link";
 import { SeaBackgroundFullScreen } from "@/components/SeaBackgroundFullScreen";
-import { useRouter } from "next/router";
 
 export default function Home() {
-  const router = useRouter();
-
   return (
     <VStack pos="relative" h="100vh" overflow="clip">
       <VStack pt="50px" zIndex={10}>
@@ -23,20 +20,12 @@ export default function Home() {
           </BoldedHeader>
         </BobUpAndDown>
         <HStack>
-          <StonesButton stone="stone2" width={400}>Start</StonesButton>
-          <StonesButton
-            width={400}
-            buttonProps={{
-              onClick: () => {
-                router.push("/raft");
-              },
-            }}
-          >
-            Resume
-          </StonesButton>
+          <StonesButton width={400}>Start</StonesButton>
+          <Link href="/raft">
+            <StonesButton width={400}>Resume</StonesButton>
+          </Link>
         </HStack>
       </VStack>
-
       <ChakraMotionDiv
         pos="absolute"
         top="80%"
@@ -52,8 +41,7 @@ export default function Home() {
           times: [0, 0.2, 0.5, 0.8, 1],
         }}
       >
-        <Raft hasDolphin hasSail />
-        
+        <Raft hasDolphin hasSail hasEngine />
       </ChakraMotionDiv>
 
       <SeaBackgroundFullScreen />
