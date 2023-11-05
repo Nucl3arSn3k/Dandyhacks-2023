@@ -4,6 +4,7 @@ import os
 import json
 def main():
     #interview(0.2,"confident-slice-404114","us-central1")
+
     with open(r"Backend\prompts.txt", 'r') as file:
         input3 = file.read()
     trigger(input3,0.2,"confident-slice-404114","us-central1")
@@ -18,10 +19,10 @@ def interview(
     vertexai.init(project=project_id, location=location)
     # TODO developer - override these parameters as needed:
     parameters = {
-        "temperature": temperature,
-        "max_output_tokens": 1000,
-        "top_p": 0.8,
-        "top_k": 40,
+        "temperature": temperature, #max tempp is also 1.0
+        "max_output_tokens": 1000, #2048 is the token limit
+        "top_p": 0.8, #topp maxes to 1.0
+        "top_k": 40, #topk maxes out to 40
     }
 
     model = TextGenerationModel.from_pretrained("text-bison@001")
@@ -58,14 +59,22 @@ def trigger(user_input,temperature: float,
 
     localstr = response.text
 
+    print(f"Model:{localstr}")
+    localstr+="\nAnswer question 1"
+    response2 = model.predict (localstr,**parameters)
+
+    print(f"Model2:{response2.text}")
+
     questions_list = localstr.strip().split('\n')
     questions_dict = {}
 
     for x,question in enumerate(questions_list,start=1):
-        questions_dict[f"Question {x}"]=question.strip()
+        questions_dict[f"Question"]=question.strip()
 
     questions_json = json.dumps(questions_dict, indent=4)
-    print(questions_json)
+    #print(questions_json)
+
+#def categorization(input_text)
 
 
 

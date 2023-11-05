@@ -9,11 +9,8 @@ import { WavyText } from "@/components/WavyText";
 import { StonesButton } from "@/components/StonesButton";
 import Link from "next/link";
 import { SeaBackgroundFullScreen } from "@/components/SeaBackgroundFullScreen";
-import { useRouter } from "next/router";
 
 export default function Home() {
-  const router = useRouter();
-
   return (
     <VStack pos="relative" h="100vh" overflow="clip">
       <VStack pt="50px" zIndex={10}>
@@ -29,7 +26,6 @@ export default function Home() {
           </Link>
         </HStack>
       </VStack>
-
       <ChakraMotionDiv
         pos="absolute"
         top="80%"

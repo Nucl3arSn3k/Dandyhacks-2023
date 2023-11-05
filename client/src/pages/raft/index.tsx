@@ -13,6 +13,7 @@ import { StonesButton } from "@/components/StonesButton";
 import Link from "next/link";
 import { PlayerCoins } from "@/components/PlayerCoins";
 import { BobUpAndDown } from "@/components/BobUpAndDown";
+import { useRouter } from "next/router";
 
 const RaftHomePage = () => {
   return (

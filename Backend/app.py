@@ -5,8 +5,7 @@ import base64
 import mimetypes
 from authlib.integrations.flask_client import OAuth
 from google.cloud import aiplatform
-import vertexai
-from vertexai.language_models import TextGenerationModel
+
 from databasehandler import commit_token_email
 import random
 import string
