@@ -287,11 +287,6 @@ const BattleChat = ({
                   question: { msg: val, from: "user" },
                   isFinalPrompt: false,
                 });
-<<<<<<< HEAD
-
-=======
-                console.log(aiResponse);
->>>>>>> df2f0f90ce0e92e2fe081f2966a9b7132ae337b7
                 setValue("");
                 setHistory((prev: any) => {
                   const removeAILoading = prev.filter(
