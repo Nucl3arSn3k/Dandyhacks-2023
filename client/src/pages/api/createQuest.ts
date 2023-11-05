@@ -76,8 +76,6 @@ export default async function handler(
           },
         });
 
-        console.log(createdMsg);
-
         res.status(201).json(createdQuest);
       } catch (e) {
         res.status(500).json({ error: "An error when converting file to PDF" });

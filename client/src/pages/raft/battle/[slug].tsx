@@ -1,24 +1,15 @@
 import { BoldedHeader } from "@/components/BoldedHeader";
 import { StonesContainer } from "@/components/StonesContainer";
-import { HStack, Heading, VStack, useBoolean } from "@chakra-ui/react";
+import { HStack, Heading, Tooltip, VStack, useBoolean } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import Chat from "@/components/Chat";
 import InputStone from "@/components/InputStone";
 import { StonesButton } from "@/components/StonesButton";
 import { BobUpAndDown } from "@/components/BobUpAndDown";
 import Link from "next/link";
-import { useRouter } from "next/router";
-import { QUESTS } from "@/consts";
-import { getSession, useSession } from "next-auth/react";
-import { PrismaClient, Prisma } from "@prisma/client";
+import { getSession } from "next-auth/react";
+import { PrismaClient } from "@prisma/client";
 import axios from "axios";
-import { GetServerSideProps, NextPageContext } from "next";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/pages/api/auth/[...nextauth]";
-
-interface CreateQuestData {
-  questId: string;
-}
 
 interface QuestData {
   initQuest: any; // Define the actual type for the quest object
@@ -86,15 +77,12 @@ const BattleChat = ({
   questId,
   error,
 }: QuestData & { error: string }) => {
-  const [initialLoad, setInitialLoad] = useBoolean();
   const [quest, setQuest] = useState<any>(initQuest);
   const [history, setHistory] = useState<any>(initQuestMessages);
   const chatEndRef = React.useRef<HTMLDivElement | null>(null);
   let [val, setValue] = React.useState("");
 
-  console.log(initQuestMessages);
-
-  const [aiLoading, setAiLoading] = useBoolean(true);
+  const [aiLoading, setAiLoading] = useBoolean(false);
 
   const scrollToBottom = () => {
     if (chatEndRef.current) {
@@ -106,13 +94,8 @@ const BattleChat = ({
     scrollToBottom();
   }, [history]);
 
-  if (initialLoad) {
-    return <div>Loading</div>;
-  }
-
   return (
     <VStack pos="relative" h="100vh" overflow="clip" justify="center">
-      <Heading>{aiLoading ? "ai loading" : "no loading"}</Heading>
       <StonesContainer
         height={"120vh"}
         width={"110vw"}
@@ -126,7 +109,7 @@ const BattleChat = ({
                 <StonesButton
                   stone="stone7"
                   width={"25rem"}
-                  headerProps={{ shadowOffset: 3 }}
+                  headerProps={{ shadowOffset: 3, fontSize: "1.4em" }}
                   boxProps={{
                     position: "absolute",
                     left: 0,
@@ -178,11 +161,13 @@ const BattleChat = ({
                   key={idx}
                   msg={historyObj.message}
                   from={historyObj.isUserSender ? "user" : "bot"}
+                  isAiLoading={historyObj?.isAiLoading}
                 />
               ))}
               <div ref={chatEndRef} />
             </VStack>
             <InputStone
+              isLoading={aiLoading}
               onChange={(e) => setValue(e.target.value)}
               val={val}
               onEnter={async () => {
@@ -195,6 +180,16 @@ const BattleChat = ({
                   {
                     message: val,
                     isUserSender: true,
+                    isAiLoading: false,
+                  },
+                ]);
+
+                setHistory((prev: any) => [
+                  ...prev,
+                  {
+                    message: "",
+                    isUserSender: false,
+                    isAiLoading: true,
                   },
                 ]);
 
@@ -203,14 +198,20 @@ const BattleChat = ({
                   question: { msg: val, from: "user" },
                   isFinalPrompt: false,
                 });
-
-                setHistory((prev: any) => [
-                  ...prev,
-                  {
-                    message: aiResponse.data.message,
-                    isUserSender: false,
-                  },
-                ]);
+                setValue("");
+                setHistory((prev: any) => {
+                  const removeAILoading = prev.filter(
+                    (msg: any) => !msg.isAiLoading
+                  );
+                  return [
+                    ...removeAILoading,
+                    {
+                      message: aiResponse.data.message,
+                      isUserSender: false,
+                      isAiLoading: false,
+                    },
+                  ];
+                });
 
                 setAiLoading.off();
               }}
