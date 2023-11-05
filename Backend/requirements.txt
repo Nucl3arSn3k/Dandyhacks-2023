@@ -108,6 +108,7 @@ pypresence==4.2.1
 pyreadline3==3.4.1
 
 python-dotenv==1.0.0
+<<<<<<< Updated upstream
 pytz==2022.6
 pywin32-ctypes==0.2.0
 PyYAML==6.0
@@ -136,3 +137,7 @@ urllib3==1.26.12
 Werkzeug==2.2.2
 yarg==0.1.9
 yarl==1.8.2
+=======
+vertexai==0.0.1
+werkzeug
+>>>>>>> Stashed changes
