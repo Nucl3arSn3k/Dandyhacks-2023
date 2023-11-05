@@ -61,7 +61,15 @@ def model_run(
     [Chat]:
     {nl_char.join(map(lambda x: f"- [{x['from'].capitalize()}]: {x['msg']}", chat_history))}
     
-    If there is no initial chat information available. Please generate a suitable question for the user to answer. If there is information available, assess whether the user response adequately answers the question. If it does generate a new answer. If it does not, give helpful instructions for the user to improve their answer.
+    If there is no initial chat information available. Please generate a suitable question for the user to answer. 
+    
+    If there is chat information available, assess whether the user response adequately answers the question. 
+    
+    If user has given insufficient [Chat] response. 
+    - Give helpful instructions for the user to improve their answer in this format.
+    
+    If user has given a good answer.
+    - Generate a new question based on the [Source] content that targets a different topic other than the prior questions.
     """
     
     promptFinal = f"""
