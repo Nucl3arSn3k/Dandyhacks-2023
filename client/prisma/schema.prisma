@@ -73,8 +73,8 @@ model UserShop {
   hasDolphin Boolean
   hasSail    Boolean
   hasEngine  Boolean
-  userId     String  @map("user_id")
-  user       User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userEmail  String  @map("user_email")
+  user         User           @relation(fields: [userEmail], references: [email], onDelete: Cascade)
 }
 
 model Quest {
@@ -82,17 +82,18 @@ model Quest {
   title String
   strengths String[]
   weaknesses String[]
-  userId       String         @map("user_id")
-  user         User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userEmail  String  @map("user_email")
+  user         User           @relation(fields: [userEmail], references: [email], onDelete: Cascade)
   QuestMessage QuestMessage[]
 }
 
 model QuestMessage {
   id           String  @id @default(cuid())
-  userId       String  @map("user_id")
+  userEmail       String  @map("user_email")
   questId      String  @map("quest_id")
   isUserSender Boolean
-  user         User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  message      String
+  user         User    @relation(fields: [userEmail], references: [email], onDelete: Cascade)
   quest        Quest   @relation(fields: [questId], references: [id], onDelete: Cascade)
 }
 
