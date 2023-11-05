@@ -64,12 +64,10 @@ export async function getServerSideProps(context: any) {
 
   const questMessages = await prisma.questMessage.findMany({
     where: {
-      id: questId,
+      questId: questId,
       userEmail: session.user!.email!,
     },
   });
-
-  console.log(questMessages);
 
   return {
     props: {
