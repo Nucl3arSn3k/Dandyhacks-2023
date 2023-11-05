@@ -14,6 +14,7 @@ import Link from "next/link";
 import { PlayerCoins } from "@/components/PlayerCoins";
 import { BobUpAndDown } from "@/components/BobUpAndDown";
 import { useUser } from "@/store/useUsers";
+import { useRouter } from "next/router";
 
 const RaftHomePage = () => {
   const {

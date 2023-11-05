@@ -8,7 +8,7 @@ const Chat = ({ msg = "default", from = "user" }) => {
     <HStack
       alignSelf={from == "user" ? "flex-start" : "flex-end"}
       alignItems="end"
-      maxWidth={"70%"}
+      maxWidth={"60vw"}
       flexDirection={from == "user" ? "row" : "row-reverse"}
     >
       <StonesContainer stone="stone5" width="11rem" height="10rem">
@@ -27,8 +27,10 @@ const Chat = ({ msg = "default", from = "user" }) => {
       </StonesContainer>
       <VStack
         alignItems={from == "user" ? "flex-start" : "flex-end"}
-        flex={1}
         gap="0.5rem"
+        flex="1"
+        maxWidth="70%"
+        position={"relative"}
       >
         <BoldedHeader fontSize="1rem" shadowOffset={2}>
           {from == "user" ? "Momo The Tutor" : "You"}
@@ -39,8 +41,10 @@ const Chat = ({ msg = "default", from = "user" }) => {
           background="#FFF"
           padding="1.5rem"
           width="100%"
+          position="relative"
           boxShadow="0px 3px 0px 0px rgba(95,62,0,0.95)"
           whiteSpace={"pre-wrap"}
+          textOverflow={"wrap"}
         >
           {msg}
         </Box>

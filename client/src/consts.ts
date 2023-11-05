@@ -18,10 +18,25 @@ export const IslandCoords = [
   { x: 1110, y: 370 },
 ];
 
-export const QUESTS: Quest[] = [
-  {
+export const QUESTS: Record<string, Quest> = {
+  quest_0: {
+    id: 0,
     title: "Physics",
     percentageKnown: 30,
+    conversation: [
+      {
+        msg: "Hello, I am your helpful tutor for today",
+        from: "bot",
+      },
+      {
+        msg: "Here are you 10 questions for physics. These are the 10 questions.",
+        from: "bot",
+      },
+      {
+        msg: "I think the answer do this mechanics question is that the change in energy in 5J",
+        from: "user",
+      },
+    ],
     strengths: [
       {
         title: "Kinematics",
@@ -51,7 +66,8 @@ export const QUESTS: Quest[] = [
       },
     ],
   },
-  {
+  quest_1: {
+    id: 1,
     title: "Mathematics",
     percentageKnown: 30,
     strengths: [
@@ -68,6 +84,7 @@ export const QUESTS: Quest[] = [
         percentageKnown: 50,
       },
     ],
+    conversation: [],
     weaknesses: [
       {
         title: "Kinematics",
@@ -83,9 +100,11 @@ export const QUESTS: Quest[] = [
       },
     ],
   },
-  {
+  quest_2: {
+    id: 2,
     title: "Chemistry",
     percentageKnown: 70,
+    conversation: [],
     strengths: [
       {
         title: "Calculus",
@@ -115,4 +134,4 @@ export const QUESTS: Quest[] = [
       },
     ],
   },
-];
+};
