@@ -42,7 +42,7 @@ export default async function handler(
         });
         const questMessages = await prisma.questMessage.findMany({
           where: {
-            id: quest?.id,
+            id: data.questId,
             userEmail: session.user!.email!,
           },
         });

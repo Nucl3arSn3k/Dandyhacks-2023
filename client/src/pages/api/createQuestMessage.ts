@@ -3,12 +3,13 @@ import { PrismaClient } from "@prisma/client";
 import { getServerSession } from "next-auth";
 import { authOptions } from "./auth/[...nextauth]";
 import axios from "axios";
+import { text } from "stream/consumers";
 
 const prisma = new PrismaClient();
 
 interface CreateQuestData {
   questId: string;
-  question: string;
+  question: { from: "user"; msg: string };
   isFinalPrompt?: boolean;
 }
 
@@ -43,7 +44,7 @@ export default async function handleUpdate(
       data: {
         questId: givenQuestId,
         userEmail: session.user!.email!,
-        message: question,
+        message: question.msg,
         isUserSender: true,
       },
     });
@@ -53,31 +54,46 @@ export default async function handleUpdate(
         id: quest?.id,
         userEmail: session.user!.email!,
       },
+      orderBy: {
+        timestamp: "asc",
+      },
     });
 
-    const chatHistory = [...questMessages, question];
+    const parsedQuest = questMessages.map((quest) => ({
+      msg: quest.message,
+      from: quest.isUserSender ? "user" : "bot",
+    }));
+
+    const chatHistory = [...parsedQuest, question];
     const pdfInput = quest?.initialPDFText;
     const isFinalPrompt = data.isFinalPrompt;
 
     // api response HERE!!
-    const textFromAI = await axios.post("http://localhost:8000/ai", {
-      chat_history: chatHistory,
-      pdf_input: pdfInput,
-      final_prompt: isFinalPrompt,
-    });
-
-    // create quest message from api response
-    const aiResponse = await prisma.questMessage.create({
-      data: {
-        questId: givenQuestId,
-        userEmail: session.user!.email!,
-        message: textFromAI.data,
-        isUserSender: false,
-      },
-    });
-
-    res.status(201).json({ api: aiResponse });
+    try {
+      const textFromAI = await axios.post("http://localhost:8000/ai", {
+        chat_history: chatHistory,
+        pdf_input: pdfInput,
+        final_prompt: isFinalPrompt,
+      });
+      console.log(textFromAI.data);
+      // create quest message from api response
+      const aiResponse = await prisma.questMessage.create({
+        data: {
+          questId: givenQuestId,
+          userEmail: session.user!.email!,
+          message: textFromAI.data,
+          isUserSender: false,
+        },
+      });
+      res.status(201).json(aiResponse);
+    } catch (error) {
+      console.log(error);
+      res
+        .status(500)
+        .json({ error: "An error occurred while fetching from AI" });
+    }
   } catch (error) {
+    console.log("error 2");
     res.status(500).json({ error: "An error occurred while fetching quests." });
   }
 }

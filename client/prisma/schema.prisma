@@ -87,7 +87,7 @@ model QuestMessage {
   questId      String  @map("quest_id")
   isUserSender Boolean
   message      String
-  timestamp    DateTime
+  timestamp    DateTime @default(now()) 
   user         User    @relation(fields: [userEmail], references: [email], onDelete: Cascade)
   quest        Quest   @relation(fields: [questId], references: [id], onDelete: Cascade)
 }
