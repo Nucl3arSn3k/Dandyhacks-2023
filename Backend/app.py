@@ -28,7 +28,7 @@ def ai():
     pdf_input = data.get('pdf_input', '')
     final_prompt = data.get("final_prompt", False).to_bool()
     
-    return ai_connection.model_run(0.2,"confident-slice-404114","us-central1",chat_history, pdf_input)
+    return ai_connection.model_run(0.2,"confident-slice-404114","us-central1",chat_history, pdf_input, final_prompt)
 
 @app.route('/pdfload')
 def pdf_loader():
