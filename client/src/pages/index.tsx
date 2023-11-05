@@ -7,7 +7,6 @@ import { Raft } from "@/features/raft/components/Raft";
 import { ChakraMotionDiv } from "@/components/ChakraMotionDiv";
 import { WavyText } from "@/components/WavyText";
 import { StonesButton } from "@/components/StonesButton";
-import Link from "next/link";
 import { SeaBackgroundFullScreen } from "@/components/SeaBackgroundFullScreen";
 import { useRouter } from "next/router";
 
@@ -23,7 +22,14 @@ export default function Home() {
           </BoldedHeader>
         </BobUpAndDown>
         <HStack>
-          <StonesButton stone="stone2" width={400}>
+          <StonesButton
+            width={400}
+            buttonProps={{
+              onClick: () => {
+                router.push("/api/auth/signin");
+              },
+            }}
+          >
             Start
           </StonesButton>
           <StonesButton
