@@ -2,10 +2,21 @@ import { Box, HStack, Spinner, VStack } from "@chakra-ui/react";
 import { BoldedHeader } from "./BoldedHeader";
 import { StonesContainer } from "./StonesContainer";
 import Image from "next/image";
+import { ChakraMotionDiv } from "./ChakraMotionDiv";
 
 const Chat = ({ msg = "default", from = "user", isAiLoading = false }) => {
   return (
-    <HStack
+    <ChakraMotionDiv
+      animate={{
+        opacity: [0, 0.4, 0.8, 1],
+        translateY: [20, 0],
+      }}
+      // @ts-ignore no problem in operation, although type error appears.
+      transition={{
+        duration: 1.5,
+        ease: "easeOut",
+      }}
+      display="flex"
       alignSelf={from !== "user" ? "flex-start" : "flex-end"}
       alignItems="end"
       maxWidth={"60vw"}
@@ -61,7 +72,7 @@ const Chat = ({ msg = "default", from = "user", isAiLoading = false }) => {
           </Box>
         )}
       </VStack>
-    </HStack>
+    </ChakraMotionDiv>
   );
 };
 

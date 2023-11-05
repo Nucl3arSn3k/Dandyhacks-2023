@@ -25,6 +25,7 @@ interface Props {
   width?: number;
   height?: number;
   hideFooter?: boolean;
+  isLoading?: boolean;
 }
 
 export const StoneModal = ({
@@ -39,6 +40,7 @@ export const StoneModal = ({
   onClose,
   width = 500,
   height = 350,
+  isLoading = false,
 }: Props) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose} isCentered>
@@ -63,6 +65,8 @@ export const StoneModal = ({
                     cancelAction?.();
                     onClose();
                   },
+                  disabled: isLoading,
+                  opacity: isLoading ? "50%" : "100%",
                 }}
                 isAnimationOff={true}
               >
@@ -80,7 +84,11 @@ export const StoneModal = ({
                 width={200}
                 height={70}
                 isAnimationOff={true}
-                buttonProps={{ onClick: confirmAction }}
+                buttonProps={{
+                  onClick: confirmAction,
+                  disabled: isLoading,
+                  opacity: isLoading ? "50%" : "100%",
+                }}
               >
                 <BoldedHeader
                   fontSize="0.5em"

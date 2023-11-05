@@ -1,9 +1,10 @@
-import { Button, ChakraProvider } from "@chakra-ui/react";
+import { ChakraProvider } from "@chakra-ui/react";
 import type { AppProps } from "next/app";
 import Head from "next/head";
 import React from "react";
 import BackgroundMusic from "@/components/BackgroundMusic";
 import { SessionProvider } from "next-auth/react";
+import NextTopLoader from "nextjs-toploader";
 
 function App({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   return (
@@ -18,6 +19,7 @@ function App({ Component, pageProps: { session, ...pageProps } }: AppProps) {
         />
       </Head>
       <SessionProvider session={session}>
+        <NextTopLoader />
         <Component {...pageProps} />
       </SessionProvider>
     </ChakraProvider>

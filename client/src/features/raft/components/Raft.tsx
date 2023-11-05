@@ -4,7 +4,7 @@ import Image from "next/image";
 import React from "react";
 import { useUser } from "@/store/useUsers";
 
-export const Raft = () => {
+export const Raft = ({ hasDolphin = false }: { hasDolphin?: boolean }) => {
   const { currency, ownsDolphin, ownsSail, ownsParrot } = useUser();
   return (
     <Box pos="relative">

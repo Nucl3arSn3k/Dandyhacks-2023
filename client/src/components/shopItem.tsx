@@ -24,6 +24,7 @@ export interface ShopItemProps {
   buyItem?: (price: number, text: string) => void;
   isBought?: boolean;
   playSound?: (name: string) => void;
+  index: number;
 }
 // animationDelay?: number;
 const ShopItem = ({
@@ -34,6 +35,7 @@ const ShopItem = ({
   buyItem = () => {},
   playSound = (name: string) => {},
   isBought = false,
+  index,
 }: ShopItemProps) => {
   return (
     <VStack pt={70}>
@@ -44,33 +46,33 @@ const ShopItem = ({
         }}
         // @ts-ignore no problem in operation, although type error appears.
         transition={{
-          delay: 0.2,
+          delay: 0.2 + 0.2 * index,
           duration: 0.5,
           ease: "easeInOut",
         }}
       >
-        <StonesContainer stone={stone} width={250} height={250}>
-          <Image
-            src={url}
-            alt="Background"
-            width="0"
-            height="0"
-            sizes="auto"
-            style={{
-              width: "120px",
-              height: "120px",
-              position: "absolute",
-              bottom: "50px",
-            }}
-          />
+        <StonesContainer stone={stone} width={220} height={220}>
+          <VStack alignItems="center">
+            <Image
+              src={url}
+              alt="Background"
+              width="0"
+              height="0"
+              sizes="auto"
+              style={{
+                width: "90px",
+                height: "90px",
+              }}
+            />
+          </VStack>
         </StonesContainer>
       </ChakraMotionDiv>
-
       <StonesButton
         stone="stone6"
         width={350}
         headerProps={{
           fontSize: "1.3em",
+          shadowOffset: 3,
           onClick: () => {
             buyItem(price, text);
             playSound(text);
@@ -95,7 +97,7 @@ const ShopItem = ({
               height="0"
               sizes="auto"
               style={{
-                width: "80px",
+                width: "70px",
                 height: "50px",
               }}
             ></Image>

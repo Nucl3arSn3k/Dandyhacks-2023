@@ -154,7 +154,7 @@ const BattleChat = ({
               <StonesButton
                 stone="stone7"
                 width={"25rem"}
-                headerProps={{ shadowOffset: 3 }}
+                headerProps={{ shadowOffset: 3, fontSize: "1.4em" }}
                 boxProps={{
                   position: "absolute",
                   left: 0,
