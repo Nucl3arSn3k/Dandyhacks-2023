@@ -24,6 +24,8 @@ export default async function handler(
   if (req.method === "POST") {
     try {
       const data: CreateQuestData = req.body;
+      console.log(data);
+
       const session = await getServerSession(req, res, authOptions);
       if (!session) {
         res.status(401).json({ error: "You are not authenticated" });
@@ -40,12 +42,17 @@ export default async function handler(
             userEmail: session.user!.email!,
           },
         });
+
+        console.log(quest);
+
         const questMessages = await prisma.questMessage.findMany({
           where: {
             id: data.questId,
             userEmail: session.user!.email!,
           },
         });
+
+        console.log(questMessages);
 
         // returns quest and quest messages
 

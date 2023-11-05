@@ -1,10 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { PrismaClient } from "@prisma/client";
 import { getServerSession } from "next-auth";
-import { authOptions } from "./auth/[...nextauth]";
+import { authOptions, prisma } from "./auth/[...nextauth]";
 import axios from "axios";
-
-const prisma = new PrismaClient();
 
 interface CreateQuestData {
   questId: string;

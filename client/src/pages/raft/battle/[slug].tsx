@@ -9,36 +9,94 @@ import { BobUpAndDown } from "@/components/BobUpAndDown";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { QUESTS } from "@/consts";
-import { useSession } from "next-auth/react";
+import { getSession, useSession } from "next-auth/react";
 import { PrismaClient, Prisma } from "@prisma/client";
 import axios from "axios";
+import { GetServerSideProps, NextPageContext } from "next";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/pages/api/auth/[...nextauth]";
 
-const BattleChat = () => {
-  const router = useRouter();
-  const questId = router.query.slug;
+interface CreateQuestData {
+  questId: string;
+}
+
+interface QuestData {
+  initQuest: any; // Define the actual type for the quest object
+  initQuestMessages: any[]; // Define the actual type for the questMessages array
+  questId: string;
+}
+
+const prisma = new PrismaClient();
+
+export async function getServerSideProps(context: any) {
+  const session = await getSession(context);
+
+  if (!session) {
+    return {
+      props: { error: "You are not authenticated" },
+    };
+  }
+
+  if (!session.user?.email) {
+    return {
+      props: { error: "Could not find user email" },
+    };
+  }
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/", // Redirect to the login page if the user is not authenticated.
+        permanent: false,
+      },
+    };
+  }
+
+  const questId = context.params?.slug as string;
+
+  // get question on load
+  const quest = await prisma.quest.findUnique({
+    where: {
+      id: questId,
+      userEmail: session.user!.email!,
+    },
+  });
+
+  const questMessages = await prisma.questMessage.findMany({
+    where: {
+      id: questId,
+      userEmail: session.user!.email!,
+    },
+  });
+
+  console.log(questMessages);
+
+  return {
+    props: {
+      initQuest: quest,
+      initQuestMessages: questMessages.map((quest) => ({
+        ...quest,
+        timestamp: JSON.stringify(quest.timestamp),
+      })),
+      questId,
+    },
+  };
+}
+const BattleChat = ({
+  initQuest,
+  initQuestMessages,
+  questId,
+  error,
+}: QuestData & { error: string }) => {
   const [initialLoad, setInitialLoad] = useBoolean();
-  const [quest, setQuest] = useState<any>(null);
-  const [history, setHistory] = useState<any>([]);
+  const [quest, setQuest] = useState<any>(initQuest);
+  const [history, setHistory] = useState<any>(initQuestMessages);
   const chatEndRef = React.useRef<HTMLDivElement | null>(null);
   let [val, setValue] = React.useState("");
 
+  console.log(initQuestMessages);
+
   const [aiLoading, setAiLoading] = useBoolean(true);
-
-  useEffect(() => {
-    const getData = async () => {
-      console.log("get data");
-      setInitialLoad.on();
-
-      const data: any = await axios.post("/api/getAllChatHistory", {
-        questId,
-      });
-      setQuest(data.data.quest);
-      setHistory(data.data.questMessages);
-
-      setInitialLoad.off();
-    };
-    getData();
-  }, []);
 
   const scrollToBottom = () => {
     if (chatEndRef.current) {
