@@ -2,7 +2,6 @@ import vertexai
 from vertexai.language_models import TextGenerationModel
 import os
 import json
-from oauth2client.client import GoogleCredentials
 
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "confident-slice-404114-7d0b0ed1f4b4.json"
 
@@ -11,7 +10,7 @@ credentials_path = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
 if credentials_path is None:
     credentials_path = "confident-slice-404114-7d0b0ed1f4b4.json"
     
-credentials = GoogleCredentials.get_application_default()
+
 
 
 def main():
