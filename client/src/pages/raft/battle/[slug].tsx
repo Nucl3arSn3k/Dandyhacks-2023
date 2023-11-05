@@ -21,7 +21,6 @@ const BattleChat = () => {
   const [history, setHistory] = useState<any>([]);
   const chatEndRef = React.useRef<HTMLDivElement | null>(null);
   let [val, setValue] = React.useState("");
-  let [data, setData] = React.useState([]);
 
   const [aiLoading, setAiLoading] = useBoolean(true);
 
@@ -41,7 +40,15 @@ const BattleChat = () => {
     getData();
   }, []);
 
-  console.log(history);
+  const scrollToBottom = () => {
+    if (chatEndRef.current) {
+      chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [history]);
 
   if (initialLoad) {
     return <div>Loading</div>;

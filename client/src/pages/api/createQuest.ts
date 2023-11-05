@@ -60,15 +60,23 @@ export default async function handler(
 
         // FIRST API RESPONSE CALL INITIAL QUESTIONS
 
+        const textFromAI = await axios.post("http://localhost:8000/ai", {
+          chat_history: [],
+          pdf_input: plainTextPdf,
+          final_prompt: false,
+        });
+
         // create quest message from api response
-        await prisma.questMessage.create({
+        const createdMsg = await prisma.questMessage.create({
           data: {
             questId: createdQuest.id,
             userEmail: session.user!.email!,
-            message: "", // FROM API
+            message: textFromAI.data, // FROM API
             isUserSender: false,
           },
         });
+
+        console.log(createdMsg);
 
         res.status(201).json(createdQuest);
       } catch (e) {
