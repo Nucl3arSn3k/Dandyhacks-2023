@@ -1,9 +1,14 @@
-// pages/_app.js
 import { Button, ChakraProvider } from "@chakra-ui/react";
 import type { AppProps } from "next/app";
 import Head from "next/head";
-import React, { useState, useEffect, use } from "react";
+import React from "react";
 import BackgroundMusic from "@/components/BackgroundMusic";
+<<<<<<< HEAD
+
+
+
+function App({ Component, pageProps }: AppProps) {
+=======
 import { Howl, Howler } from "howler";
 import { SessionProvider } from "next-auth/react";
 
@@ -29,10 +34,14 @@ function App({ Component, pageProps: { session, ...pageProps } }: AppProps) {
     playSound = !playSound;
   };
 
+>>>>>>> a73d5ddffb98d0a8a99bc2f0321bc767457f6924
   return (
     <ChakraProvider>
-      <Button onClick={onPlaySound}>Play</Button>
+
+      <BackgroundMusic />
+
       <Head>
+
         <link
           rel="icon"
           type="image/png"

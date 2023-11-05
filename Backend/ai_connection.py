@@ -139,18 +139,25 @@ def ouroboros(
     print(f"Model: {localstr}")
     
 
-    questions_list = localstr.strip().split('\n')
+    jsonString = {'orig_dat':localstr}
+    return jsonString,ouroboros(temperature, project_id, location, depth+1, max_depth,globalstore)
 
-    questions_dict = {}
-
-    for x, question in enumerate(questions_list, start=1):
-        questions_dict[f"Question {x}"] = question.strip()
-
-    #print(globalstore)
-    questions_json = json.dumps(questions_dict, indent=4)
-    ouroboros(temperature, project_id, location, depth+1, max_depth,globalstore)
-
-    
+def ouroboros2(
+    temperature: float,
+    project_id: str,
+    location: str,
+    user_input: str = ""
+):
+    vertexai.init(project=project_id, location=location)
+    parameters = {
+        "temperature": temperature,
+        "max_output_tokens": 1000,
+        "top_p": 0.8,
+        "top_k": 40,
+    }
+    model = TextGenerationModel.from_pretrained("text-bison@001")
+    response = model.predict(user_input, **parameters)
+    return response.text 
 
 
 

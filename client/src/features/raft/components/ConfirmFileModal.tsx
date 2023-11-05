@@ -2,6 +2,7 @@ import { BoldedHeader } from "@/components/BoldedHeader";
 import { StoneModal } from "@/components/StoneModal";
 import React from "react";
 import axios from "axios";
+import { useBoolean } from "@chakra-ui/react";
 
 interface Props {
   isOpen?: boolean;
@@ -10,6 +11,17 @@ interface Props {
 }
 
 export const ConfirmFileModal = ({ file, isOpen = false, onClose }: Props) => {
+  const [loading, setLoading] = useBoolean();
+
+  async function postFile(base64: string) {
+    setLoading.on();
+    const data = await axios.post("/api/createQuest", {
+      title: "test",
+      base64: base64,
+    });
+    setLoading.off();
+  }
+
   return (
     <StoneModal
       isOpen={isOpen}
@@ -21,23 +33,13 @@ export const ConfirmFileModal = ({ file, isOpen = false, onClose }: Props) => {
             console.error(error);
           } else {
             console.log("Base64 data:", base64Data);
-            console.log(file?.name);
-            axios
-              .post("/api/createQuest", {
-                title: "test",
-              })
-              .then(function (response) {
-                console.log(response);
-              })
-              .catch(function (error) {
-                console.log(error);
-              });
+            postFile(base64Data!);
           }
         });
       }}
     >
       <BoldedHeader fontSize="1.4em" shadowOffset={3} py="20px" as="p">
-        {file?.name}
+        {loading ? file?.name : "Creating Quest"}
       </BoldedHeader>
     </StoneModal>
   );

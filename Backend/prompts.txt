@@ -1,13 +1,19 @@
-Create some questions based off of this material.
+Create some questions based off of this material. 
 
-    Evaluating Information
-    • Popularity =/= quality.
-    • Usually Higher Quality:
-    • Information taken independently from many
-    diverse individuals is often reliable.
-    • Usually Lower Quality:
-    • Information taken from like-minded sources.
-    • Information taken from sources that already
-    consumed an earlier source.
-    • Neutrals → swayed, or silenced
-    • Partisans → pushing existing views further
+    The cane toad (Rhinella marina), also known as the giant neotropical toad or marine toad, 
+    is a large, terrestrial true toad native to South and mainland Central America, 
+    but which has been introduced to various islands throughout Oceania and the Caribbean, 
+    as well as Northern Australia. It is a member of the genus Rhinella, 
+    which includes many true toad species found throughout Central and South America, 
+    but it was formerly assigned to the genus Bufo.
+
+    The cane toad is an old species. A fossil toad (specimen UCMP 41159) from the 
+    La Venta fauna of the late Miocene in Colombia is indistinguishable from modern cane toads
+    from northern South America. It was discovered in a floodplain deposit, 
+    which suggests the R. marina habitat preferences have long been for open areas. 
+    The cane toad is a prolific breeder; females lay single-clump spawns with thousands of eggs.
+    Its reproductive success is partly because of opportunistic feeding: it has a diet, unusual among anurans,
+    of both dead and living matter. Adults average 10–15 cm (4–6 in) in length;
+    the largest recorded specimen had a snout-vent length of 24 cm (9.4 in).
+    The cane toad has poison glands, and the tadpoles are highly toxic to most animals if ingested. 
+    Its toxic skin can kill many animals, both wild and domesticated, and cane toads are particularly dangerous to dogs. Because of its voracious appetite, the cane toad has been introduced to many regions of the Pacific and the Caribbean islands as a method of agricultural pest control. The common name of the species is derived from its use against the cane beetle (Dermolepida albohirtum), which damages sugar cane. The cane toad is now considered a pest and an invasive species in many of its introduced regions. The 1988 film Cane Toads: An Unnatural History documented the trials and tribulations of the introduction of cane toads in Australia.

@@ -1,31 +1,61 @@
 import React, { useEffect, useState } from "react";
 import { Howl, Howler } from "howler";
-import { Box, Button } from "@chakra-ui/react";
+import { useRef } from "react";
+import { StonesButton } from "./StonesButton";
+import { Box } from "@chakra-ui/react";
+import { set } from "lodash";
 
 export default function BackgroundMusic() {
-  const [playSound, setPlaySound] = useState(false);
-  let sound = new Howl({
-    src: ["assets/sounds/BackgroundMusic.mp3"],
-    loop: false,
-    volume: 0.5,
-    onend: function () {
-      console.log("Finished!");
-    },
-  });
+  const sound = useRef(null); // Use a ref to store the Howler sound object
+  const isPlaying = useRef(false); // Use a ref to track if the sound is currently playing
+  const [isMuted, setIsMuted] = useState(true);
 
   useEffect(() => {
-    if (!playSound) {
-      sound.play();
-    } else {
-      sound.pause();
-      sound.unload();
-    }
-  }, [playSound]);
+    // Initialize the sound when the component mounts
+    sound.current = new Howl({
+      src: ["assets/sounds/BackgroundMusic.mp3"],
+      loop: false,
+      volume: 0.5,
+      onend: function () {
+        console.log("Finished!");
+      },
+    });
+  }, []);
 
+  const onPlaySound = () => {
+    if (sound.current) {
+      if (!isPlaying.current) {
+        setIsMuted(false);
+        sound.current.play();
+      } else {
+        setIsMuted(true);
+        sound.current.pause();
+      }
+      isPlaying.current = !isPlaying.current;
+    }
+  };
   return (
-    //use HTML TO ADD AUDIO
-    <Box position="absolute" top="10" left="10" zIndex={100}>
-      <Button onClick={() => setPlaySound(!playSound)}>Play</Button>
+    <Box
+      position="absolute"
+      bottom="10px"
+      left="10px"
+      zIndex={1000}
+      display="flex"
+      flexDirection="column"
+    >
+      <StonesButton
+        stone="stone1"
+        width={150}
+        height={70}
+        buttonProps={{
+          onClick: () => {
+            onPlaySound();
+          },
+        }}
+        headerProps={{ fontSize: "1em" }}
+      >
+        {isMuted ? "Play Music" : "Pause Music"}
+      </StonesButton>
     </Box>
   );
 }
