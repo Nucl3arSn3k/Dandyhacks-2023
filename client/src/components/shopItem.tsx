@@ -57,8 +57,8 @@ const ShopItem = ({
             height="0"
             sizes="auto"
             style={{
-              width: "150px",
-              height: "150px",
+              width: "120px",
+              height: "120px",
               position: "absolute",
               bottom: "50px",
             }}

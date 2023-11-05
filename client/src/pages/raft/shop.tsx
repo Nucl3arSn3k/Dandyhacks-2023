@@ -20,10 +20,10 @@ export default function Shop() {
     currency,
     ownsDolphin,
     ownsSail,
-    ownsEngine,
+    ownsParrot,
     setCurrency,
     setOwnsDolphin,
-    setOwnsEngine,
+    setOwnsParrot,
     setOwnsSail,
   } = useUser();
 
@@ -46,10 +46,10 @@ export default function Shop() {
     },
     {
       stone: StoneEnum.stone5,
-      text: "Buy Engine",
-      url: "/assets/raft/engine.png",
+      text: "Buy Parrot",
+      url: "/assets/characters/parrot.png",
       price: 300,
-      isBought: ownsEngine,
+      isBought: ownsParrot,
     },
   ];
 
@@ -61,8 +61,8 @@ export default function Shop() {
       } else if ("Buy Sail" === text && !ownsSail) {
         setOwnsSail(true);
         setCurrency(currency - price);
-      } else if ("Buy Engine" === text && !ownsEngine) {
-        setOwnsEngine(true);
+      } else if ("Buy Parrot" === text && !ownsParrot) {
+        setOwnsParrot(true);
         setCurrency(currency - price);
       }
     }
@@ -91,7 +91,7 @@ export default function Shop() {
         sound.current.play();
       } else if ("Buy Sail" === name && !ownsSail) {
         sound.current.play();
-      } else if ("Buy Engine" === name && !ownsEngine) {
+      } else if ("Buy Parrot" === name && !ownsParrot) {
         sound.current.play();
       }
       isPlaying.current = !isPlaying.current;

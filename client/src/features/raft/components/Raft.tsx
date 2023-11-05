@@ -5,16 +5,16 @@ import React from "react";
 import { useUser } from "@/store/useUsers";
 
 export const Raft = () => {
-  const { currency, ownsDolphin, ownsSail, ownsEngine } = useUser();
+  const { currency, ownsDolphin, ownsSail, ownsParrot } = useUser();
   return (
-    <Box pos="relative" >
+    <Box pos="relative">
       {ownsDolphin && (
         <BobUpAndDown
           position="absolute"
-          right="26%"
+          right="40%"
           top="-35%"
           animate={{ translateY: [0, 1, -1, 2, 0] }}
-          zIndex={5}
+          zIndex={10}
         >
           <Image
             src="/assets/characters/dolphin.png"
@@ -50,23 +50,23 @@ export const Raft = () => {
           />
         </BobUpAndDown>
       )}
-      {ownsEngine && (
+      {ownsParrot && (
         <BobUpAndDown
           position="absolute"
-          right="-30%"
-          bottom="-10%"
+          right="10%"
+          top="-30%"
           animate={{ translateY: [0, 1, -1, 2, 0] }}
-          zIndex={4}
+          zIndex={5}
         >
           <Image
-            src="/assets/raft/engine.png"
+            src="/assets/characters/parrot.png"
             alt="Background"
             width="0"
             height="0"
             sizes="100vw"
             style={{
-              width: "250px",
-              height: "80px",
+              width: "80px",
+              height: "60px",
             }}
           />
         </BobUpAndDown>
