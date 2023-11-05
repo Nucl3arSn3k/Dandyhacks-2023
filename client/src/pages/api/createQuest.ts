@@ -56,9 +56,6 @@ export default async function handler(
             weaknesses: [],
             userEmail: session.user!.email!,
           },
-          include: {
-            QuestMessage: true,
-          },
         });
         res.status(201).json(createdQuest);
       } catch (e) {

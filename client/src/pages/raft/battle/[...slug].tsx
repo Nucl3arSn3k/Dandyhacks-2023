@@ -31,7 +31,9 @@ const ChatBattle = ({ task = "biology", msges = [] }) => {
   const chatEndRef = React.useRef(null);
 
   const scrollToBottom = () => {
-    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (chatEndRef.current) {
+      chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    }
   };
 
   React.useEffect(() => {
