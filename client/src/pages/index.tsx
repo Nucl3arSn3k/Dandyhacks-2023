@@ -8,6 +8,8 @@ import { StonesButton } from "@/components/StonesButton";
 import { SeaBackgroundFullScreen } from "@/components/SeaBackgroundFullScreen";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
+
+
 export default function Home() {
   const router = useRouter();
   const { data: session } = useSession();
@@ -61,7 +63,8 @@ export default function Home() {
           times: [0, 0.2, 0.5, 0.8, 1],
         }}
       >
-        <Raft hasDolphin />
+      
+        <Raft />
       </ChakraMotionDiv>
 
       <SeaBackgroundFullScreen />

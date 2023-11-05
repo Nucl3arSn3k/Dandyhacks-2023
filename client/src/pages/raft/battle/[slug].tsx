@@ -3,6 +3,7 @@ import { StonesContainer } from "@/components/StonesContainer";
 import {
   HStack,
   Heading,
+  Tooltip,
   VStack,
   useBoolean,
   useDisclosure,
@@ -16,12 +17,11 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { QUESTS } from "@/consts";
 import { getSession, useSession } from "next-auth/react";
-import { PrismaClient, Prisma, Quest } from "@prisma/client";
+import { PrismaClient, Prisma } from "@prisma/client";
 import axios from "axios";
 import { GetServerSideProps, NextPageContext } from "next";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
-import { BattleReportModal } from "@/features/raft/components/BattleReportModal";
 
 interface CreateQuestData {
   questId: string;
@@ -93,16 +93,13 @@ const BattleChat = ({
   questId,
   error,
 }: QuestData & { error: string }) => {
-  const [initialLoad, setInitialLoad] = useBoolean();
   const [quest, setQuest] = useState<any>(initQuest);
   const [history, setHistory] = useState<any>(initQuestMessages);
   const chatEndRef = React.useRef<HTMLDivElement | null>(null);
   let [val, setValue] = React.useState("");
   const router = useRouter();
 
-  console.log(initQuestMessages);
-
-  const [aiLoading, setAiLoading] = useBoolean(true);
+  const [aiLoading, setAiLoading] = useBoolean(false);
 
   const scrollToBottom = () => {
     if (chatEndRef.current) {
@@ -113,32 +110,13 @@ const BattleChat = ({
   useEffect(() => {
     scrollToBottom();
   }, [history]);
-  const {
-    isOpen: isReportModalOpen,
-    onClose: onCloseReportModal,
-    onOpen: onOpenReportModal,
-  } = useDisclosure();
-
-  const [openedReport, setOpenedReport] = useState<Quest | null>(null);
 
   if (initialLoad) {
     return <div>Loading</div>;
   }
 
-  const onSelectViewReport = (quest: Quest) => {
-    console.log("quest");
-    setOpenedReport(quest);
-    onOpenReportModal();
-  };
-
   return (
     <VStack pos="relative" h="100vh" overflow="clip" justify="center">
-      <BattleReportModal
-        quest={openedReport}
-        onClose={onCloseReportModal}
-        isOpen={isReportModalOpen}
-        confirmAction={() => router.push(`/raft`)}
-      />
       <Heading>{aiLoading ? "ai loading" : "no loading"}</Heading>
       <StonesContainer
         height={"120vh"}
@@ -149,57 +127,19 @@ const BattleChat = ({
         <VStack width="85%" height="105vh">
           <VStack p={5} style={{ marginTop: "0" }}>
             <HStack>
-              <StonesButton
-                stone="stone7"
-                width={"25rem"}
-                headerProps={{ shadowOffset: 3 }}
-                boxProps={{
-                  position: "absolute",
-                  left: 0,
-                }}
-                onClick={async () => {
-                  const aiResponse = await axios.post(
-                    "/api/createQuestMessage",
-                    {
-                      questId: questId,
-                      question: { msg: "", from: "user" },
-                      isFinalPrompt: true,
-                      create: false,
-                    }
-                  );
-
-                  console.log(aiResponse);
-
-                  let weaknesses = [];
-                  let strengths = [];
-
-                  aiResponse.data.message
-                    .split("\n")
-                    .forEach((line: string) => {
-                      let lineData = line.split(":");
-                      let topic = lineData[1].trim();
-                      let topicType = lineData[2].trim();
-
-                      if (topicType == "Weak") {
-                        weaknesses.push(topic);
-                      } else if (topicType == "Strong") {
-                        strengths.push(topic);
-                      }
-                    });
-                  const questData = await axios.post("/api/getQuest", {
-                    questId,
-                  });
-
-                  await axios.post("/api/updateQuest", {
-                    weakness: [...questData.data.quest.weakness],
-                    strengths: [...questData.data.quest.strengths],
-                    questId,
-                  });
-                  onSelectViewReport(questData.data.quest);
-                }}
-              >
-                End Quest
-              </StonesButton>
+              <Link href="/raft">
+                <StonesButton
+                  stone="stone7"
+                  width={"25rem"}
+                  headerProps={{ shadowOffset: 3 }}
+                  boxProps={{
+                    position: "absolute",
+                    left: 0,
+                  }}
+                >
+                  End Quest
+                </StonesButton>
+              </Link>
               <BobUpAndDown>
                 <BoldedHeader
                   fontSize="2.5em"
@@ -243,11 +183,13 @@ const BattleChat = ({
                   key={idx}
                   msg={historyObj.message}
                   from={historyObj.isUserSender ? "user" : "bot"}
+                  isAiLoading={historyObj?.isAiLoading}
                 />
               ))}
               <div ref={chatEndRef} />
             </VStack>
             <InputStone
+              isLoading={aiLoading}
               onChange={(e) => setValue(e.target.value)}
               val={val}
               onEnter={async () => {
@@ -260,6 +202,16 @@ const BattleChat = ({
                   {
                     message: val,
                     isUserSender: true,
+                    isAiLoading: false,
+                  },
+                ]);
+
+                setHistory((prev: any) => [
+                  ...prev,
+                  {
+                    message: "",
+                    isUserSender: false,
+                    isAiLoading: true,
                   },
                 ]);
 
@@ -268,14 +220,20 @@ const BattleChat = ({
                   question: { msg: val, from: "user" },
                   isFinalPrompt: false,
                 });
-
-                setHistory((prev: any) => [
-                  ...prev,
-                  {
-                    message: aiResponse.data.message,
-                    isUserSender: false,
-                  },
-                ]);
+                setValue("");
+                setHistory((prev: any) => {
+                  const removeAILoading = prev.filter(
+                    (msg: any) => !msg.isAiLoading
+                  );
+                  return [
+                    ...removeAILoading,
+                    {
+                      message: aiResponse.data.message,
+                      isUserSender: false,
+                      isAiLoading: false,
+                    },
+                  ];
+                });
 
                 setAiLoading.off();
               }}

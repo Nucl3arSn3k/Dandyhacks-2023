@@ -2,28 +2,19 @@ import { BobUpAndDown } from "@/components/BobUpAndDown";
 import { Box, BoxProps } from "@chakra-ui/react";
 import Image from "next/image";
 import React from "react";
+import { useUser } from "@/store/useUsers";
 
-interface Props {
-  hasDolphin?: boolean;
-  hasSail?: boolean;
-  hasEngine?: boolean;
-}
-
-export const Raft = ({
-  hasEngine = false,
-  hasSail = false,
-  hasDolphin = false,
-  ...rest
-}: Props & BoxProps) => {
+export const Raft = () => {
+  const { currency, ownsDolphin, ownsSail, ownsParrot } = useUser();
   return (
-    <Box pos="relative" {...rest}>
-      {hasDolphin && (
+    <Box pos="relative">
+      {ownsDolphin && (
         <BobUpAndDown
           position="absolute"
-          right="26%"
+          right="40%"
           top="-35%"
           animate={{ translateY: [0, 1, -1, 2, 0] }}
-          zIndex={5}
+          zIndex={10}
         >
           <Image
             src="/assets/characters/dolphin.png"
@@ -38,7 +29,7 @@ export const Raft = ({
           />
         </BobUpAndDown>
       )}
-      {hasSail && (
+      {ownsSail && (
         <BobUpAndDown
           position="absolute"
           right="26%"
@@ -59,23 +50,23 @@ export const Raft = ({
           />
         </BobUpAndDown>
       )}
-      {hasEngine && (
+      {ownsParrot && (
         <BobUpAndDown
           position="absolute"
-          right="-30%"
-          bottom="-10%"
+          right="10%"
+          top="-30%"
           animate={{ translateY: [0, 1, -1, 2, 0] }}
-          zIndex={4}
+          zIndex={5}
         >
           <Image
-            src="/assets/raft/engine.png"
+            src="/assets/characters/parrot.png"
             alt="Background"
             width="0"
             height="0"
             sizes="100vw"
             style={{
-              width: "250px",
-              height: "80px",
+              width: "80px",
+              height: "60px",
             }}
           />
         </BobUpAndDown>

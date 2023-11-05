@@ -21,6 +21,7 @@ const InputStone = ({
   val = "",
   onChange = (e: ChangeEvent<HTMLInputElement>) => {},
   onEnter = () => {},
+  isLoading = false,
 }) => {
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
@@ -37,6 +38,7 @@ const InputStone = ({
         fontSize="1.5rem"
         borderRadius="1.5rem"
         onChange={onChange}
+        disabled={isLoading}
         backgroundColor="white"
         value={val}
         onKeyDown={handleKeyDown}
@@ -47,6 +49,8 @@ const InputStone = ({
           width={"10rem"}
           height={"4rem"}
           onClick={onEnter}
+          disabled={isLoading}
+          buttonProps={{ opacity: isLoading ? "40%" : "100%" }}
         >
           Send
         </StonesButton>

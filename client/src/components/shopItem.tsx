@@ -23,7 +23,7 @@ export interface ShopItemProps {
   animationDelay?: number;
   buyItem?: (price: number, text: string) => void;
   isBought?: boolean;
-  isEnoughCurrency?: boolean;
+  playSound?: (name: string) => void;
 }
 // animationDelay?: number;
 const ShopItem = ({
@@ -32,8 +32,8 @@ const ShopItem = ({
   price = 0,
   url = "/assets/characters/dolphin.png",
   buyItem = () => {},
+  playSound = (name: string) => {},
   isBought = false,
-  isEnoughCurrency = true,
 }: ShopItemProps) => {
   return (
     <VStack pt={70}>
@@ -57,8 +57,8 @@ const ShopItem = ({
             height="0"
             sizes="auto"
             style={{
-              width: "150px",
-              height: "150px",
+              width: "120px",
+              height: "120px",
               position: "absolute",
               bottom: "50px",
             }}
@@ -73,6 +73,7 @@ const ShopItem = ({
           fontSize: "1.3em",
           onClick: () => {
             buyItem(price, text);
+            playSound(text);
           },
         }}
       >

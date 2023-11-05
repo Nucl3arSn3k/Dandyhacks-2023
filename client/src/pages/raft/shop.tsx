@@ -9,19 +9,21 @@ import { useRouter } from "next/router";
 import ShopItem, { ShopItemProps } from "@/components/shopItem";
 import { StoneEnum } from "@/consts";
 import { PlayerCoins } from "@/components/PlayerCoins";
-import { useEffect, useState } from "react";
+import { useEffect, useRef } from "react";
 import { useUser } from "@/store/useUsers";
+import { Howl } from "howler";
 
 export default function Shop() {
   const router = useRouter();
+
   const {
     currency,
     ownsDolphin,
     ownsSail,
-    ownsEngine,
+    ownsParrot,
     setCurrency,
     setOwnsDolphin,
-    setOwnsEngine,
+    setOwnsParrot,
     setOwnsSail,
   } = useUser();
 
@@ -44,10 +46,10 @@ export default function Shop() {
     },
     {
       stone: StoneEnum.stone5,
-      text: "Buy Engine",
-      url: "/assets/raft/engine.png",
+      text: "Buy Parrot",
+      url: "/assets/characters/parrot.png",
       price: 300,
-      isBought: ownsEngine,
+      isBought: ownsParrot,
     },
   ];
 
@@ -59,12 +61,41 @@ export default function Shop() {
       } else if ("Buy Sail" === text && !ownsSail) {
         setOwnsSail(true);
         setCurrency(currency - price);
-      } else if ("Buy Engine" === text && !ownsEngine) {
-        setOwnsEngine(true);
+      } else if ("Buy Parrot" === text && !ownsParrot) {
+        setOwnsParrot(true);
         setCurrency(currency - price);
       }
     }
 
+    // ==== Sound Effect ====
+  };
+
+  const sound = useRef(null); // Use a ref to store the Howler sound object
+  const isPlaying = useRef(false); // Use a ref to track if the sound is currently playing
+
+  useEffect(() => {
+    // Initialize the sound when the component mounts
+    sound.current = new Howl({
+      src: ["../assets/sounds/purchaseSound.mp3"],
+      loop: false,
+      volume: 0.5,
+      onend: function () {},
+    });
+  }, []);
+
+  const onPlaySound = (name: string) => {
+    // play for 5 seconds only if button is clicked for first time
+    if (sound.current) {
+      // if text == "Buy Dolphin" && !ownsDolphin
+      if ("Buy Dolphin" === name && !ownsDolphin) {
+        sound.current.play();
+      } else if ("Buy Sail" === name && !ownsSail) {
+        sound.current.play();
+      } else if ("Buy Parrot" === name && !ownsParrot) {
+        sound.current.play();
+      }
+      isPlaying.current = !isPlaying.current;
+    }
   };
 
   return (
@@ -86,6 +117,7 @@ export default function Shop() {
                 price={item.price}
                 buyItem={buyItem}
                 isBought={item.isBought}
+                playSound={onPlaySound}
               />
             );
           })}
