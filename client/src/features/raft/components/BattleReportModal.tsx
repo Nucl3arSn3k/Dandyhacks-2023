@@ -11,6 +11,7 @@ interface Props {
   onClose: VoidFunction;
   quest: Quest | null;
   confirmAction: () => void;
+  textConfirm: string;
 }
 
 const SkillList = ({
@@ -33,7 +34,7 @@ const SkillList = ({
           as="p"
           key={idx}
         >
-          {strength.title}
+          {strength}
         </BoldedHeader>
       ))}
     </VStack>
@@ -47,14 +48,16 @@ export const BattleReportModal = ({
   confirmAction = () => {
     router.push(`/raft/battle?questId=${quest?.id}`);
   },
+  textConfirm = "Start",
 }: Props) => {
+  console.log(quest);
   const router = useRouter();
   return (
     <StoneModal
       isOpen={isOpen}
       onClose={onClose}
       header={`${quest?.title} Quest`}
-      confirmText="Start"
+      confirmText={textConfirm}
       confirmAction={confirmAction}
       height={500}
     >

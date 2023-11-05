@@ -17,12 +17,13 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { QUESTS } from "@/consts";
 import { getSession, useSession } from "next-auth/react";
-import { PrismaClient, Prisma } from "@prisma/client";
+import { PrismaClient, Prisma, Quest } from "@prisma/client";
 import axios from "axios";
 import { GetServerSideProps, NextPageContext } from "next";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import { useUser } from "@/store/useUsers";
+import { BattleReportModal } from "@/features/raft/components/BattleReportModal";
 
 interface CreateQuestData {
   questId: string;
@@ -115,8 +116,34 @@ const BattleChat = ({
     scrollToBottom();
   }, [history]);
 
+  // if (initialLoad) {
+  //   return <div>Loading</div>;
+  // }
+
+  const [openedReport, setOpenedReport] = useState<Quest | null>(null);
+
+  const {
+    isOpen: isReportModalOpen,
+    onClose: onCloseReportModal,
+    onOpen: onOpenReportModal,
+  } = useDisclosure();
+
+  const onSelectViewReport = (quest: Quest) => {
+    setOpenedReport(quest);
+    onOpenReportModal();
+  };
+
   return (
     <VStack pos="relative" h="100vh" overflow="clip" justify="center">
+      <BattleReportModal
+        quest={openedReport}
+        onClose={onCloseReportModal}
+        isOpen={isReportModalOpen}
+        confirmAction={() => {
+          router.push(`/raft`);
+        }}
+        textConfirm="Leave"
+      />
       <Heading>{aiLoading ? "ai loading" : "no loading"}</Heading>
       <StonesContainer
         height={"120vh"}
@@ -127,19 +154,58 @@ const BattleChat = ({
         <VStack width="85%" height="105vh">
           <VStack p={5} style={{ marginTop: "0" }}>
             <HStack>
-              <Link href="/raft">
-                <StonesButton
-                  stone="stone7"
-                  width={"25rem"}
-                  headerProps={{ shadowOffset: 3, fontSize: "1.4em" }}
-                  boxProps={{
-                    position: "absolute",
-                    left: 0,
-                  }}
-                >
-                  End Quest
-                </StonesButton>
-              </Link>
+              <StonesButton
+                stone="stone7"
+                width={"25rem"}
+                headerProps={{ shadowOffset: 3, fontSize: "1.4em" }}
+                boxProps={{
+                  position: "absolute",
+                  left: 0,
+                }}
+                onClick={async () => {
+                  const aiResponse = await axios.post(
+                    "/api/createQuestMessage",
+                    {
+                      questId: questId,
+                      question: { msg: "", from: "user" },
+                      isFinalPrompt: true,
+                      create: false,
+                    }
+                  );
+
+                  let text = aiResponse.data.data.message;
+
+                  let weaknesses = [];
+                  let strengths = [];
+
+                  text.split("\n").forEach((line: string) => {
+                    let lineData = line.split(":");
+                    let topic = lineData[1].trim();
+                    let strength = lineData[2].trim();
+                    if (strength == "Weak") {
+                      weaknesses.push(topic);
+                    } else {
+                      strengths.push(topic);
+                    }
+                  });
+
+                  const data = await axios.post("/api/getQuest", {
+                    questId: questId,
+                  });
+
+                  const quest = data.data;
+
+                  const updatedQuest = await axios.post("/api/updateQuest", {
+                    questId: questId,
+                    weaknesses: [...quest.weaknesses, ...weaknesses],
+                    strengths: [...quest.strengths, ...strengths],
+                  });
+
+                  onSelectViewReport(updatedQuest.data);
+                }}
+              >
+                End Quest
+              </StonesButton>
               <BobUpAndDown>
                 <BoldedHeader
                   fontSize="2.5em"
@@ -221,7 +287,11 @@ const BattleChat = ({
                   question: { msg: val, from: "user" },
                   isFinalPrompt: false,
                 });
+<<<<<<< HEAD
 
+=======
+                console.log(aiResponse);
+>>>>>>> df2f0f90ce0e92e2fe081f2966a9b7132ae337b7
                 setValue("");
                 setHistory((prev: any) => {
                   const removeAILoading = prev.filter(

@@ -56,20 +56,22 @@ def model_run(
     
     This is the current information available to you.
     
-    [Source]: {pdf_input}
+    [Source]: {" ".join(pdf_input.strip().split())}
     
     [Chat]:
     {nl_char.join(map(lambda x: f"- [{x['from'].capitalize()}]: {x['msg']}", chat_history))}
     
-    If there is no initial chat information available. Please generate a suitable question for the user to answer. 
+    --------------------------------------------
     
-    If there is chat information available, assess whether the user response adequately answers the question. 
+    If there is no initial chat information available. Please generate useful, intellectual, comprehensive question for the user to answer. 
     
-    If user has given insufficient [Chat] response. 
+    If there is chat information available, assess whether the user response adequately answers the previous question. 
+    
+    If user has given a insufficient response ot the question in [Chat]. 
     - Give helpful instructions for the user to improve their answer in this format.
     
-    If user has given a good answer.
-    - Generate a new question based on the [Source] content that targets a different topic other than the prior questions.
+    If user has given a sufficient answer.
+    - Generate a new useful and comprehensive question based on the [Source] content that targets a different topic other than the prior questions. Be sure you are NOT asking the same question
     """
     
     promptFinal = f"""
@@ -87,7 +89,7 @@ def model_run(
     
     This is the current information available to you.
     
-    [Source]: {pdf_input}
+    [Source]: {" ".join(pdf_input.strip().split())}
     
     [Chat]:
     {nl_char.join(map(lambda x: f"- [{x['from'].capitalize()}]: {x['msg']}", chat_history))}
@@ -99,13 +101,11 @@ def model_run(
 
     Format:
     
-    [Topic]: Knowledge (Weak, Medium, Strong)
-    [Topic]: Knowledge (Weak, Medium, Strong)
-    [Topic]: Knowledge (Weak, Medium, Strong)
+    [Topic]: Knowledge (Weak, Strong)
     
     Example:
     [History of Europe]: Weak
-    [History of Americas]: Medium
+    [History of Americas]: Strong
     
     Please keep the number of topics to under 5.
     

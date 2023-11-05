@@ -76,18 +76,20 @@ export default async function handleUpdate(
       console.log(data.create);
 
       // create quest message from api response
-      const aiResponse =
-        data.create == true
-          ? await prisma.questMessage.create({
-              data: {
-                questId: givenQuestId,
-                userEmail: session.user!.email!,
-                message: textFromAI.data,
-                isUserSender: false,
-              },
-            })
-          : { data: { message: textFromAI.data } };
-      res.status(201).json(aiResponse);
+      if (data.create == true) {
+        const aiResponse = await prisma.questMessage.create({
+          data: {
+            questId: givenQuestId,
+            userEmail: session.user!.email!,
+            message: textFromAI.data,
+            isUserSender: false,
+          },
+        });
+        res.status(201).json(aiResponse);
+      } else {
+        console.log("HIHIH");
+        res.status(201).json({ data: { message: textFromAI.data } });
+      }
     } catch (error) {
       console.log(error);
       res
