@@ -48,7 +48,7 @@ export const QuestLog = () => {
             <BoldedHeader fontSize="2.5em" shadowOffset={4}>
               Top Quests
             </BoldedHeader>
-            {QUESTS.map((quest, idx) => (
+            {Object.values(QUESTS).map((quest, idx) => (
               <HStack key={idx} pos="relative" alignItems="center">
                 <VStack alignItems="flex-start">
                   <BoldedHeader as="h3" fontSize="1.4em" shadowOffset={3}>
@@ -80,7 +80,7 @@ export const QuestLog = () => {
             ))}
           </VStack>
         </StonesContainer>
-        
+
       </ChakraMotionDiv>
     </>
   );
