@@ -139,16 +139,8 @@ def ouroboros(
     print(f"Model: {localstr}")
     
 
-    questions_list = localstr.strip().split('\n')
-
-    questions_dict = {}
-
-    for x, question in enumerate(questions_list, start=1):
-        questions_dict[f"Question {x}"] = question.strip()
-
-    #print(globalstore)
-    questions_json = json.dumps(questions_dict, indent=4)
-    ouroboros(temperature, project_id, location, depth+1, max_depth,globalstore)
+    jsonString = {'orig_dat':localstr}
+    return jsonString,ouroboros(temperature, project_id, location, depth+1, max_depth,globalstore)
 
     
 

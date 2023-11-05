@@ -1,7 +1,5 @@
-import Head from "next/head";
 import { Box, Button, HStack, VStack } from "@chakra-ui/react";
 import { BoldedHeader } from "@/components/BoldedHeader";
-import Image from "next/image";
 import { BobUpAndDown } from "@/components/BobUpAndDown";
 import { Raft } from "@/features/raft/components/Raft";
 import { ChakraMotionDiv } from "@/components/ChakraMotionDiv";
@@ -9,9 +7,10 @@ import { WavyText } from "@/components/WavyText";
 import { StonesButton } from "@/components/StonesButton";
 import { SeaBackgroundFullScreen } from "@/components/SeaBackgroundFullScreen";
 import { useRouter } from "next/router";
-
+import { useSession } from "next-auth/react";
 export default function Home() {
   const router = useRouter();
+  const { data: session } = useSession();
 
   return (
     <VStack pos="relative" h="100vh" overflow="clip">
@@ -32,16 +31,18 @@ export default function Home() {
           >
             Start
           </StonesButton>
-          <StonesButton
-            width={400}
-            buttonProps={{
-              onClick: () => {
-                router.push("/raft");
-              },
-            }}
-          >
-            Resume
-          </StonesButton>
+          {session && (
+            <StonesButton
+              width={400}
+              buttonProps={{
+                onClick: () => {
+                  router.push("/raft");
+                },
+              }}
+            >
+              Resume
+            </StonesButton>
+          )}
         </HStack>
       </VStack>
 
