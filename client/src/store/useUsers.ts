@@ -12,7 +12,7 @@ export interface UserInfo {
 }
 
 export const useUser = create<UserInfo>()((set) => ({
-  currency: 1000,
+  currency: 400,
   ownsDolphin: false,
   ownsSail: false,
   ownsParrot: false,
