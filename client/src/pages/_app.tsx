@@ -9,7 +9,6 @@ function App({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   return (
     <ChakraProvider>
       <BackgroundMusic />
-
       <Head>
         <link
           rel="icon"

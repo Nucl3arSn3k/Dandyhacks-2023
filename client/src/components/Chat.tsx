@@ -6,10 +6,10 @@ import Image from "next/image";
 const Chat = ({ msg = "default", from = "user" }) => {
   return (
     <HStack
-      alignSelf={from == "user" ? "flex-start" : "flex-end"}
+      alignSelf={from !== "user" ? "flex-start" : "flex-end"}
       alignItems="end"
       maxWidth={"60vw"}
-      flexDirection={from == "user" ? "row" : "row-reverse"}
+      flexDirection={from !== "user" ? "row" : "row-reverse"}
     >
       <StonesContainer stone="stone5" width="11rem" height="10rem">
         <Image
@@ -26,7 +26,7 @@ const Chat = ({ msg = "default", from = "user" }) => {
         />
       </StonesContainer>
       <VStack
-        alignItems={from == "user" ? "flex-start" : "flex-end"}
+        alignItems={from !== "user" ? "flex-start" : "flex-end"}
         gap="0.5rem"
         flex="1"
         maxWidth="70%"

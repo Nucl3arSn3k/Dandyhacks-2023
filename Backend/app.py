@@ -7,6 +7,7 @@ from authlib.integrations.flask_client import OAuth
 from google.cloud import aiplatform
 
 import ai_connection
+import json
 import random
 import string
 from flask_cors import CORS
@@ -20,9 +21,16 @@ app.secret_key = 'your_secret_key'  # Change this to a random secret key
 def hello_world():
     return 'Hello, World!'
 
-@app.route("/ai")
+@app.route("/ai", methods=["post"])
 def ai():
-    return ai_connection.ouroboros(0.2,"confident-slice-404114","us-central1",pdfx)
+    data = json.loads(request.data)
+    chat_history = data['chat_history']
+    pdf_input = data['pdf_input']
+    final_prompt = data["final_prompt"]
+    
+    print(final_prompt)
+    
+    return ai_connection.model_run(0.2,"confident-slice-404114","us-central1",chat_history, final_prompt, pdf_input)
 
 @app.route('/pdfload')
 def pdf_loader():
