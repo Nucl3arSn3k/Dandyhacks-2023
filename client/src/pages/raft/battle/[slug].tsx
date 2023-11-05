@@ -125,7 +125,7 @@ const BattleChat = ({
   } = useDisclosure();
 
   const onSelectViewReport = (quest: Quest) => {
-    console.log("quest");
+    console.log(quest);
     setOpenedReport(quest);
     onOpenReportModal();
   };
@@ -170,9 +170,40 @@ const BattleChat = ({
                     }
                   );
 
-                  console.log(aiResponse.data.message);
+                  let text = aiResponse.data.data.message;
 
-                  onSelectViewReport(quest);
+                  let weaknesses = [];
+                  let strengths = [];
+
+                  text.split("\n").forEach((line: string) => {
+                    console.log(line);
+                    let lineData = line.split(":");
+                    console.log(lineData);
+                    let topic = lineData[1].trim();
+                    let strength = lineData[2].trim();
+                    if (strength == "Weak") {
+                      weaknesses.push(topic);
+                    } else {
+                      strengths.push(topic);
+                    }
+                  });
+
+                  const data = await axios.post("/api/getQuest", {
+                    questId: questId,
+                  });
+
+                  const quest = data.data;
+
+                  console.log(quest);
+
+                  const updatedQuest = await axios.post("/api/updateQuest", {
+                    questId: questId,
+                    weaknesses: [...quest.weaknesses, ...weaknesses],
+                    strengths: [...quest.strengths, ...strengths],
+                  });
+
+                  console.log(updatedQuest);
+                  onSelectViewReport(updatedQuest.data);
                 }}
               >
                 End Quest

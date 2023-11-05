@@ -34,7 +34,7 @@ const SkillList = ({
           as="p"
           key={idx}
         >
-          {strength.title}
+          {strength}
         </BoldedHeader>
       ))}
     </VStack>
@@ -50,6 +50,7 @@ export const BattleReportModal = ({
   },
   textConfirm = "Start",
 }: Props) => {
+  console.log(quest);
   const router = useRouter();
   return (
     <StoneModal
